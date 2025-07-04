@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { Webhook } from 'svix';
 
-import { createUser, getUser, updateUser } from '@/libs/DB';
+import { createUser, deleteUser, getUser, updateUser } from '@/libs/DB';
 import { Env } from '@/libs/Env';
 import { logger } from '@/libs/Logger';
 
@@ -121,6 +121,33 @@ export async function POST(req: NextRequest) {
       } catch (error) {
         logger.error({ error, userId: id }, 'Error updating user');
         return new NextResponse(`Error updating user: ${String(error)}`, { status: 500 });
+      }
+    }
+
+    // 处理用户删除事件
+    if (event.type === 'user.deleted') {
+      const { id } = event.data;
+
+      // 检查id是否存在
+      if (!id) {
+        logger.error('User deleted event missing ID');
+        return new NextResponse('User ID missing', { status: 400 });
+      }
+
+      try {
+        // 删除用户记录
+        const deletedUser = await deleteUser(id);
+
+        if (deletedUser) {
+          logger.info({ userId: id, supabaseId: deletedUser.id }, 'User deleted');
+          return NextResponse.json({ message: 'User deleted successfully', userId: deletedUser.id });
+        } else {
+          logger.warn({ userId: id }, 'User not found for deletion');
+          return NextResponse.json({ message: 'User not found for deletion' });
+        }
+      } catch (error) {
+        logger.error({ error, userId: id }, 'Error deleting user');
+        return new NextResponse(`Error deleting user: ${String(error)}`, { status: 500 });
       }
     }
 

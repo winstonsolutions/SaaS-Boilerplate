@@ -75,6 +75,24 @@ export async function updateUser(id: string, userData: Partial<User>) {
   return data[0];
 }
 
+// 删除用户
+export async function deleteUser(clerkId: string) {
+  const user = await getUser(clerkId);
+  if (!user) {
+    return null;
+  }
+
+  const { error } = await db
+    .from('users')
+    .delete()
+    .eq('clerk_id', clerkId);
+
+  if (error) {
+    throw error;
+  }
+  return user;
+}
+
 // License相关操作
 export type License = {
   id?: string;
