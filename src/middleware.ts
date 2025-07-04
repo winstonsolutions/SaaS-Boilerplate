@@ -3,6 +3,9 @@ import type {
   NextFetchEvent,
   NextRequest,
 } from 'next/server';
+import {
+  NextResponse,
+} from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 
 import { AllLocales, AppConfig } from './utils/AppConfig';
@@ -18,14 +21,25 @@ const isProtectedRoute = createRouteMatcher([
   '/:locale/dashboard(.*)',
   '/onboarding(.*)',
   '/:locale/onboarding(.*)',
-  '/api(.*)',
-  '/:locale/api(.*)',
+  // 排除webhook和同步用户API路径
+  '/((?!api/webhooks|api/sync-users).*)api(.*)',
+  '/:locale/((?!api/webhooks|api/sync-users).*)api(.*)',
 ]);
 
+// 此middleware确保只有已登录用户可以访问应用
+// 但排除了webhook路径和公共路径
 export default function middleware(
   request: NextRequest,
   event: NextFetchEvent,
 ) {
+  // 排除webhook路径和同步用户API
+  if (
+    request.nextUrl.pathname.includes('/api/webhooks')
+    || request.nextUrl.pathname.includes('/api/sync-users')
+  ) {
+    return NextResponse.next();
+  }
+
   if (
     request.nextUrl.pathname.includes('/sign-in')
     || request.nextUrl.pathname.includes('/sign-up')
@@ -52,5 +66,5 @@ export default function middleware(
 }
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next|monitoring).*)', '/', '/(api|trpc)(.*)'], // Also exclude tunnelRoute used in Sentry from the matcher
+  matcher: ['/((?!.+\\.[\\w]+$|_next|monitoring).*)', '/', '/(api|trpc)(.*)'],
 };

@@ -211,7 +211,24 @@ Now, you have a fully working authentication system with Next.js: Sign up, Sign 
 
 ### Set up remote database
 
-The project uses DrizzleORM, a type-safe ORM that is compatible with PostgreSQL, SQLite, and MySQL databases. By default, the project is set up to work seamlessly with PostgreSQL and you can easily choose any PostgreSQL database provider.
+The project uses DrizzleORM, a type-safe ORM that is compatible with PostgreSQL, SQLite, and MySQL databases. By default, the project is set up to work seamlessly with PostgreSQL and Supabase.
+
+#### Supabase Configuration
+
+To use Supabase as your database provider:
+
+1. Create a Supabase project at [Supabase.com](https://supabase.com)
+2. Get your Supabase URL and API keys from the project settings
+3. Add the following environment variables to your `.env.local` file:
+
+```shell
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_URL=your_supabase_project_url  # Same as NEXT_PUBLIC_SUPABASE_URL
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key  # Do not expose this publicly
+```
+
+You can use either the `DATABASE_URL` directly or the Supabase configuration above. The system will automatically use the appropriate connection method.
 
 ### Translation (i18n) setup
 
