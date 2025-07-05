@@ -15,13 +15,10 @@
   "Hero": {
     "follow_twitter": "在Twitter上关注@Ixartz",
     "title_first_line": "<important>截图工具</important>",
-    "title_second_line": "具有像素级精确度",
-    "description": "Pixel Capture 是一款功能强大的浏览器扩展，可让您以自定义尺寸和像素级精确度捕获屏幕截图。适合设计师、开发者和内容创作者。",
+    "title_second_line": "像素级精确度",
+    "description": "Pixel Capture是一个强大的浏览器扩展，让您可以捕获具有自定义尺寸和像素级精确度的屏幕截图。非常适合设计师、开发人员和内容创作者。",
     "primary_button": "开始使用",
-    "secondary_button": "在GitHub上加星标"
-  },
-  "Sponsors": {
-    "title": "赞助商"
+    "secondary_button": "在GitHub上加星"
   },
   "Features": {
     "section_subtitle": "功能特点",

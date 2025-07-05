@@ -3,7 +3,7 @@ export const CenteredHero = (props: {
   title: React.ReactNode;
   description: string;
   chromeButton?: React.ReactNode;
-  buttons: React.ReactNode;
+  buttons?: React.ReactNode;
 }) => (
   <>
     <div className="text-center">{props.banner}</div>
@@ -18,8 +18,10 @@ export const CenteredHero = (props: {
 
     {props.chromeButton && props.chromeButton}
 
-    <div className="mt-8 flex justify-center gap-x-5 gap-y-3 max-sm:flex-col">
-      {props.buttons}
-    </div>
+    {props.buttons && (
+      <div className="mt-8 flex justify-center gap-x-5 gap-y-3 max-sm:flex-col">
+        {props.buttons}
+      </div>
+    )}
   </>
 );

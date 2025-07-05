@@ -15,13 +15,10 @@
   "Hero": {
     "follow_twitter": "Suivez @Ixartz sur Twitter",
     "title_first_line": "<important>Outil de capture d'écran</important>",
-    "title_second_line": "avec une précision au pixel près.",
-    "description": "Pixel Capture est une puissante extension de navigateur qui vous permet de capturer des captures d'écran avec des dimensions personnalisées et une précision parfaite. Idéal pour les designers, les développeurs et les créateurs de contenu.",
-    "primary_button": "Démarrer",
-    "secondary_button": "Mettez une étoile sur GitHub"
-  },
-  "Sponsors": {
-    "title": "Sponsorisé par"
+    "title_second_line": "avec une précision au pixel près",
+    "description": "Pixel Capture est une puissante extension de navigateur qui vous permet de capturer des captures d'écran avec des dimensions personnalisées et une précision au pixel près. Idéal pour les designers, les développeurs et les créateurs de contenu.",
+    "primary_button": "Commencer",
+    "secondary_button": "Star sur GitHub"
   },
   "Features": {
     "section_subtitle": "Fonctionnalités",
