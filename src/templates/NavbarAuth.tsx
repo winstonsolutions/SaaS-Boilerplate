@@ -17,8 +17,8 @@ export const NavbarAuth = () => {
         <li>
           <Separator orientation="vertical" className="h-4" />
         </li>
-        <li>
-          <Link href="/dashboard" className="mr-2">{t('dashboard')}</Link>
+        <li data-fade>
+          <Link href="/dashboard" className="mr-2 opacity-80 hover:opacity-100">{t('dashboard')}</Link>
         </li>
         <li>
           <UserButton
