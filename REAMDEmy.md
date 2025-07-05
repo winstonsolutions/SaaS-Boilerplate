@@ -6,3 +6,6 @@ To change the text, you would modify the AppConfig.name value in src/utils/AppCo
 Replace the SVG code in src/templates/Logo.tsx with your custom SVG icon
 use claude and chatgpt
 https://www.svgviewer.dev/
+
+## change navbar
+/src/templates/Navbar.tsx
