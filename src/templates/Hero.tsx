@@ -1,4 +1,5 @@
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 import { buttonVariants } from '@/components/ui/buttonVariants';
@@ -29,6 +30,22 @@ export const Hero = () => {
           </>
         )}
         description={t('description')}
+        chromeButton={(
+          <a
+            href="https://chrome.google.com/webstore"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mx-auto mt-8 flex w-96 items-center justify-center gap-4 rounded-full bg-green-400 px-10 py-5 text-3xl font-medium text-black shadow-lg transition-all hover:bg-green-500"
+          >
+            <Image
+              src="/assets/images/chrome-store-logo.svg"
+              alt="Chrome Web Store logo"
+              width={40}
+              height={40}
+            />
+            Add to Chrome
+          </a>
+        )}
         buttons={(
           <>
             <a

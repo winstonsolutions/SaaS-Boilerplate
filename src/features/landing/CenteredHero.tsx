@@ -2,6 +2,7 @@ export const CenteredHero = (props: {
   banner: React.ReactNode;
   title: React.ReactNode;
   description: string;
+  chromeButton?: React.ReactNode;
   buttons: React.ReactNode;
 }) => (
   <>
@@ -14,6 +15,8 @@ export const CenteredHero = (props: {
     <div className="mx-auto mt-5 max-w-screen-md text-center text-xl text-muted-foreground">
       {props.description}
     </div>
+
+    {props.chromeButton && props.chromeButton}
 
     <div className="mt-8 flex justify-center gap-x-5 gap-y-3 max-sm:flex-col">
       {props.buttons}
