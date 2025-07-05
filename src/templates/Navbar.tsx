@@ -12,7 +12,7 @@ export const Navbar = () => {
   const t = useTranslations('Navbar');
 
   return (
-    <Section className="px-3 py-6">
+    <Section className="sticky top-0 z-50 bg-background px-3 py-6 shadow-sm">
       <CenteredMenu
         logo={<Logo />}
         rightMenu={(
