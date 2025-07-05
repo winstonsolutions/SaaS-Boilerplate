@@ -52,7 +52,7 @@ export default function RootLayout(props: {
   // which dynamically adds a `style` attribute to the body tag.
   return (
     <html lang={props.params.locale} suppressHydrationWarning>
-      <body className="bg-background text-foreground antialiased" suppressHydrationWarning>
+      <body className="bg-gradient-to-b from-[#faf5ff] to-[#d8b4fe] text-foreground antialiased" suppressHydrationWarning>
         {/* PRO: Dark mode support for Shadcn UI */}
         <NextIntlClientProvider
           locale={props.params.locale}
