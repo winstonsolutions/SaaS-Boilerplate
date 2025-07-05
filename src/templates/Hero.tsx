@@ -31,20 +31,22 @@ export const Hero = () => {
         description={t('description')}
         chromeButton={(
           <div className="mt-8 flex justify-center">
-            <a
-              href="https://chrome.google.com/webstore"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-green-400 px-6 py-4 text-2xl font-medium text-black shadow-lg transition-all hover:bg-green-500"
-            >
-              <Image
-                src="/assets/images/chrome-store-logo.svg"
-                alt="Chrome Web Store logo"
-                width={32}
-                height={32}
-              />
-              {navbarT('chrome')}
-            </a>
+            <div className="rounded-full bg-green-200/50 p-1.5 shadow-lg">
+              <a
+                href="https://chrome.google.com/webstore"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full bg-green-400 px-6 py-4 text-2xl font-medium text-black shadow-lg transition-all hover:bg-green-500"
+              >
+                <Image
+                  src="/assets/images/chrome-store-logo.svg"
+                  alt="Chrome Web Store logo"
+                  width={32}
+                  height={32}
+                />
+                {navbarT('chrome')}
+              </a>
+            </div>
           </div>
         )}
         buttons={null}
