@@ -6,16 +6,17 @@
   "Navbar": {
     "sign_in": "Se connecter",
     "sign_up": "S'inscrire",
-    "product": "Produit",
-    "docs": "Docs",
-    "blog": "Blog",
-    "community": "Communauté",
-    "company": "Entreprise"
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "faq": "FAQ",
+    "roadmap": "Roadmap",
+    "chrome": "Ajouter à Chrome"
   },
   "Hero": {
     "follow_twitter": "Suivez @Ixartz sur Twitter",
-    "title": "Le parfait <important>SaaS template</important> pour construire et mettre à l'échelle votre entreprise en toute simplicité.",
-    "description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS.",
+    "title_first_line": "<important>Outil de capture d'écran</important>",
+    "title_second_line": "avec une précision au pixel près.",
+    "description": "Pixel Capture est une puissante extension de navigateur qui vous permet de capturer des captures d'écran avec des dimensions personnalisées et une précision parfaite. Idéal pour les designers, les développeurs et les créateurs de contenu.",
     "primary_button": "Démarrer",
     "secondary_button": "Mettez une étoile sur GitHub"
   },

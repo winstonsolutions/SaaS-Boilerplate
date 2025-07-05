@@ -1,0 +1,162 @@
+{
+  "Index": {
+    "meta_title": "Pixel Capture - 具有像素级精确度的完美截图工具。",
+    "meta_description": "Pixel Capture 是一款功能强大的浏览器扩展，可让您以自定义尺寸和像素级精确度捕获屏幕截图。适合设计师、开发者和内容创作者。"
+  },
+  "Navbar": {
+    "sign_in": "登录",
+    "sign_up": "注册",
+    "features": "功能",
+    "pricing": "价格",
+    "faq": "常见问题",
+    "roadmap": "路线图",
+    "chrome": "添加到Chrome"
+  },
+  "Hero": {
+    "follow_twitter": "在Twitter上关注@Ixartz",
+    "title_first_line": "<important>截图工具</important>",
+    "title_second_line": "具有像素级精确度",
+    "description": "Pixel Capture 是一款功能强大的浏览器扩展，可让您以自定义尺寸和像素级精确度捕获屏幕截图。适合设计师、开发者和内容创作者。",
+    "primary_button": "开始使用",
+    "secondary_button": "在GitHub上加星标"
+  },
+  "Sponsors": {
+    "title": "赞助商"
+  },
+  "Features": {
+    "section_subtitle": "功能特点",
+    "section_title": "解锁Pixel Capture的全部潜力",
+    "section_description": "Pixel Capture是一款功能强大的浏览器扩展，为您提供精确的截图体验。",
+    "feature1_title": "自定义尺寸",
+    "feature2_title": "像素级精确",
+    "feature3_title": "快速捕获",
+    "feature4_title": "云端存储",
+    "feature5_title": "一键分享",
+    "feature6_title": "多设备同步",
+    "feature_description": "Pixel Capture让您轻松捕获和分享屏幕截图，提高工作效率。"
+  },
+  "Pricing": {
+    "section_subtitle": "价格方案",
+    "section_title": "选择适合您的计划",
+    "section_description": "我们提供灵活的价格方案，满足不同用户的需求。",
+    "button_text": "开始使用"
+  },
+  "PricingPlan": {
+    "free_plan_name": "免费版",
+    "premium_plan_name": "高级版",
+    "enterprise_plan_name": "企业版",
+    "free_plan_description": "适合个人用户",
+    "premium_plan_description": "适合小团队",
+    "enterprise_plan_description": "适合行业领导者",
+    "feature_team_member": "{number} 团队成员",
+    "feature_website": "{number} 网站",
+    "feature_storage": "{number} GB 存储空间",
+    "feature_transfer": "{number} TB 传输量",
+    "feature_email_support": "电子邮件支持",
+    "plan_interval_month": "月",
+    "plan_interval_year": "年",
+    "next_renew_date": "您的订阅将于 {date} 续订"
+  },
+  "FAQ": {
+    "question": "Pixel Capture有哪些主要功能？",
+    "answer": "Pixel Capture提供精确的屏幕截图功能，包括自定义尺寸、像素级精确度、快速捕获、云端存储、一键分享和多设备同步等功能。"
+  },
+  "CTA": {
+    "title": "准备好了吗？",
+    "description": "立即开始使用Pixel Capture，提升您的截图体验。",
+    "button_text": "在GitHub上加星标"
+  },
+  "Footer": {
+    "product": "产品",
+    "docs": "文档",
+    "blog": "博客",
+    "community": "社区",
+    "company": "公司",
+    "terms_of_service": "服务条款",
+    "privacy_policy": "隐私政策",
+    "designed_by": "设计者 <author></author>。"
+  },
+  "ProtectFallback": {
+    "not_enough_permission": "您没有执行此操作的权限"
+  },
+  "SignIn": {
+    "meta_title": "登录",
+    "meta_description": "通过我们用户友好的登录流程无缝登录您的账户。"
+  },
+  "SignUp": {
+    "meta_title": "注册",
+    "meta_description": "通过我们直观的注册流程轻松创建账户。"
+  },
+  "DashboardLayout": {
+    "home": "首页",
+    "todos": "待办事项",
+    "billing": "账单",
+    "settings": "设置"
+  },
+  "Dashboard": {
+    "meta_title": "Pixel Capture 仪表板",
+    "meta_description": "管理您的Pixel Capture设置和使用情况。"
+  },
+  "DashboardIndex": {
+    "title_bar": "仪表板",
+    "title_bar_description": "欢迎来到您的仪表板",
+    "message_state_title": "让我们开始",
+    "message_state_description": "您可以通过编辑 <code>dashboard/page.tsx</code> 文件来自定义此页面",
+    "message_state_button": "在GitHub上加星标",
+    "message_state_alternative": "想要使用相同技术栈的更多功能？尝试 <url></url>。"
+  },
+  "UserProfile": {
+    "title_bar": "用户资料",
+    "title_bar_description": "查看和管理您的用户资料"
+  },
+  "Billing": {
+    "title_bar": "账单",
+    "title_bar_description": "管理您的账单和订阅",
+    "current_section_title": "当前计划",
+    "current_section_description": "调整您的付款计划以最适合您的需求",
+    "manage_subscription_button": "管理订阅"
+  },
+  "BillingOptions": {
+    "current_plan": "当前计划",
+    "upgrade_plan": "开始使用"
+  },
+  "CheckoutConfirmation": {
+    "title_bar": "付款确认",
+    "message_state_title": "付款成功",
+    "message_state_description": "您的付款已成功处理。感谢您的购买！",
+    "message_state_button": "返回账单页面"
+  },
+  "DataTable": {
+    "no_results": "没有结果。"
+  },
+  "Todos": {
+    "title_bar": "待办事项列表",
+    "title_bar_description": "查看和管理您的待办事项列表",
+    "add_todo_button": "新建待办事项"
+  },
+  "TodoTableColumns": {
+    "open_menu": "打开菜单",
+    "edit": "编辑",
+    "delete": "删除",
+    "title_header": "标题",
+    "message_header": "消息",
+    "created_at_header": "创建时间"
+  },
+  "AddTodo": {
+    "title_bar": "添加待办事项",
+    "add_todo_section_title": "创建新的待办事项",
+    "add_todo_section_description": "填写下面的表单以创建新的待办事项"
+  },
+  "EditTodo": {
+    "title_bar": "编辑待办事项",
+    "edit_todo_section_title": "修改待办事项",
+    "edit_todo_section_description": "填写下面的表单以编辑待办事项"
+  },
+  "TodoForm": {
+    "title_label": "标题",
+    "title_description": "为您的待办事项输入一个描述性标题。",
+    "message_title": "消息",
+    "message_description": "为您的待办事项输入详细消息。",
+    "submit_button": "提交"
+  }
+}

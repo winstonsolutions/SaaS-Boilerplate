@@ -33,19 +33,19 @@ export const Navbar = () => {
         )}
       >
         <li>
-          <Link href="/features">Features</Link>
+          <Link href="/features">{t('features')}</Link>
         </li>
         <li>
-          <Link href="/pricing">Pricing</Link>
+          <Link href="/pricing">{t('pricing')}</Link>
         </li>
         <li>
-          <Link href="/faq">FAQ</Link>
+          <Link href="/faq">{t('faq')}</Link>
         </li>
         <li>
-          <Link href="/roadmap">Roadmap</Link>
+          <Link href="/roadmap">{t('roadmap')}</Link>
         </li>
         <li>
-          <Link href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer">Add to Chrome</Link>
+          <Link href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer">{t('chrome')}</Link>
         </li>
       </CenteredMenu>
     </Section>
