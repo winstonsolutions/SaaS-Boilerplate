@@ -25,33 +25,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // 如果找不到用户记录，创建一个新的
+    // 如果找不到用户记录，返回无试用信息
     if (!data) {
-      // 从Clerk获取用户email
-      const userEmail = auth.sessionClaims?.email || '';
-
-      // 创建新用户记录
-      const now = new Date().toISOString();
-      const newUser = {
-        clerk_id: userId,
-        email: userEmail,
-        trial_started_at: now,
-        updated_at: now,
-      };
-
-      const { data: createdUser, error: insertError } = await db
-        .from('users')
-        .insert(newUser)
-        .select()
-        .single();
-
-      if (insertError) {
-        return NextResponse.json({ error: insertError.message }, { status: 500 });
-      }
-
       return NextResponse.json({
-        trialStartedAt: now,
-        user: createdUser,
+        trialStartedAt: null,
+        user: null,
       });
     }
 

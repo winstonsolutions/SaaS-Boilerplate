@@ -35,6 +35,19 @@ function AccountStatus() {
 
         const data = await response.json();
 
+        // // 开发环境下记录API响应数据
+        // if (process.env.NODE_ENV === 'development') {
+        //   console.log('===== Trial API Response =====');
+        //   console.log('User:', user.id);
+        //   console.log('Response data:', data);
+        //   console.log('trialStartedAt:', data.trialStartedAt);
+        //   console.log('user data:', data.user);
+        //   console.log('user.publicMetadata:', user.publicMetadata);
+        //   console.log('user email', user.primaryEmailAddress?.emailAddress);
+        //   console.log('user email', data.user.email);
+        //   console.log('===========================');
+        // }
+
         // 开发环境中的测试参数: 添加 ?expired=true 到URL可以模拟试用过期
         const urlParams = new URLSearchParams(window.location.search);
         const simulateExpired = urlParams.get('expired') === 'true';
@@ -47,11 +60,12 @@ function AccountStatus() {
         } else if (data.trialStartedAt) {
           setTrialStartDate(new Date(data.trialStartedAt));
         } else {
-          // 如果没有找到用户或试用日期，设置一个默认的试用开始日期
-          setTrialStartDate(new Date());
+          // 如果没有找到用户或试用日期，返回null
+          setTrialStartDate(null);
         }
-      } catch {
+      } catch (error) {
         // 错误处理
+        console.error('Error fetching trial info:', error);
       } finally {
         setIsLoading(false);
       }
