@@ -75,7 +75,14 @@
     "company": "公司",
     "terms_of_service": "服务条款",
     "privacy_policy": "隐私政策",
-    "designed_by": "设计者 <author></author>。"
+    "designed_by": "设计者 <author></author>。",
+    "features": "功能",
+    "pricing": "价格",
+    "faq": "常见问题",
+    "resources": "资源",
+    "about": "关于我们",
+    "contact": "联系我们",
+    "all_rights_reserved": "版权所有。"
   },
   "ProtectFallback": {
     "not_enough_permission": "您没有执行此操作的权限"

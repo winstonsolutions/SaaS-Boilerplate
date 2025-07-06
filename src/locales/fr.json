@@ -75,7 +75,14 @@
     "company": "Entreprise",
     "terms_of_service": "Conditions d'utilisation",
     "privacy_policy": "Politique de confidentialité",
-    "designed_by": "Designé by <author></author>."
+    "designed_by": "Designé by <author></author>.",
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "faq": "FAQ",
+    "resources": "Ressources",
+    "about": "À propos",
+    "contact": "Contact",
+    "all_rights_reserved": "Tous droits réservés."
   },
   "ProtectFallback": {
     "not_enough_permission": "Vous n'avez pas les permissions pour effectuer cette action"

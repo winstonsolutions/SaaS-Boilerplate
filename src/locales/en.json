@@ -73,9 +73,16 @@
     "blog": "Blog",
     "community": "Community",
     "company": "Company",
-    "terms_of_service": "Terms Of Service",
+    "terms_of_service": "Terms of Service",
     "privacy_policy": "Privacy Policy",
-    "designed_by": "Designed by <author></author>."
+    "designed_by": "Designed by <author></author>.",
+    "features": "Features",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "resources": "Resources",
+    "about": "About Us",
+    "contact": "Contact",
+    "all_rights_reserved": "All rights reserved."
   },
   "ProtectFallback": {
     "not_enough_permission": "You do not have the permissions to perform this action"
