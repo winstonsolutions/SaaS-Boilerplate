@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
 import { DashboardHeader } from '@/features/dashboard/DashboardHeader';
+import { Footer } from '@/templates/Footer';
 
 export async function generateMetadata(props: { params: { locale: string } }) {
   const t = await getTranslations({
@@ -20,12 +21,12 @@ export default function DashboardLayout(props: { children: React.ReactNode }) {
 
   return (
     <>
-      <div className="shadow-md">
+      <div className="sticky top-0 z-50 shadow-md backdrop-blur-sm">
         <div className="mx-auto flex max-w-screen-xl items-center justify-between px-3 py-4">
           <DashboardHeader
             menu={[
               {
-                href: '/dashboard',
+                href: '/',
                 label: t('home'),
               },
               // PRO: Link to the /dashboard/todos page
@@ -44,6 +45,8 @@ export default function DashboardLayout(props: { children: React.ReactNode }) {
           {props.children}
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }
