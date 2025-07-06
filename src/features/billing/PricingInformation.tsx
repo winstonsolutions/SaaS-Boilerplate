@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl';
 
 import { PricingCard } from '@/features/billing/PricingCard';
 import { PricingFeature } from '@/features/billing/PricingFeature';
-import { PricingPlanList } from '@/utils/AppConfig';
+import { PLAN_ID, PricingPlanList } from '@/utils/AppConfig';
 
 export const PricingInformation = (props: {
   buttonList: Record<string, React.ReactNode>;
@@ -10,7 +10,7 @@ export const PricingInformation = (props: {
   const t = useTranslations('PricingPlan');
 
   return (
-    <div className="grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-3">
+    <div className="mx-auto grid max-w-3xl grid-cols-1 gap-8 md:grid-cols-2">
       {Object.values(PricingPlanList).map(plan => (
         <PricingCard
           key={plan.id}
@@ -20,15 +20,7 @@ export const PricingInformation = (props: {
           button={props.buttonList[plan.id]}
         >
           <PricingFeature>
-            {t('feature_team_member', {
-              number: plan.features.teamMember,
-            })}
-          </PricingFeature>
-
-          <PricingFeature>
-            {t('feature_website', {
-              number: plan.features.website,
-            })}
+            {plan.id === PLAN_ID.PRO ? t('feature_pdf_support') : t('feature_basic_formats')}
           </PricingFeature>
 
           <PricingFeature>

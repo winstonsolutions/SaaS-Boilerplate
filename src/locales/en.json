@@ -39,20 +39,18 @@
     "feature6_description": "Synchronize your screenshots across different devices, accessing all your content anywhere, anytime."
   },
   "Pricing": {
-    "section_subtitle": "Features",
-    "section_title": "Unlock the Full Potential of the SaaS Template",
-    "section_description": "A free and open-source landing page template for your SaaS business, built with React, TypeScript, Shadcn UI, and Tailwind CSS.",
+    "section_subtitle": "Pricing",
+    "section_title": "Choose the Plan That's Right for You",
+    "section_description": "Whether you need basic screenshot functionality or advanced features like PDF exports, we have a plan for you.",
     "button_text": "Get Started"
   },
   "PricingPlan": {
     "free_plan_name": "Free",
-    "premium_plan_name": "Premium",
-    "enterprise_plan_name": "Enterprise",
+    "pro_plan_name": "Pro",
     "free_plan_description": "For individuals",
-    "premium_plan_description": "For small teams",
-    "enterprise_plan_description": "For industry leaders",
-    "feature_team_member": "{number} Team Members",
-    "feature_website": "{number} Websites",
+    "pro_plan_description": "For individuals",
+    "feature_basic_formats": "PNG, JPG, WebP formats",
+    "feature_pdf_support": "PDF format support",
     "feature_storage": "{number} GB Storage",
     "feature_transfer": "{number} TB Transfer",
     "feature_email_support": "Email Support",

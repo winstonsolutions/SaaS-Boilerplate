@@ -41,18 +41,16 @@
   "Pricing": {
     "section_subtitle": "价格方案",
     "section_title": "选择适合您的计划",
-    "section_description": "我们提供灵活的价格方案，满足不同用户的需求。",
+    "section_description": "无论您需要基本的截图功能还是包括PDF导出在内的高级功能，我们都有适合您的方案。",
     "button_text": "开始使用"
   },
   "PricingPlan": {
     "free_plan_name": "免费版",
-    "premium_plan_name": "高级版",
-    "enterprise_plan_name": "企业版",
+    "pro_plan_name": "专业版",
     "free_plan_description": "适合个人用户",
-    "premium_plan_description": "适合小团队",
-    "enterprise_plan_description": "适合行业领导者",
-    "feature_team_member": "{number} 团队成员",
-    "feature_website": "{number} 网站",
+    "pro_plan_description": "适合个人用户",
+    "feature_basic_formats": "支持PNG、JPG、WebP格式",
+    "feature_pdf_support": "支持PDF格式",
     "feature_storage": "{number} GB 存储空间",
     "feature_transfer": "{number} TB 传输量",
     "feature_email_support": "电子邮件支持",
@@ -62,7 +60,7 @@
   },
   "FAQ": {
     "question": "Pixel Capture有哪些主要功能？",
-    "answer": "Pixel Capture提供精确的屏幕截图功能，包括自定义尺寸、像素级精确度、快速捕获、云端存储、一键分享和多设备同步等功能。"
+    "answer": "Pixel Capture提供精确的屏幕截图功能，包括自定义尺寸、像素级精确度、快速捕获、云端存储、多种格式和多设备同步等功能。"
   },
   "CTA": {
     "title": "准备好了吗？",

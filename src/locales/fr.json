@@ -39,20 +39,18 @@
     "feature6_description": "Synchronisez vos captures d'écran sur différents appareils, en accédant à tout votre contenu n'importe où, n'importe quand."
   },
   "Pricing": {
-    "section_subtitle": "Fonctionnalités",
-    "section_title": "Débloquer le plein potentiel du SaaS Template",
-    "section_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS.",
+    "section_subtitle": "Tarifs",
+    "section_title": "Choisissez le plan qui vous convient",
+    "section_description": "Que vous ayez besoin de fonctionnalités de capture d'écran de base ou de fonctionnalités avancées comme l'exportation PDF, nous avons un plan pour vous.",
     "button_text": "Démarrer"
   },
   "PricingPlan": {
     "free_plan_name": "Gratuit",
-    "premium_plan_name": "Premium",
-    "enterprise_plan_name": "Enterprise",
+    "pro_plan_name": "Pro",
     "free_plan_description": "Pour les particuliers",
-    "premium_plan_description": "Pour les petites équipes",
-    "enterprise_plan_description": "Pour les leaders de l'industrie",
-    "feature_team_member": "{number} membres",
-    "feature_website": "{number} sites internet",
+    "pro_plan_description": "Pour les particuliers",
+    "feature_basic_formats": "Formats PNG, JPG, WebP",
+    "feature_pdf_support": "Support format PDF",
     "feature_storage": "{number} Go de stockage",
     "feature_transfer": "{number} TB de transfert",
     "feature_email_support": "Support par e-mail",
