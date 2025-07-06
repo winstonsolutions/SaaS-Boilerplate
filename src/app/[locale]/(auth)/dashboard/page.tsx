@@ -7,6 +7,7 @@ import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import React, { useEffect, useState } from 'react';
 
+import { DevUserInfo } from '@/features/dashboard/DevUserInfo';
 import { TitleBar } from '@/features/dashboard/TitleBar';
 
 // 内联AccountStatus组件
@@ -345,6 +346,8 @@ export default function DashboardPage() {
         title={t('title_bar')}
         description={t('title_bar_description')}
       />
+
+      <DevUserInfo />
 
       <div className="space-y-8">
         <AccountStatus />
