@@ -179,5 +179,29 @@
     "message_title": "Message",
     "message_description": "Entrez un message détaillé pour votre todo.",
     "submit_button": "Envoyer"
+  },
+  "Roadmap": {
+    "section_subtitle": "Roadmap",
+    "section_title": "Notre Parcours de Développement",
+    "section_description": "Découvrez les fonctionnalités actuellement disponibles et nos prochains développements.",
+    "feature1_title": "Format PNG",
+    "feature1_description": "Capturez des captures d'écran au format PNG avec prise en charge de la transparence pour des images de haute qualité.",
+    "feature2_title": "Format JPG",
+    "feature2_description": "Enregistrez des captures d'écran au format JPG avec compression ajustable pour des fichiers plus légers.",
+    "feature3_title": "Format WebP",
+    "feature3_description": "Exportez des captures d'écran au format WebP pour des images optimisées pour le web avec une meilleure compression.",
+    "feature4_title": "Export PDF",
+    "feature4_description": "Convertissez directement vos captures d'écran au format PDF pour un partage et une documentation faciles.",
+    "feature5_title": "Stockage Cloud",
+    "feature5_description": "Stockez vos captures d'écran en toute sécurité dans le cloud et accédez-y de n'importe où.",
+    "feature6_title": "Extension Firefox",
+    "feature6_description": "Support pour le navigateur Firefox afin d'atteindre plus d'utilisateurs sur différentes plateformes.",
+    "feature7_title": "Extension Safari",
+    "feature7_description": "Étendre notre plateforme aux utilisateurs de Safari sur les appareils macOS et iOS.",
+    "feature8_title": "Extension Edge",
+    "feature8_description": "Apporter Pixel Capture aux utilisateurs de Microsoft Edge pour une expérience multi-navigateurs complète.",
+    "status_completed": "Terminé",
+    "status_in_progress": "En Cours",
+    "status_planned": "Planifié"
   }
 }

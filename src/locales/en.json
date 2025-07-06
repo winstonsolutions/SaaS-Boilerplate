@@ -179,5 +179,29 @@
     "message_title": "Message",
     "message_description": "Enter a detailed message for your todo.",
     "submit_button": "Submit"
+  },
+  "Roadmap": {
+    "section_subtitle": "Roadmap",
+    "section_title": "Our Development Journey",
+    "section_description": "See what features are currently available and what we're working on next.",
+    "feature1_title": "PNG Screenshot Format",
+    "feature1_description": "Capture screenshots in PNG format with transparency support for high-quality images.",
+    "feature2_title": "JPG Screenshot Format",
+    "feature2_description": "Save screenshots in JPG format with adjustable compression for smaller file sizes.",
+    "feature3_title": "WebP Screenshot Format",
+    "feature3_description": "Export screenshots in WebP format for modern web-optimized images with better compression.",
+    "feature4_title": "PDF Export",
+    "feature4_description": "Convert your screenshots directly to PDF format for easy sharing and documentation.",
+    "feature5_title": "Cloud Storage",
+    "feature5_description": "Store your screenshots securely in the cloud and access them from anywhere.",
+    "feature6_title": "Firefox Extension",
+    "feature6_description": "Support for Firefox browser to reach more users across different platforms.",
+    "feature7_title": "Safari Extension",
+    "feature7_description": "Expand our platform to Safari users on macOS and iOS devices.",
+    "feature8_title": "Edge Extension",
+    "feature8_description": "Bring Pixel Capture to Microsoft Edge users for a complete cross-browser experience.",
+    "status_completed": "Completed",
+    "status_in_progress": "In Progress",
+    "status_planned": "Planned"
   }
 }

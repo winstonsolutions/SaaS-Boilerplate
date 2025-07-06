@@ -179,5 +179,29 @@
     "message_title": "消息",
     "message_description": "为您的待办事项输入详细消息。",
     "submit_button": "提交"
+  },
+  "Roadmap": {
+    "section_subtitle": "路线图",
+    "section_title": "我们的开发旅程",
+    "section_description": "了解当前可用的功能以及我们接下来的开发计划。",
+    "feature1_title": "PNG截图格式",
+    "feature1_description": "以PNG格式捕获截图，支持透明度，提供高质量图像。",
+    "feature2_title": "JPG截图格式",
+    "feature2_description": "以JPG格式保存截图，可调节压缩率以获得更小的文件大小。",
+    "feature3_title": "WebP截图格式",
+    "feature3_description": "以WebP格式导出截图，为现代网络优化的图像提供更好的压缩效果。",
+    "feature4_title": "PDF导出",
+    "feature4_description": "将截图直接转换为PDF格式，方便分享和文档记录。",
+    "feature5_title": "云端存储",
+    "feature5_description": "安全地将截图存储在云端，随时随地访问您的内容。",
+    "feature6_title": "Firefox扩展",
+    "feature6_description": "支持Firefox浏览器，覆盖更多不同平台的用户。",
+    "feature7_title": "Safari扩展",
+    "feature7_description": "将我们的平台扩展到macOS和iOS设备上的Safari用户。",
+    "feature8_title": "Edge扩展",
+    "feature8_description": "为Microsoft Edge用户提供Pixel Capture，实现完整的跨浏览器体验。",
+    "status_completed": "已完成",
+    "status_in_progress": "开发中",
+    "status_planned": "计划中"
   }
 }
