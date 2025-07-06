@@ -75,11 +75,6 @@
     "question6": "How secure are my screenshots in the cloud?",
     "answer6": "We take security seriously. All screenshots stored in our cloud are encrypted both in transit and at rest. We use industry-standard security practices, and your data is never shared with third parties without your explicit permission."
   },
-  "CTA": {
-    "title": "You are ready?",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "button_text": "Star on GitHub"
-  },
   "Footer": {
     "product": "Product",
     "docs": "Docs",

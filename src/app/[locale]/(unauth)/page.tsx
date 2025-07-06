@@ -1,6 +1,5 @@
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
-import { CTA } from '@/templates/CTA';
 import { FAQ } from '@/templates/FAQ';
 import { Features } from '@/templates/Features';
 import { Footer } from '@/templates/Footer';
@@ -32,7 +31,6 @@ const IndexPage = (props: { params: { locale: string } }) => {
       <Pricing />
       <FAQ />
       <Roadmap />
-      <CTA />
       <Footer />
     </>
   );

@@ -17,7 +17,7 @@ export const Hero = () => {
             <div className="mb-4">
               {t.rich('title_first_line', {
                 important: chunks => (
-                  <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text font-extrabold text-transparent">
                     {chunks}
                   </span>
                 ),

@@ -75,11 +75,6 @@
     "question6": "Mes captures d'écran sont-elles sécurisées dans le cloud ?",
     "answer6": "Nous prenons la sécurité au sérieux. Toutes les captures d'écran stockées dans notre cloud sont cryptées à la fois en transit et au repos. Nous utilisons des pratiques de sécurité standard de l'industrie, et vos données ne sont jamais partagées avec des tiers sans votre permission explicite."
   },
-  "CTA": {
-    "title": "Vous êtes prêt?",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    "button_text": "Mettez une étoile sur GitHub"
-  },
   "Footer": {
     "product": "Produit",
     "docs": "Docs",
