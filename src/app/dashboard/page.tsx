@@ -1,123 +1,44 @@
-'use client';
-
+// 直接在页面中实现组件，避免导入问题
 import { useUser } from '@clerk/nextjs';
-import { addDays } from 'date-fns';
+import { addDays, differenceInDays } from 'date-fns';
 import { Check, FileDown, MessageCircle, Settings } from 'lucide-react';
-import { useParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
-import React, { useEffect, useState } from 'react';
+import type { Metadata } from 'next';
+import React from 'react';
 
-import { TitleBar } from '@/features/dashboard/TitleBar';
+export const metadata: Metadata = {
+  title: 'Dashboard | Pixel Capture',
+  description: 'Manage your Pixel Capture subscription and account settings',
+};
 
 // 内联AccountStatus组件
 function AccountStatus() {
   const { user, isLoaded } = useUser();
-  const params = useParams();
-  const locale = params.locale as string;
-  const [trialStartDate, setTrialStartDate] = useState<Date | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // 从API获取用户试用信息
-  useEffect(() => {
-    async function fetchUserTrialInfo() {
-      if (!user || !isLoaded) {
-        return;
-      }
+  // Calculate trial status
+  const trialStarted = user?.publicMetadata?.trial_started_at
+    ? new Date(user.publicMetadata.trial_started_at as string)
+    : null;
 
-      try {
-        // 使用API端点获取用户试用信息
-        const response = await fetch(`/${locale}/api/user/trial`);
-
-        if (!response.ok) {
-          return;
-        }
-
-        const data = await response.json();
-
-        // 开发环境中的测试参数: 添加 ?expired=true 到URL可以模拟试用过期
-        const urlParams = new URLSearchParams(window.location.search);
-        const simulateExpired = urlParams.get('expired') === 'true';
-
-        if (simulateExpired && process.env.NODE_ENV === 'development') {
-          // 模拟过期的试用 - 设置为7天前
-          const expiredDate = new Date();
-          expiredDate.setDate(expiredDate.getDate() - 7);
-          setTrialStartDate(expiredDate);
-        } else if (data.trialStartedAt) {
-          setTrialStartDate(new Date(data.trialStartedAt));
-        } else {
-          // 如果没有找到用户或试用日期，设置一个默认的试用开始日期
-          setTrialStartDate(new Date());
-        }
-      } catch {
-        // 错误处理
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    if (isLoaded && user) {
-      fetchUserTrialInfo();
-    }
-  }, [user, isLoaded, locale]);
-
-  // 计算试用期结束日期和剩余时间
-  const trialEndDate = trialStartDate ? addDays(trialStartDate, 7) : null;
+  const trialEndDate = trialStarted ? addDays(trialStarted, 7) : null;
   const today = new Date();
+  const daysRemaining = trialEndDate ? differenceInDays(trialEndDate, today) : 0;
+  const hoursRemaining = trialEndDate ? Math.floor((trialEndDate.getTime() - today.getTime()) / (1000 * 60 * 60) % 24) : 0;
+  const minutesRemaining = trialEndDate ? Math.floor((trialEndDate.getTime() - today.getTime()) / (1000 * 60) % 60) : 0;
 
-  // 确保日期计算正确
-  const calculateTimeRemaining = (endDate: Date | null, currentDate: Date) => {
-    if (!endDate) {
-      return { days: 0, hours: 0, minutes: 0 };
-    }
-
-    const diffMs = Math.max(0, endDate.getTime() - currentDate.getTime());
-    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-
-    return { days, hours, minutes };
-  };
-
-  const timeRemaining = calculateTimeRemaining(trialEndDate, today);
-  const daysRemaining = timeRemaining.days;
-  const hoursRemaining = timeRemaining.hours;
-  const minutesRemaining = timeRemaining.minutes;
-
-  // 确定用户状态
+  // Determine status
   let status = 'FREE';
-  let isTrialExpired = false;
-
-  if (trialStartDate) {
-    if (daysRemaining > 0 || (daysRemaining === 0 && (hoursRemaining > 0 || minutesRemaining > 0))) {
-      status = 'Pro Trial Active';
-    } else {
-      isTrialExpired = true;
-      status = 'FREE';
-    }
+  if (trialStarted && daysRemaining >= 0) {
+    status = 'Pro Trial Active';
   } else if (user?.publicMetadata?.subscriptionStatus === 'active') {
     status = 'PRO';
   }
 
-  // 计算进度条 - 全新逻辑
-  // 总试用时间为7天（以毫秒为单位）
-  const TRIAL_DURATION_MS = 7 * 24 * 60 * 60 * 1000;
+  // Calculate progress percentage for the trial
+  const progressPercentage = trialStarted
+    ? Math.max(0, Math.min(100, 100 - (daysRemaining * 24 * 60 + hoursRemaining * 60 + minutesRemaining) / (7 * 24 * 60) * 100))
+    : 100;
 
-  // 如果有试用开始日期，计算已经过去的时间
-  let elapsedMs = 0;
-  let remainingMs = 0;
-
-  if (trialStartDate) {
-    // 已经过去的时间 = 当前时间 - 试用开始时间
-    elapsedMs = Math.min(TRIAL_DURATION_MS, today.getTime() - trialStartDate.getTime());
-    // 剩余时间 = 总时间 - 已过去时间
-    remainingMs = Math.max(0, TRIAL_DURATION_MS - elapsedMs);
-  }
-
-  // 进度百分比 = 剩余时间 / 总时间 * 100
-  const progressPercentage = trialStartDate ? Math.min(100, (remainingMs / TRIAL_DURATION_MS) * 100) : 0;
-
-  if (!isLoaded || isLoading) {
+  if (!isLoaded) {
     return <div className="h-40 animate-pulse rounded-lg bg-gray-200"></div>;
   }
 
@@ -137,14 +58,6 @@ function AccountStatus() {
         </span>
       </div>
 
-      {/* 试用过期消息 */}
-      {isTrialExpired && (
-        <div className="mb-6 rounded-lg border border-blue-100 bg-blue-50 p-4">
-          <p className="text-blue-800">Your trial has expired. Purchase a license to continue using Pro features.</p>
-        </div>
-      )}
-
-      {/* 试用进行中显示进度条 */}
       {status === 'Pro Trial Active' && (
         <div className="mb-6">
           <div className="mb-1 flex justify-between text-sm">
@@ -160,17 +73,13 @@ function AccountStatus() {
               m remaining
             </span>
           </div>
-
-          {/* 全新进度条设计 */}
-          <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
-            {/* 剩余时间 */}
+          <div className="h-2 w-full rounded-full bg-gray-200">
             <div
-              className="h-full rounded-full bg-blue-600 transition-all duration-500 ease-in-out"
+              className="h-2 rounded-full bg-blue-600"
               style={{ width: `${progressPercentage}%` }}
             >
             </div>
           </div>
-
           <div className="mt-1 text-xs text-gray-500">
             Try all Pro features for 7 days
           </div>
@@ -336,21 +245,25 @@ function LicenseForm() {
   );
 }
 
-export default function DashboardPage() {
-  const t = useTranslations('DashboardIndex');
-
+// 内联Dashboard组件
+function Dashboard() {
   return (
-    <>
-      <TitleBar
-        title={t('title_bar')}
-        description={t('title_bar_description')}
-      />
+    <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
+      <h1 className="mb-8 text-2xl font-bold">Dashboard</h1>
 
       <div className="space-y-8">
         <AccountStatus />
         <GetPro />
         <LicenseForm />
       </div>
-    </>
+    </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <div className="container mx-auto py-8">
+      <Dashboard />
+    </div>
   );
 }

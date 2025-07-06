@@ -1,6 +1,13 @@
 import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
 
+/**
+ * Environment variables with type checking.
+ *
+ * This allows us to catch missing or invalid environment variables at build time
+ * rather than at runtime.
+ */
+
 export const Env = createEnv({
   server: {
     CLERK_SECRET_KEY: z.string().min(1),
@@ -46,3 +53,28 @@ export const Env = createEnv({
     CLERK_WEBHOOK_SECRET: process.env.CLERK_WEBHOOK_SECRET,
   },
 });
+
+/**
+ * Validates that all required environment variables are set.
+ * This function should be called at build time.
+ */
+export function validateEnv() {
+  const requiredServerVars = ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'];
+  const requiredClientVars = ['NEXT_PUBLIC_SUPABASE_URL', 'NEXT_PUBLIC_SUPABASE_ANON_KEY'];
+
+  // Only validate server vars on the server
+  if (typeof window === 'undefined') {
+    for (const key of requiredServerVars) {
+      if (!process.env[key]) {
+        throw new Error(`Missing environment variable: ${key}`);
+      }
+    }
+  }
+
+  // Always validate client vars
+  for (const key of requiredClientVars) {
+    if (!process.env[key]) {
+      throw new Error(`Missing environment variable: ${key}`);
+    }
+  }
+}
