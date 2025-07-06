@@ -225,9 +225,22 @@ function AccountStatus() {
 
 // 内联GetPro组件
 function GetPro() {
+  const { user } = useUser();
+
   const handleSubscribe = () => {
+    // Get user email from Clerk
+    const userEmail = user?.primaryEmailAddress?.emailAddress || '';
+
+    // Base Stripe checkout URL
+    const baseUrl = 'https://buy.stripe.com/test_9B6bIU2Gy0bRdRJd1Y43S02';
+
+    // Append email as a query parameter if available
+    const checkoutUrl = userEmail
+      ? `${baseUrl}?prefilled_email=${encodeURIComponent(userEmail)}`
+      : baseUrl;
+
     // Redirect to Stripe checkout
-    window.location.href = 'https://buy.stripe.com/test_9B6bIU2Gy0bRdRJd1Y43S02';
+    window.location.href = checkoutUrl;
   };
 
   return (
