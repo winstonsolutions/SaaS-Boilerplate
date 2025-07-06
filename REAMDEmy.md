@@ -9,3 +9,6 @@ https://www.svgviewer.dev/
 
 ## change navbar
 /src/templates/Navbar.tsx
+
+## supabase
+Updated the database access to use your existing Supabase client from @/libs/DB instead of Drizzle ORM
