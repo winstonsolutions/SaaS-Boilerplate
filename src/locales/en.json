@@ -1,7 +1,7 @@
 {
   "Index": {
-    "meta_title": "SaaS Template - The perfect SaaS template to build and scale your business with ease.",
-    "meta_description": "A free and open-source landing page template for your SaaS business, built with React, TypeScript, Shadcn UI, and Tailwind CSS."
+    "meta_title": "Pixel Capture - Perfect screenshot tool with pixel-perfect precision.",
+    "meta_description": "Pixel Capture is a powerful browser extension that lets you capture screenshots with custom dimensions and pixel-perfect accuracy. Ideal for designers, developers and content creators."
   },
   "Navbar": {
     "sign_in": "Sign In",
@@ -23,15 +23,20 @@
   },
   "Features": {
     "section_subtitle": "Features",
-    "section_title": "Unlock the Full Potential of the SaaS Template",
-    "section_description": "A free and open-source landing page template for your SaaS business, built with React, TypeScript, Shadcn UI, and Tailwind CSS.",
-    "feature1_title": "Node.js",
-    "feature2_title": "React",
-    "feature3_title": "Tailwind CSS",
-    "feature4_title": "TypeScript",
-    "feature5_title": "Shadcn UI",
-    "feature6_title": "ESLint",
-    "feature_description": "A free and open-source landing page template for your SaaS business, built with React, TypeScript, Shadcn UI, and Tailwind CSS."
+    "section_title": "Unlock the Full Potential of Pixel Capture",
+    "section_description": "Pixel Capture is a powerful browser extension that provides precise screenshot experience.",
+    "feature1_title": "Custom Dimensions",
+    "feature1_description": "Precisely control the width and height of your screenshots, customizing dimensions to your specific needs.",
+    "feature2_title": "Pixel-Perfect Accuracy",
+    "feature2_description": "Ensure every pixel is perfectly accurate, capturing exactly what you need, no more and no less.",
+    "feature3_title": "Fast Capture",
+    "feature3_description": "Capture screen content with just a few clicks, saving your valuable working time.",
+    "feature4_title": "Cloud Storage",
+    "feature4_description": "Automatically save your screenshots to the cloud, easily access and manage all your historical captures.",
+    "feature5_title": "Multiple Formats",
+    "feature5_description": "Support for PNG, JPG, WebP, and PDF export formats to meet different requirements.",
+    "feature6_title": "Multi-Device Sync",
+    "feature6_description": "Synchronize your screenshots across different devices, accessing all your content anywhere, anytime."
   },
   "Pricing": {
     "section_subtitle": "Features",

@@ -26,12 +26,17 @@
     "section_title": "解锁Pixel Capture的全部潜力",
     "section_description": "Pixel Capture是一款功能强大的浏览器扩展，为您提供精确的截图体验。",
     "feature1_title": "自定义尺寸",
+    "feature1_description": "精确控制截图的宽度和高度，按照您的需要自定义尺寸，提高工作效率。",
     "feature2_title": "像素级精确",
+    "feature2_description": "确保每个像素都完美精确，获取您所需的确切内容，不多也不少。",
     "feature3_title": "快速捕获",
+    "feature3_description": "只需点击几下，即可快速捕获屏幕内容，节省宝贵的工作时间。",
     "feature4_title": "云端存储",
-    "feature5_title": "一键分享",
+    "feature4_description": "自动将截图保存到云端，轻松访问和管理您的所有历史截图。",
+    "feature5_title": "多种格式",
+    "feature5_description": "支持PNG、JPG、WebP和PDF等多种导出格式，满足不同场景的需求。",
     "feature6_title": "多设备同步",
-    "feature_description": "Pixel Capture让您轻松捕获和分享屏幕截图，提高工作效率。"
+    "feature6_description": "在不同设备之间同步您的截图，随时随地访问您的所有内容。"
   },
   "Pricing": {
     "section_subtitle": "价格方案",

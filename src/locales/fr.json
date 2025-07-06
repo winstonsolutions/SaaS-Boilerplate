@@ -1,7 +1,7 @@
 {
   "Index": {
-    "meta_title": "SaaS Template - Le template SaaS parfait pour construire et mettre à l'échelle votre entreprise en toute simplicité.",
-    "meta_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS."
+    "meta_title": "Pixel Capture - Outil de capture d'écran parfait avec une précision au pixel près.",
+    "meta_description": "Pixel Capture est une puissante extension de navigateur qui vous permet de capturer des captures d'écran avec des dimensions personnalisées et une précision au pixel près. Idéal pour les designers, les développeurs et les créateurs de contenu."
   },
   "Navbar": {
     "sign_in": "Se connecter",
@@ -23,15 +23,20 @@
   },
   "Features": {
     "section_subtitle": "Fonctionnalités",
-    "section_title": "Débloquer le plein potentiel du SaaS Template",
-    "section_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS.",
-    "feature1_title": "Node.js",
-    "feature2_title": "React",
-    "feature3_title": "Tailwind CSS",
-    "feature4_title": "TypeScript",
-    "feature5_title": "Shadcn UI",
-    "feature6_title": "ESLint",
-    "feature_description": "Un template gratuit et open-source de landing page pour votre entreprise SaaS, construit avec React, TypeScript, Shadcn UI et Tailwind CSS."
+    "section_title": "Débloquez tout le potentiel de Pixel Capture",
+    "section_description": "Pixel Capture est une puissante extension de navigateur qui offre une expérience de capture d'écran précise.",
+    "feature1_title": "Dimensions personnalisées",
+    "feature1_description": "Contrôlez précisément la largeur et la hauteur de vos captures d'écran, en personnalisant les dimensions selon vos besoins spécifiques.",
+    "feature2_title": "Précision au pixel près",
+    "feature2_description": "Assurez-vous que chaque pixel est parfaitement précis, capturant exactement ce dont vous avez besoin, ni plus ni moins.",
+    "feature3_title": "Capture rapide",
+    "feature3_description": "Capturez le contenu de l'écran en quelques clics seulement, économisant votre précieux temps de travail.",
+    "feature4_title": "Stockage cloud",
+    "feature4_description": "Enregistrez automatiquement vos captures d'écran dans le cloud, accédez et gérez facilement toutes vos captures historiques.",
+    "feature5_title": "Formats multiples",
+    "feature5_description": "Prise en charge des formats d'exportation PNG, JPG, WebP et PDF pour répondre à différentes exigences.",
+    "feature6_title": "Synchronisation multi-appareils",
+    "feature6_description": "Synchronisez vos captures d'écran sur différents appareils, en accédant à tout votre contenu n'importe où, n'importe quand."
   },
   "Pricing": {
     "section_subtitle": "Fonctionnalités",
