@@ -55,7 +55,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="/features"
+                  href="/#features"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {t('features')}
@@ -63,7 +63,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/pricing"
+                  href="/#pricing"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {t('pricing')}
@@ -71,18 +71,18 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/docs"
+                  href="/#faq"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  {t('docs')}
+                  {t('faq')}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/faq"
+                  href="/#roadmap"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  {t('faq')}
+                  {t('roadmap')}
                 </Link>
               </li>
             </ul>
@@ -96,7 +96,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="/blog"
+                  href="#"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {t('blog')}
@@ -104,7 +104,7 @@ export const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/community"
+                  href="#"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {t('community')}
