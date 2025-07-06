@@ -27,16 +27,16 @@ export const Navbar = () => {
         )}
       >
         <li>
-          <Link href="/features">{t('features')}</Link>
+          <Link href="/#features" scroll={true}>{t('features')}</Link>
         </li>
         <li>
-          <Link href="/pricing">{t('pricing')}</Link>
+          <Link href="/#pricing" scroll={true}>{t('pricing')}</Link>
         </li>
         <li>
-          <Link href="/faq">{t('faq')}</Link>
+          <Link href="/#faq" scroll={true}>{t('faq')}</Link>
         </li>
         <li>
-          <Link href="/roadmap">{t('roadmap')}</Link>
+          <Link href="/#roadmap" scroll={true}>{t('roadmap')}</Link>
         </li>
         <li>
           <Link href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer">{t('chrome')}</Link>

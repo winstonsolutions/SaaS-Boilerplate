@@ -10,10 +10,11 @@ export const Features = () => {
   return (
     <Background>
       <Section
+        id="features"
         subtitle={t('section_subtitle')}
         title={t('section_title')}
         description={t('section_description')}
-        className="py-20"
+        className="scroll-mt-24 py-20"
       >
         <div className="relative">
           {/* Decorative background elements */}

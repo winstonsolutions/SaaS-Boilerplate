@@ -51,9 +51,11 @@ export const Roadmap = () => {
 
   return (
     <Section
+      id="roadmap"
       subtitle={t('section_subtitle')}
       title={t('section_title')}
       description={t('section_description')}
+      className="scroll-mt-24"
     >
       <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {features.map((feature, index) => (

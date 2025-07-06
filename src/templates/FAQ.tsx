@@ -13,9 +13,11 @@ export const FAQ = () => {
 
   return (
     <Section
+      id="faq"
       subtitle={t('section_subtitle')}
       title={t('section_title')}
       description={t('section_description')}
+      className="scroll-mt-24"
     >
       <Accordion type="multiple" className="w-full">
         <AccordionItem value="item-1">
