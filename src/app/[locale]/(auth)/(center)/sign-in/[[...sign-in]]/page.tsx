@@ -16,7 +16,17 @@ export async function generateMetadata(props: { params: { locale: string } }) {
 }
 
 const SignInPage = (props: { params: { locale: string } }) => (
-  <SignIn path={getI18nPath('/sign-in', props.params.locale)} />
+  <div className="w-full max-w-md">
+    <SignIn
+      path={getI18nPath('/sign-in', props.params.locale)}
+      appearance={{
+        elements: {
+          formButtonPrimary: 'bg-primary hover:bg-primary/90',
+          card: 'shadow-none',
+        },
+      }}
+    />
+  </div>
 );
 
 export default SignInPage;
