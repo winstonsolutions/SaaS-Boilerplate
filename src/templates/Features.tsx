@@ -137,43 +137,6 @@ export const Features = () => {
               {t('feature6_description')}
             </FeatureCard>
           </div>
-
-          {/* Extension-like browser UI showcase */}
-          <div className="mx-auto mt-16 max-w-3xl overflow-hidden rounded-lg border border-border bg-card/80 shadow-xl backdrop-blur-sm">
-            <div className="flex items-center gap-2 border-b border-border bg-card/90 p-3">
-              <div className="flex gap-1.5">
-                <div className="size-3 rounded-full bg-red-400"></div>
-                <div className="size-3 rounded-full bg-yellow-400"></div>
-                <div className="size-3 rounded-full bg-green-400"></div>
-              </div>
-              <div className="flex-1 rounded-md bg-card/50 px-3 py-1.5 text-center text-xs text-muted-foreground">
-                chrome-extension://pixel-capture
-              </div>
-              <div className="size-6 rounded-md bg-purple-100/30 p-0.5">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="stroke-purple-500">
-                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13 12H3" />
-                </svg>
-              </div>
-            </div>
-            <div className="flex h-40 items-center justify-center p-4">
-              <div className="text-center">
-                <div className="mb-3 inline-block size-12 rounded-lg bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 p-3 shadow-md">
-                  <svg
-                    className="stroke-white stroke-2"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M0 0h24v24H0z" stroke="none" />
-                    <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3M12 12l8-4.5M12 12v9M12 12L4 7.5" />
-                  </svg>
-                </div>
-                <p className="text-lg font-medium">{t('section_subtitle')}</p>
-              </div>
-            </div>
-          </div>
         </div>
       </Section>
     </Background>
