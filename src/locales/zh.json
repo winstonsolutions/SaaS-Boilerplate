@@ -80,7 +80,7 @@
     "docs": "文档",
     "blog": "博客",
     "community": "社区",
-    "company": "公司",
+    "developer": "开发者",
     "terms_of_service": "服务条款",
     "privacy_policy": "隐私政策",
     "designed_by": "设计者 <author></author>。",
@@ -89,8 +89,8 @@
     "faq": "常见问题",
     "roadmap": "路线图",
     "resources": "资源",
-    "about": "关于我们",
-    "contact": "联系我们",
+    "about_me": "关于我",
+    "contact": "联系我",
     "all_rights_reserved": "版权所有。"
   },
   "ProtectFallback": {

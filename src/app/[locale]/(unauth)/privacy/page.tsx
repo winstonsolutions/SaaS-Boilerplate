@@ -22,56 +22,54 @@ export default function PrivacyPolicyPage(props: { params: { locale: string } })
           <section className="mb-8">
             <h2 className="mb-4 text-2xl font-semibold">Introduction</h2>
             <p className="mb-4">
-              At Pixel Capture, we respect your privacy and are committed to protecting your personal data.
-              This privacy policy will inform you about how we look after your personal data when you visit
-              our website or use our browser extension and tell you about your privacy rights and how the law protects you.
+              As an independent developer of Pixel Capture, I respect your privacy and am committed to protecting your personal data.
+              This simple privacy policy will inform you about how I look after your personal data when you use my browser extension.
             </p>
             <p>
-              Please read this privacy policy carefully before using our services.
+              Please read this privacy policy carefully before using Pixel Capture.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">Information We Collect</h2>
-            <p className="mb-4">We collect several types of information from and about users of our Services, including:</p>
+            <h2 className="mb-4 text-2xl font-semibold">Information I Collect</h2>
+            <p className="mb-4">I collect only the necessary information to provide you with the Pixel Capture service:</p>
             <ul className="list-disc space-y-2 pl-6">
               <li>
                 <strong>Personal Data:</strong>
                 {' '}
-                Email address, first name, last name (when you create an account).
+                Email address (when you create an account).
               </li>
               <li>
                 <strong>Usage Data:</strong>
                 {' '}
-                Information about how you use our website and extension.
+                Basic information about how you use the extension.
               </li>
               <li>
                 <strong>Screenshot Data:</strong>
                 {' '}
-                The screenshots you capture using our extension, which may include
-                personal or sensitive information depending on what you capture.
-              </li>
-              <li>
-                <strong>Technical Data:</strong>
-                {' '}
-                Internet protocol (IP) address, browser type and version, time zone setting,
-                browser plug-in types and versions, operating system and platform.
+                The screenshots you capture using the extension, which are stored on your account if you choose to save them.
               </li>
             </ul>
           </section>
 
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">How We Use Your Information</h2>
-            <p className="mb-4">We use your information for the following purposes:</p>
+            <h2 className="mb-4 text-2xl font-semibold">How I Use Your Information</h2>
+            <p className="mb-4">I use your information only for the following essential purposes:</p>
             <ul className="list-disc space-y-2 pl-6">
-              <li>To provide and maintain our services</li>
-              <li>To notify you about changes to our services</li>
-              <li>To allow you to participate in interactive features when you choose to do so</li>
-              <li>To provide customer support</li>
-              <li>To gather analysis or valuable information to improve our services</li>
-              <li>To monitor the usage of our services</li>
-              <li>To detect, prevent and address technical issues</li>
+              <li>To provide and maintain Pixel Capture</li>
+              <li>To notify you about important changes or updates</li>
+              <li>To provide user support</li>
+              <li>To improve the extension based on usage patterns</li>
             </ul>
+          </section>
+
+          <section className="mb-8">
+            <h2 className="mb-4 text-2xl font-semibold">Data Storage and Security</h2>
+            <p className="mb-4">
+              As a solo developer, I use reliable third-party services to store your data. Your screenshots and account
+              information are stored securely, with industry-standard encryption. I do not share your data with
+              any third parties for marketing purposes.
+            </p>
           </section>
 
           <section className="mb-8">
@@ -80,30 +78,22 @@ export default function PrivacyPolicyPage(props: { params: { locale: string } })
               <AccordionItem value="item-1">
                 <AccordionTrigger>How secure are my screenshots?</AccordionTrigger>
                 <AccordionContent>
-                  Your screenshots are stored securely in our cloud storage with encryption both in transit
-                  and at rest. We employ industry-standard security measures to protect your data.
+                  Your screenshots are stored securely with encryption both in transit and at rest. I use reliable
+                  cloud hosting providers with industry-standard security measures.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
                 <AccordionTrigger>Do you share my data with third parties?</AccordionTrigger>
                 <AccordionContent>
-                  We do not sell your personal data. We may share data with service providers who help us deliver
-                  our services, but these providers are bound by strict confidentiality agreements.
+                  I do not sell or share your personal data for marketing purposes. I only use third-party services
+                  necessary to provide the Pixel Capture functionality (like cloud storage and authentication).
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
                 <AccordionTrigger>How long do you retain my data?</AccordionTrigger>
                 <AccordionContent>
-                  We retain your account information for as long as you maintain an active account.
+                  I retain your account information for as long as you maintain an active account.
                   Screenshots are stored until you delete them or close your account.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-4">
-                <AccordionTrigger>What are my privacy rights?</AccordionTrigger>
-                <AccordionContent>
-                  You have the right to access, correct, update, or request deletion of your personal information.
-                  You can also object to processing of your personal data or request that we restrict processing
-                  in certain circumstances.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -112,22 +102,18 @@ export default function PrivacyPolicyPage(props: { params: { locale: string } })
           <section className="mb-8">
             <h2 className="mb-4 text-2xl font-semibold">Changes to This Privacy Policy</h2>
             <p className="mb-4">
-              We may update our Privacy Policy from time to time. We will notify you of any changes by
-              posting the new Privacy Policy on this page and updating the "Last updated" date.
-            </p>
-            <p>
-              You are advised to review this Privacy Policy periodically for any changes. Changes to this
-              Privacy Policy are effective when they are posted on this page.
+              I may update this Privacy Policy from time to time. I will notify you of any changes by
+              posting the new Privacy Policy on the website and updating the "Last updated" date.
             </p>
           </section>
 
           <section className="mb-8">
-            <h2 className="mb-4 text-2xl font-semibold">Contact Us</h2>
+            <h2 className="mb-4 text-2xl font-semibold">Contact Me</h2>
             <p>
-              If you have any questions about this Privacy Policy, please contact us at
+              If you have any questions about this Privacy Policy, please contact me at
               {' '}
-              <a href="mailto:privacy@pixelcapture.app" className="text-primary hover:underline">
-                privacy@pixelcapture.app
+              <a href="mailto:alex@pixelcapture.app" className="text-primary hover:underline">
+                alex@pixelcapture.app
               </a>
             </p>
           </section>

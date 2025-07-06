@@ -80,7 +80,7 @@
     "docs": "Docs",
     "blog": "Blog",
     "community": "Communauté",
-    "company": "Entreprise",
+    "developer": "Développeur",
     "terms_of_service": "Conditions d'utilisation",
     "privacy_policy": "Politique de confidentialité",
     "designed_by": "Designé by <author></author>.",
@@ -89,7 +89,7 @@
     "faq": "FAQ",
     "roadmap": "Roadmap",
     "resources": "Ressources",
-    "about": "À propos",
+    "about_me": "À propos de moi",
     "contact": "Contact",
     "all_rights_reserved": "Tous droits réservés."
   },

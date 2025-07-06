@@ -113,10 +113,10 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Company Links */}
+          {/* Developer Links */}
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">
-              {t('company')}
+              {t('developer')}
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -124,7 +124,7 @@ export const Footer = () => {
                   href="/about"
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  {t('about')}
+                  {t('about_me')}
                 </Link>
               </li>
               <li>
