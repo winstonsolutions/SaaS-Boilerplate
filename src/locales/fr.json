@@ -59,8 +59,21 @@
     "next_renew_date": "Votre abonnement sera renouvelé le {date}"
   },
   "FAQ": {
-    "question": "Lorem ipsum dolor sit amet, consectetur adipiscing elit?",
-    "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam aliquam enim dui, id consequat turpis ullamcorper ac. Mauris id quam dolor. Nullam eu egestas turpis. Proin risus elit, sollicitudin in mi a, accumsan euismod turpis. In euismod mi sed diam tristique hendrerit."
+    "section_subtitle": "FAQ",
+    "section_title": "Questions Fréquemment Posées",
+    "section_description": "Trouvez des réponses aux questions courantes sur Pixel Capture.",
+    "question1": "Qu'est-ce que Pixel Capture et comment fonctionne-t-il ?",
+    "answer1": "Pixel Capture est une extension de navigateur qui vous permet de prendre des captures d'écran précises avec des dimensions personnalisées. Elle fonctionne en superposant un outil de mesure sur votre écran, vous permettant de sélectionner des zones exactes à capturer, puis en proposant diverses options d'exportation, notamment aux formats PNG, JPG, WebP et PDF.",
+    "question2": "Qu'est-ce qui différencie Pixel Capture des outils de capture d'écran ordinaires ?",
+    "answer2": "Contrairement aux outils de capture d'écran standard, Pixel Capture offre une précision au pixel près avec des dimensions personnalisables, ce qui le rend idéal pour les designers et les développeurs qui ont besoin de mesures exactes. Il propose également un stockage cloud, une synchronisation multi-appareils et prend en charge plusieurs formats d'exportation, y compris le PDF.",
+    "question3": "Dois-je créer un compte pour utiliser Pixel Capture ?",
+    "answer3": "Les fonctionnalités de base de Pixel Capture peuvent être utilisées sans compte. Cependant, pour accéder au stockage cloud, à la synchronisation entre appareils et aux capacités d'exportation PDF, vous devrez créer un compte et vous abonner à notre forfait Pro.",
+    "question4": "Puis-je utiliser Pixel Capture sur plusieurs navigateurs ?",
+    "answer4": "Actuellement, Pixel Capture est disponible en tant qu'extension Chrome. Nous travaillons à la prise en charge d'autres navigateurs comme Firefox, Safari et Edge dans les futures mises à jour. Avec un compte Pro, vous pouvez synchroniser vos captures d'écran sur différents appareils utilisant le même navigateur.",
+    "question5": "Quelle est la différence entre les forfaits Gratuit et Pro ?",
+    "answer5": "Le forfait Gratuit vous donne accès aux fonctionnalités de capture d'écran de base avec les formats PNG, JPG et WebP, ainsi qu'à 2 Go de stockage. Le forfait Pro (1,99 $/mois) ajoute la capacité d'exportation PDF, augmente le stockage à 10 Go et fournit un support par e-mail prioritaire.",
+    "question6": "Mes captures d'écran sont-elles sécurisées dans le cloud ?",
+    "answer6": "Nous prenons la sécurité au sérieux. Toutes les captures d'écran stockées dans notre cloud sont cryptées à la fois en transit et au repos. Nous utilisons des pratiques de sécurité standard de l'industrie, et vos données ne sont jamais partagées avec des tiers sans votre permission explicite."
   },
   "CTA": {
     "title": "Vous êtes prêt?",

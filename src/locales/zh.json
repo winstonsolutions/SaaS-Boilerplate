@@ -59,8 +59,21 @@
     "next_renew_date": "您的订阅将于 {date} 续订"
   },
   "FAQ": {
-    "question": "Pixel Capture有哪些主要功能？",
-    "answer": "Pixel Capture提供精确的屏幕截图功能，包括自定义尺寸、像素级精确度、快速捕获、云端存储、多种格式和多设备同步等功能。"
+    "section_subtitle": "常见问题",
+    "section_title": "常见问题解答",
+    "section_description": "查找关于Pixel Capture的常见问题答案。",
+    "question1": "Pixel Capture是什么，它是如何工作的？",
+    "answer1": "Pixel Capture是一款浏览器扩展，允许您以自定义尺寸进行精确截图。它通过在屏幕上叠加测量工具，让您选择确切的捕获区域，然后提供各种导出选项，包括PNG、JPG、WebP和PDF格式。",
+    "question2": "Pixel Capture与普通截图工具有何不同？",
+    "answer2": "与标准截图工具不同，Pixel Capture提供像素级精确度和可自定义尺寸，非常适合需要精确测量的设计师和开发人员。它还提供云存储、多设备同步，并支持包括PDF在内的多种导出格式。",
+    "question3": "我需要创建账户才能使用Pixel Capture吗？",
+    "answer3": "Pixel Capture的基本功能无需账户即可使用。但是，要访问云存储、跨设备同步和PDF导出功能，您需要创建账户并订阅我们的专业版计划。",
+    "question4": "我可以在多个浏览器上使用Pixel Capture吗？",
+    "answer4": "目前，Pixel Capture作为Chrome扩展提供。我们正在努力在未来的更新中支持Firefox、Safari和Edge等其他浏览器。使用专业版账户，您可以在使用相同浏览器的不同设备之间同步截图。",
+    "question5": "免费版和专业版有什么区别？",
+    "answer5": "免费版让您可以使用基本的截图功能，支持PNG、JPG和WebP格式，并提供2GB存储空间。专业版（每月1.99美元）增加了PDF导出功能，将存储空间增加到10GB，并提供优先电子邮件支持。",
+    "question6": "我的截图在云端安全吗？",
+    "answer6": "我们非常重视安全性。存储在我们云端的所有截图在传输和存储过程中都会被加密。我们使用行业标准的安全实践，未经您的明确许可，您的数据绝不会与第三方共享。"
   },
   "CTA": {
     "title": "准备好了吗？",
