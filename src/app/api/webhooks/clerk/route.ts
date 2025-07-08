@@ -74,6 +74,7 @@ export async function POST(req: NextRequest) {
           email: primaryEmail.email_address,
           first_name: first_name || undefined,
           last_name: last_name || undefined,
+          trial_started_at: new Date(), // 添加试用开始时间
         });
 
         logger.info({ userId: id, supabaseId: user?.id || 'unknown' }, 'User created');
@@ -105,6 +106,7 @@ export async function POST(req: NextRequest) {
             email: primaryEmail.email_address,
             first_name: first_name || undefined,
             last_name: last_name || undefined,
+            trial_started_at: new Date(), // 添加试用开始时间
           });
           logger.info({ userId: id, supabaseId: user?.id || 'unknown' }, 'User created on update');
           return NextResponse.json({ message: 'User created on update', userId: user?.id });
