@@ -65,6 +65,13 @@ export const DevUserInfo = () => {
             {' '}
             {user.updatedAt ? new Date(user.updatedAt).toLocaleString() : 'N/A'}
           </div>
+          <div>
+            <strong>Trial Started:</strong>
+            {' '}
+            {user.publicMetadata?.trial_started_at
+              ? new Date(user.publicMetadata.trial_started_at as string).toLocaleString()
+              : 'N/A'}
+          </div>
           {user.publicMetadata && (
             <div>
               <strong>Public Metadata:</strong>

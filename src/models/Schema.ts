@@ -1,9 +1,9 @@
-import {
-  pgTable,
-  serial,
-  text,
-  timestamp,
-} from 'drizzle-orm/pg-core';
+// import {
+//   pgTable,
+//   serial,
+//   text,
+//   timestamp,
+// } from 'drizzle-orm/pg-core';
 
 // This file defines the structure of your database tables using the Drizzle ORM.
 
@@ -14,15 +14,3 @@ import {
 // The generated migration file will reflect your schema changes.
 // The migration is automatically applied during the next database interaction,
 // so there's no need to run it manually or restart the Next.js server.
-
-export const todoSchema = pgTable('todo', {
-  id: serial('id').primaryKey(),
-  ownerId: text('owner_id').notNull(),
-  title: text('title').notNull(),
-  message: text('message').notNull(),
-  updatedAt: timestamp('updated_at', { mode: 'date' })
-    .defaultNow()
-    .$onUpdate(() => new Date())
-    .notNull(),
-  createdAt: timestamp('created_at', { mode: 'date' }).defaultNow().notNull(),
-});
