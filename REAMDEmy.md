@@ -19,6 +19,17 @@ Updated the database access to use your existing Supabase client from @/libs/DB 
 # 从supabase查询用户数据
 /home/wentao/wslIndependentDevelopment/pixel-capture/src/app/[locale]/api/user/trial/route.ts
 
+# installing the Supabase CLI ,This runs the latest version without installing it globally.
+npx supabase@latest
+
+# how to use
+npx supabase@latest init
+npx supabase@latest start
+npx supabase@latest status
+npx supabase@latest -h
+
+ SUPABASE_ACCESS_TOKEN=sbp_0066c7c7212ddf1bbb913cafc55747d7cb8674db npx supabase@latest gen types typescript --project-id esnsgaplszedoxxjwnbf > src/types/supabase.ts
+
 ## user.primaryEmailAddress?.emailAddress为什么是这样获取邮箱，users表中是email字段啊，不是应该user.email吗
 
 You're noticing an important distinction between two different user objects in your code:

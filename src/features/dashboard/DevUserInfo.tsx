@@ -1,11 +1,42 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-import { useState } from 'react';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export const DevUserInfo = () => {
   const { user, isLoaded, isSignedIn } = useUser();
+  const params = useParams();
+  const locale = params.locale as string;
   const [expanded, setExpanded] = useState(false);
+  const [dbUserInfo, setDbUserInfo] = useState<{
+    trialStartedAt: string | null;
+    user: {
+      id: string;
+      email: string;
+      trial_started_at: string | null;
+      [key: string]: any;
+    } | null;
+  } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch user data from the database
+  useEffect(() => {
+    if (isSignedIn) {
+      setIsLoading(true);
+      fetch(`/${locale}/api/user/trial`)
+        .then(res => res.json())
+        .then((data) => {
+          setDbUserInfo(data);
+        })
+        .catch((err) => {
+          console.error('Failed to fetch user data:', err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [isSignedIn, locale]);
 
   // Only show in development environment
   if (process.env.NODE_ENV !== 'development') {
@@ -68,15 +99,25 @@ export const DevUserInfo = () => {
           <div>
             <strong>Trial Started:</strong>
             {' '}
-            {user.publicMetadata?.trial_started_at
-              ? new Date(user.publicMetadata.trial_started_at as string).toLocaleString()
-              : 'N/A'}
+            {isLoading
+              ? 'Loading...'
+              : dbUserInfo?.user?.trial_started_at
+                ? new Date(dbUserInfo.user.trial_started_at).toLocaleString()
+                : 'N/A'}
           </div>
           {user.publicMetadata && (
             <div>
               <strong>Public Metadata:</strong>
               <pre className="mt-1 max-h-40 overflow-auto rounded bg-yellow-100 p-2 text-xs">
                 {JSON.stringify(user.publicMetadata, null, 2)}
+              </pre>
+            </div>
+          )}
+          {dbUserInfo?.user && (
+            <div>
+              <strong>Database User:</strong>
+              <pre className="mt-1 max-h-40 overflow-auto rounded bg-yellow-100 p-2 text-xs">
+                {JSON.stringify(dbUserInfo.user, null, 2)}
               </pre>
             </div>
           )}
