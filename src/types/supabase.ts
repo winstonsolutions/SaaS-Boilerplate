@@ -22,6 +22,9 @@ export type Database = {
           expires_at: string | null;
           id: string;
           license_key: string;
+          plan_type: string | null;
+          price: number | null;
+          subscription_id: string | null;
           updated_at: string | null;
           user_id: string | null;
         };
@@ -32,6 +35,9 @@ export type Database = {
           expires_at?: string | null;
           id?: string;
           license_key: string;
+          plan_type?: string | null;
+          price?: number | null;
+          subscription_id?: string | null;
           updated_at?: string | null;
           user_id?: string | null;
         };
@@ -42,6 +48,9 @@ export type Database = {
           expires_at?: string | null;
           id?: string;
           license_key?: string;
+          plan_type?: string | null;
+          price?: number | null;
+          subscription_id?: string | null;
           updated_at?: string | null;
           user_id?: string | null;
         };
@@ -88,6 +97,54 @@ export type Database = {
         };
         Relationships: [];
       };
+      payments: {
+        Row: {
+          amount: number | null;
+          currency: string | null;
+          id: string;
+          license_id: string | null;
+          payment_date: string | null;
+          payment_id: string | null;
+          status: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          amount?: number | null;
+          currency?: string | null;
+          id?: string;
+          license_id?: string | null;
+          payment_date?: string | null;
+          payment_id?: string | null;
+          status?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          amount?: number | null;
+          currency?: string | null;
+          id?: string;
+          license_id?: string | null;
+          payment_date?: string | null;
+          payment_id?: string | null;
+          status?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'payments_license_id_fkey';
+            columns: ['license_id'];
+            isOneToOne: false;
+            referencedRelation: 'licenses';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'payments_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       users: {
         Row: {
           clerk_id: string;
@@ -96,6 +153,9 @@ export type Database = {
           first_name: string | null;
           id: string;
           last_name: string | null;
+          subscription_end_at: string | null;
+          subscription_start_at: string | null;
+          subscription_status: string | null;
           trial_started_at: string | null;
           updated_at: string | null;
         };
@@ -106,6 +166,9 @@ export type Database = {
           first_name?: string | null;
           id?: string;
           last_name?: string | null;
+          subscription_end_at?: string | null;
+          subscription_start_at?: string | null;
+          subscription_status?: string | null;
           trial_started_at?: string | null;
           updated_at?: string | null;
         };
@@ -116,6 +179,9 @@ export type Database = {
           first_name?: string | null;
           id?: string;
           last_name?: string | null;
+          subscription_end_at?: string | null;
+          subscription_start_at?: string | null;
+          subscription_status?: string | null;
           trial_started_at?: string | null;
           updated_at?: string | null;
         };
