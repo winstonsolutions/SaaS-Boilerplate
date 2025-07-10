@@ -21,7 +21,7 @@ export const DevUserInfo = () => {
   } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // 延迟加载用户数据，减少初始渲染时间
+  // 优化后的数据加载逻辑，移除不必要的setTimeout
   useEffect(() => {
     let isMounted = true;
 
@@ -29,23 +29,22 @@ export const DevUserInfo = () => {
     if (isSignedIn && expanded) {
       setIsLoading(true);
 
-      setTimeout(() => {
-        fetch(`/${locale}/api/user/trial`)
-          .then(res => res.json())
-          .then((data) => {
-            if (isMounted) {
-              setDbUserInfo(data);
-            }
-          })
-          .catch((err) => {
-            console.error('Failed to fetch user data:', err);
-          })
-          .finally(() => {
-            if (isMounted) {
-              setIsLoading(false);
-            }
-          });
-      }, 100);
+      // 直接进行请求，不需要延迟
+      fetch(`/${locale}/api/user/trial`)
+        .then(res => res.json())
+        .then((data) => {
+          if (isMounted) {
+            setDbUserInfo(data);
+          }
+        })
+        .catch((err) => {
+          console.error('Failed to fetch user data:', err);
+        })
+        .finally(() => {
+          if (isMounted) {
+            setIsLoading(false);
+          }
+        });
     }
 
     return () => {
