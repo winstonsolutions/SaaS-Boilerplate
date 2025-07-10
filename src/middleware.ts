@@ -21,9 +21,9 @@ const isProtectedRoute = createRouteMatcher([
   '/:locale/dashboard(.*)',
   '/onboarding(.*)',
   '/:locale/onboarding(.*)',
-  // 排除webhook和同步用户API路径
-  '/((?!api/webhooks|api/sync-users).*)api(.*)',
-  '/:locale/((?!api/webhooks|api/sync-users).*)api(.*)',
+  // 排除webhook、同步用户API和测试API路径
+  '/((?!api/webhooks|api/sync-users|api/test-email|api/debug-email).*)api(.*)',
+  '/:locale/((?!api/webhooks|api/sync-users|api/test-email|api/debug-email).*)api(.*)',
 ]);
 
 // 此middleware确保只有已登录用户可以访问应用
@@ -32,10 +32,12 @@ export default function middleware(
   request: NextRequest,
   event: NextFetchEvent,
 ) {
-  // 排除webhook路径和同步用户API
+  // 排除webhook路径、同步用户API和测试API
   if (
     request.nextUrl.pathname.includes('/api/webhooks')
     || request.nextUrl.pathname.includes('/api/sync-users')
+    || request.nextUrl.pathname.includes('/api/test-email')
+    || request.nextUrl.pathname.includes('/api/debug-email')
   ) {
     return NextResponse.next();
   }

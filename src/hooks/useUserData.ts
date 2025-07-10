@@ -11,7 +11,7 @@ type UseUserDataResult = {
 
 // 简单的内存缓存
 const cache = new Map<string, { data: any; timestamp: number }>();
-const CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
+const CACHE_DURATION = 60 * 1000; // Reduce to 1 minute from 5 minutes to ensure fresher data
 
 // 缓存助手函数
 function getCachedData(key: string) {
@@ -24,6 +24,11 @@ function getCachedData(key: string) {
 
 function setCachedData(key: string, data: any) {
   cache.set(key, { data, timestamp: Date.now() });
+}
+
+// Clear specific cache entry
+function clearCachedData(key: string) {
+  cache.delete(key);
 }
 
 /**
@@ -48,6 +53,9 @@ export function useUserData(
         setIsLoading(false);
         return;
       }
+    } else {
+      // Clear cache when explicitly requesting fresh data
+      clearCachedData(cacheKey);
     }
 
     try {
@@ -78,7 +86,7 @@ export function useUserData(
   }, [locale]);
 
   const refetch = useCallback(() => {
-    fetchUserData(true);
+    fetchUserData(true); // Always skip cache when manually refetching
   }, [fetchUserData]);
 
   useEffect(() => {

@@ -63,6 +63,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         if (session.mode === 'subscription') {
           // 订阅模式 - 记录checkout完成，但实际处理在customer.subscription.created中进行
           logger.info({ sessionId: session.id, subscriptionId: session.subscription }, '订阅支付成功，等待subscription.created事件');
+          // 订阅模式不在这里处理，直接返回
+          logger.info({ sessionId: session.id }, '订阅支付记录完成，等待subscription事件处理');
+          break;
         } else {
           // 一次性支付模式
           const success = await StripeService.handlePaymentSucceeded(event);

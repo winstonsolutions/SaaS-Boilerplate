@@ -264,3 +264,75 @@ Pro功能组件增强 (src/features/dashboard/ProFeatures.tsx)
 
 # devuserinfo
  src/features/dashboard/DashboardContent.tsx 显示devuserinfo组件
+
+## Stripe Webhook处理最佳实践
+
+在实现订阅系统时，Stripe Webhook的正确处理至关重要。以下是处理Stripe Webhook的最佳实践和建议：
+
+### Webhook事件类型及职责分工
+
+应监听以下关键事件，并明确各自职责：
+
+1. **checkout.session.completed**
+   - 记录初始支付意图
+   - 可选：更新用户状态为"支付处理中"
+   - 不执行完整处理，避免与subscription.created重复
+
+2. **customer.subscription.created**
+   - 处理首次订阅
+   - 创建初始license
+   - 记录首次payment
+   - 发送激活邮件
+   - 更新订阅结束日期
+
+3. **invoice.paid**
+   - 专门处理续费
+   - 更新订阅结束日期
+   - 记录续费payment
+   - 发送续费通知邮件
+
+4. **customer.subscription.updated**
+   - 更新订阅状态和结束日期
+   - 处理升级/降级/暂停/恢复等状态变更
+   - 不创建新license或payment记录
+
+5. **customer.subscription.deleted**
+   - 将用户状态改为expired或free
+   - 将相关license设为inactive
+   - 可选：发送订阅终止通知
+
+### 避免重复处理的策略
+
+1. **数据库唯一约束**
+   - 为payments表的user_id + payment_id添加唯一索引
+   - 为licenses表添加适当的唯一约束
+
+2. **事件处理前检查**
+   - 在处理事件前检查是否已存在相关记录
+   - 实现幂等性处理，确保多次处理同一事件不会产生副作用
+
+3. **明确的职责分工**
+   - 每个事件处理器只负责特定操作，避免功能重叠
+   - 使用日志记录每个事件的处理状态
+
+### 实现建议
+
+1. **错误处理和重试机制**
+   - 添加详细的错误日志
+   - 对关键操作实现重试机制
+   - 返回适当的HTTP状态码，避免Stripe重复发送事件
+
+2. **事务处理**
+   - 使用数据库事务确保操作的原子性
+   - 防止部分操作成功而导致数据不一致
+
+3. **安全验证**
+   - 始终验证webhook签名
+   - 使用环境变量存储webhook密钥
+
+4. **测试策略**
+   - 使用Stripe CLI模拟webhook事件进行测试
+   - 创建专门的测试环境和测试账户
+   - 编写自动化测试确保事件处理的正确性
+
+通过遵循这些最佳实践，可以构建一个健壮的订阅管理系统，能够正确处理整个订阅生命周期的各个阶段，避免重复处理和数据不一致问题。

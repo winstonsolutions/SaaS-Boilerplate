@@ -131,8 +131,8 @@ export function SubscriptionStatusCard({ userStatus }: SubscriptionStatusProps) 
         <div className="p-6">
           <div className="mb-2 flex items-center justify-between">
             <h3 className="text-lg font-semibold">Account Status</h3>
-            <Badge variant="outline" className="bg-blue-50 font-medium text-blue-600">
-              FREE
+            <Badge variant="outline" className={`font-medium ${userStatus.accountStatus === 'pro' ? 'bg-green-50 text-green-600' : 'bg-blue-50 text-blue-600'}`}>
+              {userStatus.accountStatus === 'pro' ? 'PRO' : 'FREE'}
             </Badge>
           </div>
 
@@ -144,23 +144,31 @@ export function SubscriptionStatusCard({ userStatus }: SubscriptionStatusProps) 
               )
             : (
                 <>
-                  <p className="font-medium">Pro Trial Active</p>
+                  <p className="font-medium">
+                    {userStatus.accountStatus === 'pro' ? 'Pro Active' : 'Pro Trial Active'}
+                  </p>
                   {remaining && (
                     <p className="text-sm font-medium text-purple-600">{remaining}</p>
                   )}
 
-                  <div className="my-2 h-2 w-full rounded-full bg-gray-200">
-                    <div
-                      className="h-2 rounded-full bg-purple-600 transition-all duration-300 ease-in-out"
-                      style={{
-                        width: `${progressPercentage}%`,
-                      }}
-                    >
-                    </div>
-                  </div>
+                  {userStatus.accountStatus !== 'pro'
+                    ? (
+                        <div className="my-2 h-2 w-full rounded-full bg-gray-200">
+                          <div
+                            className="h-2 rounded-full bg-purple-600 transition-all duration-300 ease-in-out"
+                            style={{
+                              width: `${progressPercentage}%`,
+                            }}
+                          >
+                          </div>
+                        </div>
+                      )
+                    : null}
 
                   <p className="text-sm text-gray-600">
-                    Try all Pro features for 7 days
+                    {userStatus.accountStatus === 'pro'
+                      ? 'All Pro features are unlocked'
+                      : 'Try all Pro features for 7 days'}
                   </p>
                 </>
               )}
@@ -184,17 +192,19 @@ export function SubscriptionStatusCard({ userStatus }: SubscriptionStatusProps) 
             </div>
           </div>
 
-          <div className="mt-4">
-            <Button
-              className="w-full"
-              variant="outline"
-              onClick={handleDirectSubscribe}
-              disabled={isLoading}
-            >
-              {isLoading ? '处理中...' : 'Upgrade Now'}
-            </Button>
-            {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
-          </div>
+          {userStatus.accountStatus !== 'pro' && (
+            <div className="mt-4">
+              <Button
+                className="w-full"
+                variant="outline"
+                onClick={handleDirectSubscribe}
+                disabled={isLoading}
+              >
+                {isLoading ? '处理中...' : 'Upgrade Now'}
+              </Button>
+              {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

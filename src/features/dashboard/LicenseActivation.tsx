@@ -14,9 +14,14 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { useUserData } from '@/hooks/useUserData';
 import { logger } from '@/libs/Logger';
 
-export function LicenseActivation() {
+type LicenseActivationProps = {
+  onActivated?: () => void;
+};
+
+export function LicenseActivation({ onActivated }: LicenseActivationProps) {
   const [licenseKey, setLicenseKey] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPurchasing, setIsPurchasing] = useState(false);
@@ -25,6 +30,7 @@ export function LicenseActivation() {
   const [success, setSuccess] = useState('');
   const router = useRouter();
   const { isSignedIn } = useUser();
+  const { refetch } = useUserData(''); // Get the refetch function from useUserData hook
 
   const handleActivate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +64,15 @@ export function LicenseActivation() {
       setSuccess('License activated successfully!');
       setLicenseKey('');
 
-      // Refresh page after a short delay to show new status
+      // Force refresh user data immediately to update UI
+      refetch();
+
+      // Call the callback if provided
+      if (onActivated) {
+        onActivated();
+      }
+
+      // Refresh page after a short delay to ensure all components update
       setTimeout(() => {
         router.refresh();
       }, 2000);
@@ -116,11 +130,9 @@ export function LicenseActivation() {
   // Format license key, add hyphens
   const formatLicenseKey = (key: string) => {
     // Remove all non-alphanumeric characters
-    let cleaned = key.replace(/[^A-Z0-9]/gi, '').toUpperCase();
+    const cleaned = key.replace(/[^A-Z0-9]/gi, '').toUpperCase();
 
-    // Limit length to maximum 20 characters
-    cleaned = cleaned.substring(0, 20);
-
+    // Remove the character limit to support longer license keys
     // If starts with PDFPRO, maintain format
     if (cleaned.startsWith('PDFPRO') && cleaned.length > 6) {
       let formatted = 'PDFPRO';
@@ -163,11 +175,11 @@ export function LicenseActivation() {
               type="text"
               value={licenseKey}
               onChange={handleKeyChange}
-              placeholder="PDFPRO-XXXX-XXXX-XXXX"
+              placeholder="PDFPRO-XXXX-XXXX-XXXX-XXXX"
               className="font-mono"
             />
             <p className="text-xs text-gray-500">
-              License key format: PDFPRO-XXXX-XXXX-XXXX
+              License key format: PDFPRO-XXXX-XXXX-XXXX-XXXX
             </p>
 
             {/* 移除始终显示的错误信息 */}

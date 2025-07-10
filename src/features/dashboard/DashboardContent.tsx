@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { DevUserInfo } from '@/features/dashboard/DevUserInfo';
 import { LicenseActivation } from '@/features/dashboard/LicenseActivation';
@@ -55,8 +55,16 @@ type DashboardContentProps = {
 export function DashboardContent({ isPaymentSuccess, initialUserStatus }: DashboardContentProps) {
   const params = useParams();
   const locale = params.locale as string;
-  const { userStatus, isLoading, error } = useUserData(locale, initialUserStatus);
+  const { userStatus, isLoading, error, refetch } = useUserData(locale, initialUserStatus);
   const { markStart, markEnd } = usePerformance('DashboardContent');
+
+  // Create a refresh function to pass to children
+  const refreshUserStatus = useCallback(() => {
+    refetch();
+  }, [refetch]);
+
+  // Create a unique key for components based on status
+  const statusKey = userStatus ? `status-${userStatus.accountStatus}-${Date.now()}` : 'loading';
 
   // 性能监控
   React.useEffect(() => {
@@ -85,6 +93,12 @@ export function DashboardContent({ isPaymentSuccess, initialUserStatus }: Dashbo
       {/* DevUserInfo 组件 - 只在开发环境显示 */}
       <DevUserInfo />
 
+      {/* 简单API测试 */}
+      {/* <SimpleEmailTest /> */}
+
+      {/* 邮件测试面板 - 只在开发环境显示 */}
+      {/* <EmailTestPanel /> */}
+
       {/* 支付成功通知 */}
       {isPaymentSuccess && (
         <div className="mb-6">
@@ -100,14 +114,14 @@ export function DashboardContent({ isPaymentSuccess, initialUserStatus }: Dashbo
         : (
             <>
               {userStatus && (
-                <div className="mb-6">
+                <div className="mb-6" key={statusKey}>
                   <SubscriptionStatusCard userStatus={userStatus} />
                 </div>
               )}
 
-              {userStatus && userStatus.accountStatus !== 'pro' && (
+              {userStatus && (
                 <div className="mb-6">
-                  <LicenseActivation />
+                  <LicenseActivation onActivated={refreshUserStatus} />
                 </div>
               )}
             </>
