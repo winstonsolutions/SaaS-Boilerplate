@@ -12,7 +12,10 @@ export default async function DashboardPage({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   // 获取查询参数，如payment=success
-  const isPaymentSuccess = searchParams.payment === 'success';
+  // 支持两种情况: payment=success 或 payment=success?session_id=xxx
+  const paymentParam = searchParams.payment;
+  const isPaymentSuccess = typeof paymentParam === 'string'
+    && (paymentParam === 'success' || paymentParam.startsWith('success'));
 
   // 服务端预加载用户状态数据
   let initialUserStatus = null;
