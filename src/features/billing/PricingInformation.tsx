@@ -4,6 +4,22 @@ import { PricingCard } from '@/features/billing/PricingCard';
 import { PricingFeature } from '@/features/billing/PricingFeature';
 import { PLAN_ID, PricingPlanList } from '@/utils/AppConfig';
 
+// 定义features对象类型
+type FeatureObject = {
+  teamMember?: number;
+  website?: number;
+  storage?: number;
+  transfer?: number;
+};
+
+// 辅助函数：安全地获取feature值
+function getFeatureValue(features: any, key: keyof FeatureObject): number {
+  if (features && typeof features === 'object' && !Array.isArray(features) && key in features) {
+    return features[key] || 0;
+  }
+  return 0;
+}
+
 export const PricingInformation = (props: {
   buttonList: Record<string, React.ReactNode>;
 }) => {
@@ -25,13 +41,13 @@ export const PricingInformation = (props: {
 
           <PricingFeature>
             {t('feature_storage', {
-              number: plan.features.storage,
+              number: getFeatureValue(plan.features, 'storage'),
             })}
           </PricingFeature>
 
           <PricingFeature>
             {t('feature_transfer', {
-              number: plan.features.transfer,
+              number: getFeatureValue(plan.features, 'transfer'),
             })}
           </PricingFeature>
 

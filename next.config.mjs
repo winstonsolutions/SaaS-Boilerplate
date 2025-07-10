@@ -27,6 +27,28 @@ export default withSentryConfig(
       experimental: {
         serverComponentsExternalPackages: ['@electric-sql/pglite'],
       },
+      webpack: (config, { isServer }) => {
+        if (!isServer) {
+          // Don't resolve 'fs' module on the client to prevent this error on build:
+          // Module not found: Can't resolve 'fs'
+          config.resolve.fallback = {
+            fs: false,
+            net: false,
+            tls: false,
+            worker_threads: false,
+            child_process: false,
+            dns: false,
+            os: false,
+            path: false,
+            http: false,
+            https: false,
+            stream: false,
+            crypto: false,
+            zlib: false,
+          };
+        }
+        return config;
+      },
     }),
   ),
   {

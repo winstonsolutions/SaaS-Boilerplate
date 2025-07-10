@@ -4,6 +4,7 @@ import { useUser } from '@clerk/nextjs';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+// 简化版本的DevUserInfo组件，只显示基本信息
 export const DevUserInfo = () => {
   const { user, isLoaded, isSignedIn } = useUser();
   const params = useParams();
@@ -20,30 +21,44 @@ export const DevUserInfo = () => {
   } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch user data from the database
+  // 延迟加载用户数据，减少初始渲染时间
   useEffect(() => {
-    if (isSignedIn) {
-      setIsLoading(true);
-      fetch(`/${locale}/api/user/trial`)
-        .then(res => res.json())
-        .then((data) => {
-          setDbUserInfo(data);
-        })
-        .catch((err) => {
-          console.error('Failed to fetch user data:', err);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-  }, [isSignedIn, locale]);
+    let isMounted = true;
 
-  // Only show in development environment
+    // 只有在展开面板时才加载数据库用户信息
+    if (isSignedIn && expanded) {
+      setIsLoading(true);
+
+      setTimeout(() => {
+        fetch(`/${locale}/api/user/trial`)
+          .then(res => res.json())
+          .then((data) => {
+            if (isMounted) {
+              setDbUserInfo(data);
+            }
+          })
+          .catch((err) => {
+            console.error('Failed to fetch user data:', err);
+          })
+          .finally(() => {
+            if (isMounted) {
+              setIsLoading(false);
+            }
+          });
+      }, 100);
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isSignedIn, locale, expanded]);
+
+  // 只在开发环境中显示
   if (process.env.NODE_ENV !== 'development') {
     return null;
   }
 
-  if (!isLoaded || !isSignedIn) {
+  if (!isLoaded) {
     return (
       <div className="mb-4 rounded-lg border border-yellow-200 bg-yellow-50 p-4">
         <div className="font-medium text-yellow-800">Dev User Info</div>
@@ -66,61 +81,47 @@ export const DevUserInfo = () => {
 
       {expanded && (
         <div className="mt-2 space-y-2 text-sm text-yellow-700">
-          <div>
-            <strong>ID:</strong>
-            {' '}
-            {user.id}
-          </div>
-          <div>
-            <strong>Email:</strong>
-            {' '}
-            {user.primaryEmailAddress?.emailAddress}
-          </div>
-          <div>
-            <strong>Full Name:</strong>
-            {' '}
-            {user.fullName}
-          </div>
-          <div>
-            <strong>Username:</strong>
-            {' '}
-            {user.username}
-          </div>
-          <div>
-            <strong>Created:</strong>
-            {' '}
-            {user.createdAt ? new Date(user.createdAt).toLocaleString() : 'N/A'}
-          </div>
-          <div>
-            <strong>Updated:</strong>
-            {' '}
-            {user.updatedAt ? new Date(user.updatedAt).toLocaleString() : 'N/A'}
-          </div>
-          <div>
-            <strong>Trial Started:</strong>
-            {' '}
-            {isLoading
-              ? 'Loading...'
-              : dbUserInfo?.user?.trial_started_at
-                ? new Date(dbUserInfo.user.trial_started_at).toLocaleString()
-                : 'N/A'}
-          </div>
-          {user.publicMetadata && (
-            <div>
-              <strong>Public Metadata:</strong>
-              <pre className="mt-1 max-h-40 overflow-auto rounded bg-yellow-100 p-2 text-xs">
-                {JSON.stringify(user.publicMetadata, null, 2)}
-              </pre>
-            </div>
-          )}
-          {dbUserInfo?.user && (
-            <div>
-              <strong>Database User:</strong>
-              <pre className="mt-1 max-h-40 overflow-auto rounded bg-yellow-100 p-2 text-xs">
-                {JSON.stringify(dbUserInfo.user, null, 2)}
-              </pre>
-            </div>
-          )}
+          {isSignedIn
+            ? (
+                <>
+                  <div>
+                    <strong>ID:</strong>
+                    {' '}
+                    {user.id}
+                  </div>
+                  <div>
+                    <strong>Email:</strong>
+                    {' '}
+                    {user.primaryEmailAddress?.emailAddress}
+                  </div>
+                  <div>
+                    <strong>Trial Started:</strong>
+                    {' '}
+                    {isLoading
+                      ? (
+                          <span className="inline-block h-4 w-24 animate-pulse bg-yellow-100"></span>
+                        )
+                      : dbUserInfo?.user?.trial_started_at
+                        ? (
+                            new Date(dbUserInfo.user.trial_started_at).toLocaleString()
+                          )
+                        : (
+                            'N/A'
+                          )}
+                  </div>
+                  {dbUserInfo?.user && !isLoading && (
+                    <div>
+                      <strong>Database User:</strong>
+                      <pre className="mt-1 max-h-40 overflow-auto rounded bg-yellow-100 p-2 text-xs">
+                        {JSON.stringify(dbUserInfo.user, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+                </>
+              )
+            : (
+                <div>用户未登录</div>
+              )}
         </div>
       )}
     </div>
