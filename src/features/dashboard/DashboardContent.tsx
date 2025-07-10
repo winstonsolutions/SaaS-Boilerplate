@@ -3,6 +3,7 @@
 import { useParams } from 'next/navigation';
 import React from 'react';
 
+import { DevUserInfo } from '@/features/dashboard/DevUserInfo';
 import { LicenseActivation } from '@/features/dashboard/LicenseActivation';
 import { PaymentSuccessNotice } from '@/features/dashboard/PaymentSuccessNotice';
 import { SubscriptionStatusCard } from '@/features/dashboard/SubscriptionStatus';
@@ -81,6 +82,9 @@ export function DashboardContent({ isPaymentSuccess, initialUserStatus }: Dashbo
 
   return (
     <>
+      {/* DevUserInfo 组件 - 只在开发环境显示 */}
+      <DevUserInfo />
+
       {/* 支付成功通知 */}
       {isPaymentSuccess && (
         <div className="mb-6">

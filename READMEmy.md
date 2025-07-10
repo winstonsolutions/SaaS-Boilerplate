@@ -261,3 +261,6 @@ Pro功能组件增强 (src/features/dashboard/ProFeatures.tsx)
 用户状态判断函数
 试用期和订阅期检测函数
 这些文件为后续的订阅功能实现奠定了坚实基础。下一步将是实现后端服务层，特别是License服务和订阅状态服务。这样的分层实现方式确保了代码组织清晰、可维护，并在后期扩展时更加灵活。
+
+# devuserinfo
+ src/features/dashboard/DashboardContent.tsx 显示devuserinfo组件
