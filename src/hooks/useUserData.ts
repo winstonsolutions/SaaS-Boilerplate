@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import type { UserSubscriptionStatus } from '@/types/Subscription';
+import { ExtensionBridge } from '@/utils/ExtensionBridge';
+
+// API 基础 URL 配置
+const API_BASE_URL = typeof window !== 'undefined' ? window.location.origin : '';
 
 type UseUserDataResult = {
   userStatus: UserSubscriptionStatus | null;
@@ -41,9 +45,27 @@ export function useUserData(
   const [userStatus, setUserStatus] = useState<UserSubscriptionStatus | null>(initialData || null);
   const [isLoading, setIsLoading] = useState(!initialData);
   const [error, setError] = useState<string | null>(null);
+  const [isRequestInProgress, setIsRequestInProgress] = useState(false);
+
+  // 添加扩展通信逻辑
+  const syncToExtension = useCallback((userStatus: UserSubscriptionStatus) => {
+    if (userStatus) {
+      // 根据实际的数据结构正确判断
+      const isPro = userStatus.accountStatus === 'pro'; // 真正的付费用户
+      const isInTrial = userStatus.accountStatus === 'trial'; // 试用用户
+
+      // 同步到扩展
+      ExtensionBridge.notifyLogin(isPro, isInTrial);
+    }
+  }, []);
 
   const fetchUserData = useCallback(async (skipCache = false) => {
     const cacheKey = `user-status-${locale}`;
+
+    // 防止重复请求
+    if (isRequestInProgress) {
+      return;
+    }
 
     // 检查缓存
     if (!skipCache) {
@@ -59,10 +81,11 @@ export function useUserData(
     }
 
     try {
+      setIsRequestInProgress(true);
       setIsLoading(true);
       setError(null);
 
-      const response = await fetch(`/${locale}/api/user/status`);
+      const response = await fetch(`${API_BASE_URL}/api/user/status`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -73,6 +96,9 @@ export function useUserData(
       if (data.success && data.data) {
         setUserStatus(data.data);
         setCachedData(cacheKey, data.data);
+
+        // 新增：同步到扩展
+        syncToExtension(data.data);
       } else {
         throw new Error(data.error || 'Failed to fetch user status');
       }
@@ -82,8 +108,9 @@ export function useUserData(
       console.error('Error fetching user data:', err);
     } finally {
       setIsLoading(false);
+      setIsRequestInProgress(false);
     }
-  }, [locale]);
+  }, [locale, syncToExtension, isRequestInProgress]);
 
   const refetch = useCallback(() => {
     fetchUserData(true); // Always skip cache when manually refetching
@@ -92,11 +119,13 @@ export function useUserData(
   useEffect(() => {
     // 如果有初始数据，则不需要立即获取
     if (initialData) {
+      // 即使有初始数据，也要同步到扩展
+      syncToExtension(initialData);
       return;
     }
 
     fetchUserData();
-  }, [fetchUserData, initialData]);
+  }, [fetchUserData, initialData, syncToExtension]);
 
   return {
     userStatus,

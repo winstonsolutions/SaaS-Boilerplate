@@ -10,6 +10,7 @@ import { SubscriptionStatusCard } from '@/features/dashboard/SubscriptionStatus'
 import { usePerformance } from '@/hooks/usePerformance';
 import { useUserData } from '@/hooks/useUserData';
 import type { UserSubscriptionStatus } from '@/types/Subscription';
+import { ExtensionBridge } from '@/utils/ExtensionBridge';
 
 // 清理后的骨架屏组件
 const DashboardSkeleton = () => (
@@ -55,7 +56,7 @@ type DashboardContentProps = {
 export function DashboardContent({ isPaymentSuccess, initialUserStatus }: DashboardContentProps) {
   const params = useParams();
   const locale = params.locale as string;
-  const { userStatus, isLoading, error, refetch } = useUserData(locale, initialUserStatus);
+  const { userStatus, isLoading, refetch } = useUserData(locale, initialUserStatus);
   const { markStart, markEnd } = usePerformance('DashboardContent');
 
   // Create a refresh function to pass to children
@@ -63,30 +64,38 @@ export function DashboardContent({ isPaymentSuccess, initialUserStatus }: Dashbo
     refetch();
   }, [refetch]);
 
+  // 添加扩展状态同步（仅在初始用户状态时同步，避免与useUserData重复）
+  React.useEffect(() => {
+    if (initialUserStatus && userStatus && !isLoading) {
+      // 只有当使用了初始数据时才在这里同步，避免与useUserData重复
+      const isPro = userStatus.accountStatus === 'pro'; // 真正的付费用户
+      const isInTrial = userStatus.accountStatus === 'trial'; // 试用用户
+
+      // 同步到扩展（防止重复调用）
+      ExtensionBridge.notifyLogin(isPro, isInTrial);
+    }
+  }, [userStatus, isLoading, initialUserStatus]);
+
   // Create a unique key for components based on status
   const statusKey = userStatus ? `status-${userStatus.accountStatus}-${Date.now()}` : 'loading';
 
   // 性能监控
-  React.useEffect(() => {
-    if (!isLoading && userStatus) {
-      markEnd('data-loading');
-    }
-  }, [isLoading, userStatus, markEnd]);
-
   React.useEffect(() => {
     if (isLoading) {
       markStart('data-loading');
     }
   }, [isLoading, markStart]);
 
-  if (error) {
-    return (
-      <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-6">
-        <h3 className="text-lg font-semibold text-red-800">Error</h3>
-        <p className="text-red-700">{error}</p>
-      </div>
-    );
-  }
+  React.useEffect(() => {
+    if (!isLoading && userStatus) {
+      // 确保在markStart之后调用markEnd
+      try {
+        markEnd('data-loading');
+      } catch {
+        // 如果mark不存在，忽略错误
+      }
+    }
+  }, [isLoading, userStatus, markEnd]);
 
   return (
     <>
