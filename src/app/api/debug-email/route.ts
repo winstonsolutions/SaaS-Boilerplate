@@ -17,9 +17,9 @@ export async function GET() {
   }
 
   const emailConfig = {
-    from: 'PDF Pro <noreply@winstontech.me>',
+    from: 'PixelCapture Pro <noreply@winstontech.me>',
     to: 'andyredjohn@gmail.com',
-    subject: 'PDF Pro - 您的许可证密钥已就绪',
+    subject: 'PixelCapture Pro - 您的许可证密钥已就绪',
     resendApiKey: process.env.RESEND_API_KEY ? 'Configured' : 'Not configured',
     resendApiKeyLength: process.env.RESEND_API_KEY?.length || 0,
     environment: process.env.NODE_ENV,
@@ -58,15 +58,15 @@ export async function POST(_request: NextRequest) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const emailConfig = {
-      from: 'PDF Pro <noreply@winstontech.me>',
+      from: 'PixelCapture Pro <noreply@winstontech.me>',
       to: 'andyredjohn@gmail.com',
-      subject: 'PDF Pro - 测试邮件',
+      subject: 'PixelCapture Pro - 测试邮件',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #4f46e5;">测试邮件</h2>
-          <p>这是一封来自PDF Pro的测试邮件。</p>
+          <p>这是一封来自PixelCapture Pro的测试邮件。</p>
           <p><strong>发送时间:</strong> ${new Date().toLocaleString()}</p>
-          <p><strong>发件人:</strong> PDF Pro &lt;noreply@winstontech.me&gt;</p>
+          <p><strong>发件人:</strong> PixelCapture Pro &lt;noreply@winstontech.me&gt;</p>
           <p>如果您收到这封邮件，说明邮件发送功能正常工作。</p>
         </div>
       `,

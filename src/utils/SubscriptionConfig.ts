@@ -11,13 +11,13 @@ export const PRICING_PLANS: PricingPlan[] = [
   {
     id: 'monthly',
     name: 'Monthly Plan',
-    description: 'Full access to all PDF Pro features',
+    description: 'Full access to all PixelCapture Pro features',
     priceId: process.env.NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID || 'price_monthly',
     price: 1.99,
     currency: 'USD',
     interval: BILLING_INTERVAL.MONTH,
     features: [
-      'PDF Pro 高级功能',
+      'PixelCapture Pro 高级功能',
       '无限制使用',
       '优先客户支持',
       '每月自动续期',
@@ -31,12 +31,12 @@ export const getCurrentPricingPlan = (): PricingPlan => {
   return PRICING_PLANS[0] || {
     id: 'monthly',
     name: 'Monthly Plan',
-    description: 'Full access to all PDF Pro features',
+    description: 'Full access to all PixelCapture Pro features',
     priceId: 'price_monthly',
     price: 1.99,
     currency: 'USD',
     interval: BILLING_INTERVAL.MONTH,
-    features: ['PDF Pro features'],
+    features: ['PixelCapture Pro features'],
   };
 };
 

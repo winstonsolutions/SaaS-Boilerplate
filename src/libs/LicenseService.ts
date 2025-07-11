@@ -11,7 +11,7 @@ import type { License, LicenseActivationResponse } from '@/types/Subscription';
 export class LicenseService {
   /**
    * 生成新的license key
-   * 格式: PDFPRO-XXXX-XXXX-XXXX-XXXX
+   * 格式: PIXELCAPTURE-XXXX-XXXX-XXXX-XXXX
    */
   static generateLicenseKey(): string {
     // 生成随机ID
@@ -25,7 +25,7 @@ export class LicenseService {
     }
 
     // 组合成license key格式
-    return `PDFPRO-${parts.join('-')}`;
+    return `PIXELCAPTURE-${parts.join('-')}`;
   }
 
   /**

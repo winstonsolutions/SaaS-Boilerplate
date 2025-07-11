@@ -19,6 +19,9 @@ export const Env = createEnv({
     SUPABASE_URL: z.string().optional(),
     SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
     CLERK_WEBHOOK_SECRET: z.string().min(1),
+    RESEND_API_KEY: z.string().optional(),
+    CRON_API_KEY: z.string().optional(),
+    SUPABASE_ACCESS_TOKEN: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().optional(),
@@ -51,6 +54,9 @@ export const Env = createEnv({
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     CLERK_WEBHOOK_SECRET: process.env.CLERK_WEBHOOK_SECRET,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    CRON_API_KEY: process.env.CRON_API_KEY,
+    SUPABASE_ACCESS_TOKEN: process.env.SUPABASE_ACCESS_TOKEN,
   },
 });
 

@@ -154,9 +154,9 @@
   },
   "LicenseActivation": {
     "title": "Activation de licence",
-    "description": "Entrez votre clé de licence pour activer PDF Pro",
-    "placeholder": "PDFPRO-XXXX-XXXX-XXXX-XXXX",
-    "key_format": "Format de clé de licence : PDFPRO-XXXX-XXXX-XXXX-XXXX",
+    "description": "Entrez votre clé de licence pour activer PixelCapture Pro",
+    "placeholder": "PIXELCAPTURE-XXXX-XXXX-XXXX-XXXX",
+    "key_format": "Format de clé de licence : PIXELCAPTURE-XXXX-XXXX-XXXX-XXXX",
     "activate_button": "Activer",
     "activating": "Activation...",
     "no_license": "Vous n'avez pas de licence ?",

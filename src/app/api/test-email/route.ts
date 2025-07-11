@@ -51,14 +51,14 @@ export async function POST(request: NextRequest) {
     logger.info('环境变量检查:');
     logger.info(`RESEND_API_KEY 配置状态: ${!!process.env.RESEND_API_KEY}`);
     logger.info(`RESEND_API_KEY 值: ${process.env.RESEND_API_KEY?.substring(0, 10)}...`);
-    logger.info('使用固定发件人地址: PDF Pro <noreply@winstontech.me>');
+    logger.info('使用固定发件人地址: PixelCapture Pro <noreply@winstontech.me>');
     logger.info(`目标邮箱: ${targetEmail}`);
     logger.info(`NODE_ENV: ${process.env.NODE_ENV}`);
 
     // 发送测试邮件到指定地址
     const success = await EmailService.sendLicenseEmail(
       targetEmail,
-      'TEST-PDFPRO-1234-5678-9012',
+      'TEST-PIXELCAPTURE-1234-5678-9012',
       new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30天后过期
     );
 

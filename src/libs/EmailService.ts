@@ -38,7 +38,7 @@ export class EmailService {
       const resend = new Resend(process.env.RESEND_API_KEY);
 
       // 使用指定的发件人地址
-      const fromAddress = 'PDF Pro <noreply@winstontech.me>';
+      const fromAddress = 'PixelCapture Pro <noreply@winstontech.me>';
 
       // 记录发送前的配置信息
       logger.info({
@@ -46,7 +46,7 @@ export class EmailService {
         to,
         subject,
         apiKeyConfigured: !!process.env.RESEND_API_KEY,
-        customDomain: 'send.winstontech.me',
+        customDomain: process.env.EMAIL_DOMAIN || 'send.winstontech.me',
       }, '邮件发送配置');
 
       const { data, error } = await resend.emails.send({
@@ -112,26 +112,21 @@ export class EmailService {
       const messages = await getEmailTranslations(locale);
 
       // 获取翻译文本
-      const subject = messages?.Emails?.License?.subject || 'PDF Pro - Your License Key Is Ready';
-      const greeting = messages?.Emails?.License?.greeting || 'Thank you for purchasing PDF Pro!';
+      const subject = messages?.Emails?.License?.subject || 'PixelCapture Pro - Your License Key Is Ready';
+      const greeting = messages?.Emails?.License?.greeting || 'Thank you for purchasing PixelCapture Pro!';
       const importantNoteTitle = messages?.Emails?.License?.important_note_title || 'Important: Activation Required';
       const importantNoteContent = messages?.Emails?.License?.important_note_content
         || 'You need to log in and activate your account with the license key below to use Pro features.';
       const keyIntro = messages?.Emails?.License?.key_intro || 'Your license key is:';
-      const expiryDateLabel = messages?.Emails?.License?.expiry_date || 'Expiration date:';
       const activationStepsTitle = messages?.Emails?.License?.activation_steps_title || 'Activation Steps:';
-      const activationStep1 = messages?.Emails?.License?.activation_step1 || 'Log in to your PDF Pro account';
+      const activationStep1 = messages?.Emails?.License?.activation_step1 || 'Log in to your PixelCapture Pro account';
       const activationStep2 = messages?.Emails?.License?.activation_step2 || 'Visit the dashboard page';
       const activationStep3 = messages?.Emails?.License?.activation_step3 || 'Enter the key above in the "License Activation" section';
       const activationStep4 = messages?.Emails?.License?.activation_step4 || 'Click the "Activate" button';
       const goToActivation = messages?.Emails?.License?.go_to_activation || 'Go to Activation Page';
       const contactSupport = messages?.Emails?.Common?.contact_support || 'If you have any questions, please contact our support team.';
       const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
-      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
-      const permanentLicense = messages?.Emails?.Common?.permanent_license || 'Permanent (never expires)';
-
-      // 格式化过期日期，使用用户语言偏好
-      const formattedExpiryDate = expiresAt ? formatLocalizedDate(expiresAt, locale) : permanentLicense;
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PixelCapture Pro Team';
 
       const htmlContent = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -146,7 +141,6 @@ export class EmailService {
           <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; text-align: center; font-size: 18px; font-family: monospace; margin: 20px 0;">
             ${licenseKey}
           </div>
-          <p><strong>${expiryDateLabel}</strong> ${formattedExpiryDate}</p>
 
           <h3 style="color: #4f46e5; margin-top: 30px;">${activationStepsTitle}</h3>
           <ol style="line-height: 1.6;">
@@ -204,16 +198,16 @@ export class EmailService {
       const messages = await getEmailTranslations(locale);
 
       // 获取翻译文本
-      const subject = messages?.Emails?.SubscriptionConfirmation?.subject || 'PDF Pro - Your Subscription Is Confirmed';
+      const subject = messages?.Emails?.SubscriptionConfirmation?.subject || 'PixelCapture Pro - Your Subscription Is Confirmed';
       const greeting = messages?.Emails?.SubscriptionConfirmation?.greeting || 'Your subscription has been successfully activated!';
       const content = messages?.Emails?.SubscriptionConfirmation?.content
-        || 'Thank you for subscribing to PDF Pro. You now have access to all premium features.';
+        || 'Thank you for subscribing to PixelCapture Pro. You now have access to all premium features.';
       const planLabel = messages?.Emails?.SubscriptionConfirmation?.subscription_plan || 'Subscription plan:';
       const expiryDateLabel = messages?.Emails?.SubscriptionConfirmation?.expiry_date || 'Expiration date:';
       const dashboardInfo = messages?.Emails?.SubscriptionConfirmation?.dashboard_info
         || 'You can view your subscription details in the dashboard at any time.';
       const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
-      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PixelCapture Pro Team';
       const permanentLicense = messages?.Emails?.Common?.permanent_license || 'Permanent (never expires)';
 
       // 格式化过期日期，使用用户语言偏好
@@ -254,17 +248,17 @@ export class EmailService {
       const messages = await getEmailTranslations(locale);
 
       // 获取翻译文本
-      const subject = messages?.Emails?.TrialStarted?.subject || 'PDF Pro - Your Trial Has Started';
-      const greeting = messages?.Emails?.TrialStarted?.greeting || 'Your PDF Pro trial has begun!';
+      const subject = messages?.Emails?.TrialStarted?.subject || 'PixelCapture Pro - Your Trial Has Started';
+      const greeting = messages?.Emails?.TrialStarted?.greeting || 'Your PixelCapture Pro trial has begun!';
       const content = messages?.Emails?.TrialStarted?.content
-        || 'Thank you for starting your PDF Pro trial. You now have access to all premium features.';
+        || 'Thank you for starting your PixelCapture Pro trial. You now have access to all premium features.';
       const trialEndsLabel = messages?.Emails?.TrialStarted?.trial_ends || 'Trial end date:';
       const afterTrial = messages?.Emails?.TrialStarted?.after_trial
         || 'After the trial ends, you can purchase a subscription to continue using all features.';
       const contactSupport = messages?.Emails?.Common?.contact_support
         || 'If you have any questions, please contact our support team.';
       const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
-      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PixelCapture Pro Team';
 
       // 格式化结束日期
       const formattedEndDate = formatLocalizedDate(trialEndsAt, locale);
@@ -307,15 +301,15 @@ export class EmailService {
 
       // 获取翻译文本
       const subject = messages?.Emails?.TrialEndingSoon?.subject?.replace('{days}', daysRemaining.toString())
-        || `PDF Pro - Your Trial Is Ending Soon (${daysRemaining} days left)`;
+        || `PixelCapture Pro - Your Trial Is Ending Soon (${daysRemaining} days left)`;
       const greeting = messages?.Emails?.TrialEndingSoon?.greeting || 'Your trial period is ending soon';
       const content = messages?.Emails?.TrialEndingSoon?.content?.replace('{days}', daysRemaining.toString())
-        || `Your PDF Pro trial will end in ${daysRemaining} days.`;
+        || `Your PixelCapture Pro trial will end in ${daysRemaining} days.`;
       const endDateLabel = messages?.Emails?.TrialEndingSoon?.end_date || 'End date:';
       const upgradeMessage = messages?.Emails?.TrialEndingSoon?.upgrade_message
         || 'To continue using all premium features, please consider upgrading to our paid plan.';
       const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
-      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PixelCapture Pro Team';
 
       // 格式化结束日期
       const formattedEndDate = formatLocalizedDate(trialEndsAt, locale);
@@ -362,15 +356,15 @@ export class EmailService {
       const messages = await getEmailTranslations(locale);
 
       // 获取翻译文本
-      const subject = messages?.Emails?.SubscriptionEndingSoon?.subject || 'PDF Pro - Your Subscription Is Ending Soon';
+      const subject = messages?.Emails?.SubscriptionEndingSoon?.subject || 'PixelCapture Pro - Your Subscription Is Ending Soon';
       const greeting = messages?.Emails?.SubscriptionEndingSoon?.greeting || 'Your subscription is ending soon';
       const content = messages?.Emails?.SubscriptionEndingSoon?.content?.replace('{days}', daysRemaining.toString())
-        || `Your PDF Pro subscription will expire in ${daysRemaining} days.`;
+        || `Your PixelCapture Pro subscription will expire in ${daysRemaining} days.`;
       const expiryDateLabel = messages?.Emails?.SubscriptionEndingSoon?.expiry_date || 'Expiration date:';
       const renewalMessage = messages?.Emails?.SubscriptionEndingSoon?.renewal_message
         || 'To continue using all premium features, please renew your subscription.';
       const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
-      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PixelCapture Pro Team';
 
       // 格式化过期日期
       const formattedExpiryDate = formatLocalizedDate(expiresAt, locale);
@@ -413,15 +407,15 @@ export class EmailService {
       const messages = await getEmailTranslations(locale);
 
       // 获取翻译文本
-      const subject = messages?.Emails?.SubscriptionExpired?.subject || 'PDF Pro - Your Subscription Has Expired';
+      const subject = messages?.Emails?.SubscriptionExpired?.subject || 'PixelCapture Pro - Your Subscription Has Expired';
       const greeting = messages?.Emails?.SubscriptionExpired?.greeting || 'Your subscription has expired';
       const content = messages?.Emails?.SubscriptionExpired?.content
-        || 'Your PDF Pro subscription has expired. You no longer have access to premium features.';
+        || 'Your PixelCapture Pro subscription has expired. You no longer have access to premium features.';
       const renewMessage = messages?.Emails?.SubscriptionExpired?.renew_message
         || 'To restore access to all premium features, please renew your subscription.';
       const renewButton = messages?.Emails?.SubscriptionExpired?.renew_button || 'Renew Now';
       const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
-      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PixelCapture Pro Team';
 
       const htmlContent = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
