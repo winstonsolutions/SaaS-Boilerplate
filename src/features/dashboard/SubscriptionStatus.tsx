@@ -2,14 +2,13 @@
 
 import { useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
+import { useTimeCalculation } from '@/hooks/useTimeCalculation';
 import type { UserSubscriptionStatus } from '@/types/Subscription';
 
 type SubscriptionStatusProps = {
@@ -24,6 +23,7 @@ export function SubscriptionStatusCard({ userStatus }: SubscriptionStatusProps) 
   const [isExpired, setIsExpired] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const t = useTranslations('SubscriptionStatus');
 
   // 直接处理支付流程
   const handleDirectSubscribe = async () => {
@@ -66,57 +66,8 @@ export function SubscriptionStatusCard({ userStatus }: SubscriptionStatusProps) 
     }
   };
 
-  // 优化后的时间计算函数，使用useMemo缓存结果
-  const timeCalculation = React.useMemo(() => {
-    const targetDate = userStatus.accountStatus === 'trial'
-      ? userStatus.trialEndsAt
-      : userStatus.subscriptionEndsAt;
-
-    if (!targetDate) {
-      return { remainingText: '', progress: 0, expired: true };
-    }
-
-    try {
-      const endDate = new Date(targetDate);
-      const now = new Date();
-
-      // If date has passed, show expired
-      if (endDate < now) {
-        return { remainingText: 'expired', progress: 0, expired: true };
-      }
-
-      // Calculate days, hours, minutes
-      const diffTime = endDate.getTime() - now.getTime();
-      const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-
-      // Calculate progress percentage - showing remaining time (not elapsed time)
-      let progress = 100;
-      if (userStatus.accountStatus === 'trial') {
-        // For trial, assuming 7 days total
-        const TRIAL_DAYS = 7;
-        const totalTrialMs = TRIAL_DAYS * 24 * 60 * 60 * 1000;
-        const remainingMs = diffTime;
-
-        // Calculate what percentage of the trial remains
-        progress = Math.min(100, Math.max(0, (remainingMs / totalTrialMs) * 100));
-      } else if (userStatus.accountStatus === 'pro') {
-        // For subscription, we need subscription start date
-        // Since we don't have it, we'll use a fixed value for now
-        progress = 70; // Placeholder for remaining subscription time
-      }
-
-      return {
-        remainingText: `${days}d ${hours}h ${minutes}m remaining`,
-        progress: Math.round(progress),
-        expired: false,
-      };
-    } catch (error) {
-      console.error('Date formatting error:', error);
-      return { remainingText: '', progress: 0, expired: false };
-    }
-  }, [userStatus]);
+  // 计算剩余时间和进度条
+  const timeCalculation = useTimeCalculation(userStatus);
 
   // 使用计算结果
   useEffect(() => {
@@ -130,22 +81,22 @@ export function SubscriptionStatusCard({ userStatus }: SubscriptionStatusProps) 
       <CardContent className="p-0">
         <div className="p-6">
           <div className="mb-2 flex items-center justify-between">
-            <h3 className="text-lg font-semibold">Account Status</h3>
+            <h3 className="text-lg font-semibold">{t('account_status')}</h3>
             <Badge variant="outline" className={`font-medium ${userStatus.accountStatus === 'pro' ? 'bg-green-50 text-green-600' : 'bg-blue-50 text-blue-600'}`}>
-              {userStatus.accountStatus === 'pro' ? 'PRO' : 'FREE'}
+              {userStatus.accountStatus === 'pro' ? t('pro_badge') : t('free_badge')}
             </Badge>
           </div>
 
           {isExpired
             ? (
                 <div className="my-2 rounded-md bg-gray-50 p-4">
-                  <p className="text-sm">Your trial has expired. Purchase a license to continue using Pro features.</p>
+                  <p className="text-sm">{t('trial_expired')}</p>
                 </div>
               )
             : (
                 <>
                   <p className="font-medium">
-                    {userStatus.accountStatus === 'pro' ? 'Pro Active' : 'Pro Trial Active'}
+                    {userStatus.accountStatus === 'pro' ? t('pro_active') : t('pro_trial_active')}
                   </p>
                   {remaining && (
                     <p className="text-sm font-medium text-purple-600">{remaining}</p>
@@ -167,28 +118,28 @@ export function SubscriptionStatusCard({ userStatus }: SubscriptionStatusProps) 
 
                   <p className="text-sm text-gray-600">
                     {userStatus.accountStatus === 'pro'
-                      ? 'All Pro features are unlocked'
-                      : 'Try all Pro features for 7 days'}
+                      ? t('pro_features_unlocked')
+                      : t('try_pro_features')}
                   </p>
                 </>
               )}
         </div>
 
         <div className="border-t p-6">
-          <h3 className="mb-4 font-medium">Pro Features</h3>
+          <h3 className="mb-4 font-medium">{t('pro_features_title')}</h3>
 
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <p className="text-sm font-medium">Custom Themes</p>
-              <p className="text-xs text-gray-600">Personalize your progress bar</p>
+              <p className="text-sm font-medium">{t('feature_custom_themes')}</p>
+              <p className="text-xs text-gray-600">{t('feature_custom_themes_desc')}</p>
             </div>
             <div>
-              <p className="text-sm font-medium">Advanced Settings</p>
-              <p className="text-xs text-gray-600">Countdown Timer Enabled</p>
+              <p className="text-sm font-medium">{t('feature_advanced_settings')}</p>
+              <p className="text-xs text-gray-600">{t('feature_advanced_settings_desc')}</p>
             </div>
             <div>
-              <p className="text-sm font-medium">Priority Support</p>
-              <p className="text-xs text-gray-600">Get faster responses</p>
+              <p className="text-sm font-medium">{t('feature_priority_support')}</p>
+              <p className="text-xs text-gray-600">{t('feature_priority_support_desc')}</p>
             </div>
           </div>
 
@@ -200,7 +151,7 @@ export function SubscriptionStatusCard({ userStatus }: SubscriptionStatusProps) 
                 onClick={handleDirectSubscribe}
                 disabled={isLoading}
               >
-                {isLoading ? '处理中...' : 'Upgrade Now'}
+                {isLoading ? t('upgrading') : t('upgrade_now')}
               </Button>
               {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
             </div>

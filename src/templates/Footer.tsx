@@ -19,9 +19,7 @@ export const Footer = () => {
               <Logo />
             </div>
             <p className="mb-4 max-w-md text-sm text-muted-foreground">
-              Pixel Capture is a powerful browser extension that lets you capture screenshots
-              with custom dimensions and pixel-perfect accuracy. Ideal for designers, developers
-              and content creators.
+              {t('description')}
             </p>
             <div className="flex space-x-4">
               <Link

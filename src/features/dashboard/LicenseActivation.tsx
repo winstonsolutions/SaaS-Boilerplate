@@ -1,7 +1,6 @@
 'use client';
 
-import { useUser } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import React, { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -14,8 +13,6 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { useUserData } from '@/hooks/useUserData';
-import { logger } from '@/libs/Logger';
 
 type LicenseActivationProps = {
   onActivated?: () => void;
@@ -24,78 +21,94 @@ type LicenseActivationProps = {
 export function LicenseActivation({ onActivated }: LicenseActivationProps) {
   const [licenseKey, setLicenseKey] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [isPurchasing, setIsPurchasing] = useState(false);
-  const [error, setError] = useState('');
-  const [purchaseError, setPurchaseError] = useState('');
-  const [success, setSuccess] = useState('');
-  const router = useRouter();
-  const { isSignedIn } = useUser();
-  const { refetch } = useUserData(''); // Get the refetch function from useUserData hook
+  const [purchaseError, setPurchaseError] = useState<string | null>(null);
+  const t = useTranslations('LicenseActivation');
 
+  // 处理许可证密钥输入变化
+  const handleKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 清除任何错误和成功消息
+    setError(null);
+    setSuccess(null);
+
+    // 大写并自动格式化输入 (可选)
+    let key = e.target.value.toUpperCase();
+
+    // 简化的自动格式化：仅移除所有非字母数字字符，不尝试自动添加破折号
+    key = key.replace(/[^A-Z0-9-]/g, '');
+
+    // 防止多个连续的破折号
+    key = key.replace(/-{2,}/g, '-');
+
+    // 更新状态 (移除长度限制以允许输入完整的许可证密钥)
+    setLicenseKey(key);
+  };
+
+  // 激活许可证
   const handleActivate = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!licenseKey.trim()) {
+    // 重置状态
+    setError(null);
+    setSuccess(null);
+
+    // 验证输入
+    if (!licenseKey || licenseKey.trim() === '') {
       setError('Please enter a license key');
       return;
     }
 
+    // 验证许可证格式
+    // if (!LICENSE_KEY_PATTERN.test(licenseKey)) {
+    //   setError('Invalid license key format. Please use the format: PDFPRO-XXXX-XXXX-XXXX-XXXX');
+    //   return;
+    // }
+
     try {
       setIsSubmitting(true);
-      setError('');
-      setSuccess('');
 
-      // Call API to activate license
+      // 调用API激活许可证
       const response = await fetch('/api/license/activate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ licenseKey: licenseKey.trim() }),
+        body: JSON.stringify({
+          licenseKey,
+        }),
       });
 
-      const data = await response.json();
+      const result = await response.json();
 
-      if (!data.success) {
-        throw new Error(data.error || 'Activation failed');
+      if (response.ok) {
+        if (result.success) {
+          setSuccess('License activated successfully! Your account has been upgraded to Pro.');
+
+          // 刷新用户状态数据
+          if (onActivated) {
+            onActivated();
+          }
+        } else {
+          setError(result.message || 'Failed to activate license');
+        }
+      } else {
+        setError(result.message || 'Failed to activate license. Please try again later.');
       }
-
-      // Activation successful
-      setSuccess('License activated successfully!');
-      setLicenseKey('');
-
-      // Force refresh user data immediately to update UI
-      refetch();
-
-      // Call the callback if provided
-      if (onActivated) {
-        onActivated();
-      }
-
-      // Refresh page after a short delay to ensure all components update
-      setTimeout(() => {
-        router.refresh();
-      }, 2000);
-    } catch (error) {
-      logger.error({ error }, 'Failed to activate license');
-      setError(error instanceof Error ? error.message : 'Failed to activate license, please try again');
+    } catch (err) {
+      console.error('License activation error:', err);
+      setError('An error occurred while activating your license. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // 直接处理支付流程
-  const handleDirectPurchase = async (e: React.MouseEvent) => {
-    e.preventDefault();
-
-    if (!isSignedIn) {
-      router.push('/sign-in?redirect_url=/dashboard');
-      return;
-    }
-
+  // 处理直接购买流程
+  const handleDirectPurchase = async () => {
     try {
+      setPurchaseError(null);
       setIsPurchasing(true);
-      setPurchaseError('');
 
       // 创建Stripe结账会话
       const response = await fetch('/api/payment/create-checkout', {
@@ -112,7 +125,7 @@ export function LicenseActivation({ onActivated }: LicenseActivationProps) {
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || '创建支付会话失败');
+        throw new Error(result.error || 'Failed to create checkout session');
       }
 
       // 重定向到Stripe结账页面
@@ -120,53 +133,18 @@ export function LicenseActivation({ onActivated }: LicenseActivationProps) {
         window.location.href = result.data.checkoutUrl;
       }
     } catch (err) {
-      console.error('支付过程出错:', err);
-      setPurchaseError(err instanceof Error ? err.message : '支付过程出现错误');
+      console.error('Purchase flow error:', err);
+      setPurchaseError(err instanceof Error ? err.message : 'An error occurred during the purchase process');
     } finally {
       setIsPurchasing(false);
     }
   };
 
-  // Format license key, add hyphens
-  const formatLicenseKey = (key: string) => {
-    // Remove all non-alphanumeric characters
-    const cleaned = key.replace(/[^A-Z0-9]/gi, '').toUpperCase();
-
-    // Remove the character limit to support longer license keys
-    // If starts with PDFPRO, maintain format
-    if (cleaned.startsWith('PDFPRO') && cleaned.length > 6) {
-      let formatted = 'PDFPRO';
-
-      // Group remaining characters in sets of 4, separated by hyphens
-      const remaining = cleaned.substring(6);
-      for (let i = 0; i < remaining.length; i += 4) {
-        formatted += `-${remaining.substring(i, Math.min(i + 4, remaining.length))}`;
-      }
-
-      return formatted;
-    } else { // Otherwise group every 4 characters, separated by hyphens
-      let formatted = '';
-      for (let i = 0; i < cleaned.length; i += 4) {
-        if (i > 0) {
-          formatted += '-';
-        }
-        formatted += cleaned.substring(i, Math.min(i + 4, cleaned.length));
-      }
-      return formatted;
-    }
-  };
-
-  // Handle license key input
-  const handleKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatLicenseKey(e.target.value);
-    setLicenseKey(formatted);
-  };
-
   return (
     <Card>
       <CardHeader>
-        <CardTitle>License Activation</CardTitle>
-        <CardDescription>Enter your license key to activate PDF Pro</CardDescription>
+        <CardTitle>{t('title')}</CardTitle>
+        <CardDescription>{t('description')}</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleActivate}>
@@ -175,14 +153,13 @@ export function LicenseActivation({ onActivated }: LicenseActivationProps) {
               type="text"
               value={licenseKey}
               onChange={handleKeyChange}
-              placeholder="PDFPRO-XXXX-XXXX-XXXX-XXXX"
-              className="font-mono"
+              placeholder={t('placeholder')}
+              className="w-full font-mono"
+              style={{ width: '100%', minWidth: '300px' }}
             />
             <p className="text-xs text-gray-500">
-              License key format: PDFPRO-XXXX-XXXX-XXXX-XXXX
+              {t('key_format')}
             </p>
-
-            {/* 移除始终显示的错误信息 */}
           </div>
 
           {error && (
@@ -202,14 +179,14 @@ export function LicenseActivation({ onActivated }: LicenseActivationProps) {
             disabled={isSubmitting || !licenseKey.trim()}
             className="w-full bg-gray-900 hover:bg-gray-800"
           >
-            {isSubmitting ? 'Activating...' : 'Activate'}
+            {isSubmitting ? t('activating') : t('activate_button')}
           </Button>
         </form>
       </CardContent>
       <CardFooter className="border-t pt-6">
         <div className="w-full text-center text-sm text-gray-500">
           <p>
-            Don't have a license?
+            {t('no_license')}
             {' '}
             <Button
               onClick={handleDirectPurchase}
@@ -217,7 +194,7 @@ export function LicenseActivation({ onActivated }: LicenseActivationProps) {
               className="h-auto p-0 font-normal text-blue-600 hover:underline"
               disabled={isPurchasing}
             >
-              {isPurchasing ? 'Processing...' : 'Purchase Now'}
+              {isPurchasing ? t('processing') : t('purchase_now')}
             </Button>
             {purchaseError && (
               <span className="mt-1 block text-sm text-red-500">{purchaseError}</span>

@@ -91,7 +91,8 @@
     "resources": "Resources",
     "about_me": "About Me",
     "contact": "Contact",
-    "all_rights_reserved": "All rights reserved."
+    "all_rights_reserved": "All rights reserved.",
+    "description": "Pixel Capture is a powerful browser extension that lets you capture screenshots with custom dimensions and pixel-perfect accuracy. Ideal for designers, developers and content creators."
   },
   "ProtectFallback": {
     "not_enough_permission": "You do not have the permissions to perform this action"
@@ -141,10 +142,46 @@
     "title_bar": "Payment Confirmation",
     "message_state_title": "Payment successful",
     "message_state_description": "Your payment has been successfully processed. Thank you for your purchase!",
-    "message_state_button": "Go back to Billing"
+    "message_state_button": "Go back to Billing",
+    "next_steps": "Next Steps",
+    "license_key_sent": "Your license key has been sent to your email",
+    "check_inbox": "Please check your inbox, including the spam folder",
+    "activate_license": "Once you receive the license key, enter it in the activation box below",
+    "support_message": "If you don't receive the email within 10 minutes or encounter any issues, please contact our support team."
   },
   "DataTable": {
     "no_results": "No results."
+  },
+  "LicenseActivation": {
+    "title": "License Activation",
+    "description": "Enter your license key to activate PDF Pro",
+    "placeholder": "PDFPRO-XXXX-XXXX-XXXX-XXXX",
+    "key_format": "License key format: PDFPRO-XXXX-XXXX-XXXX-XXXX",
+    "activate_button": "Activate",
+    "activating": "Activating...",
+    "no_license": "Don't have a license?",
+    "purchase_now": "Purchase Now",
+    "processing": "Processing..."
+  },
+  "SubscriptionStatus": {
+    "account_status": "Account Status",
+    "pro_badge": "PRO",
+    "free_badge": "FREE",
+    "pro_active": "Pro Active",
+    "pro_trial_active": "Pro Trial Active",
+    "trial_expired": "Your trial has expired. Purchase a license to continue using Pro features.",
+    "pro_features_unlocked": "All Pro features are unlocked",
+    "try_pro_features": "Try all Pro features for 7 days",
+    "time_remaining": "{days}d {hours}h {minutes}m remaining",
+    "pro_features_title": "Pro Features",
+    "feature_custom_themes": "Custom Themes",
+    "feature_custom_themes_desc": "Personalize your progress bar",
+    "feature_advanced_settings": "Advanced Settings",
+    "feature_advanced_settings_desc": "Countdown Timer Enabled",
+    "feature_priority_support": "Priority Support",
+    "feature_priority_support_desc": "Get faster responses",
+    "upgrade_now": "Upgrade Now",
+    "upgrading": "Processing..."
   },
   "Todos": {
     "title_bar": "Todo List",

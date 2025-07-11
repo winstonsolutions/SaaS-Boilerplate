@@ -91,7 +91,8 @@
     "resources": "Ressources",
     "about_me": "À propos de moi",
     "contact": "Contact",
-    "all_rights_reserved": "Tous droits réservés."
+    "all_rights_reserved": "Tous droits réservés.",
+    "description": "Pixel Capture est une puissante extension de navigateur qui vous permet de capturer des captures d'écran avec des dimensions personnalisées et une précision au pixel près. Idéal pour les designers, les développeurs et les créateurs de contenu."
   },
   "ProtectFallback": {
     "not_enough_permission": "Vous n'avez pas les permissions pour effectuer cette action"
@@ -141,10 +142,46 @@
     "title_bar": "Confirmation du paiement",
     "message_state_title": "Paiement accepté",
     "message_state_description": "Votre paiement a été traité avec succès. Merci pour votre achat !",
-    "message_state_button": "Revenir à la facturation"
+    "message_state_button": "Revenir à la facturation",
+    "next_steps": "Prochaines étapes",
+    "license_key_sent": "Votre clé de licence a été envoyée à votre adresse e-mail",
+    "check_inbox": "Veuillez vérifier votre boîte de réception, y compris le dossier spam",
+    "activate_license": "Une fois que vous avez reçu la clé de licence, saisissez-la dans la zone d'activation ci-dessous",
+    "support_message": "Si vous ne recevez pas l'e-mail dans les 10 minutes ou si vous rencontrez des problèmes, veuillez contacter notre équipe de support."
   },
   "DataTable": {
     "no_results": "Aucun résultat."
+  },
+  "LicenseActivation": {
+    "title": "Activation de licence",
+    "description": "Entrez votre clé de licence pour activer PDF Pro",
+    "placeholder": "PDFPRO-XXXX-XXXX-XXXX-XXXX",
+    "key_format": "Format de clé de licence : PDFPRO-XXXX-XXXX-XXXX-XXXX",
+    "activate_button": "Activer",
+    "activating": "Activation...",
+    "no_license": "Vous n'avez pas de licence ?",
+    "purchase_now": "Acheter maintenant",
+    "processing": "En cours de traitement..."
+  },
+  "SubscriptionStatus": {
+    "account_status": "Statut du compte",
+    "pro_badge": "PRO",
+    "free_badge": "GRATUIT",
+    "pro_active": "Pro actif",
+    "pro_trial_active": "Essai Pro actif",
+    "trial_expired": "Votre période d'essai a expiré. Achetez une licence pour continuer à utiliser les fonctionnalités Pro.",
+    "pro_features_unlocked": "Toutes les fonctionnalités Pro sont débloquées",
+    "try_pro_features": "Essayez toutes les fonctionnalités Pro pendant 7 jours",
+    "time_remaining": "{days}j {hours}h {minutes}m restants",
+    "pro_features_title": "Fonctionnalités Pro",
+    "feature_custom_themes": "Thèmes personnalisés",
+    "feature_custom_themes_desc": "Personnalisez votre barre de progression",
+    "feature_advanced_settings": "Paramètres avancés",
+    "feature_advanced_settings_desc": "Minuterie activée",
+    "feature_priority_support": "Support prioritaire",
+    "feature_priority_support_desc": "Obtenez des réponses plus rapides",
+    "upgrade_now": "Mettre à niveau",
+    "upgrading": "En cours..."
   },
   "Todos": {
     "title_bar": "Liste de Todos",

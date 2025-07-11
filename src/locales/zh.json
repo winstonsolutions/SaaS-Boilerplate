@@ -91,7 +91,8 @@
     "resources": "资源",
     "about_me": "关于我",
     "contact": "联系我",
-    "all_rights_reserved": "版权所有。"
+    "all_rights_reserved": "版权所有。",
+    "description": "Pixel Capture是一款强大的浏览器扩展，可让您以自定义尺寸和像素级精确度捕获屏幕截图。非常适合设计师、开发人员和内容创作者。"
   },
   "ProtectFallback": {
     "not_enough_permission": "您没有执行此操作的权限"
@@ -141,10 +142,46 @@
     "title_bar": "付款确认",
     "message_state_title": "付款成功",
     "message_state_description": "您的付款已成功处理。感谢您的购买！",
-    "message_state_button": "返回账单页面"
+    "message_state_button": "返回账单页面",
+    "next_steps": "下一步操作",
+    "license_key_sent": "您的许可证密钥已发送到您的邮箱",
+    "check_inbox": "请检查您的邮箱，包括垃圾邮件文件夹",
+    "activate_license": "收到许可证密钥后，请在下方的激活框中输入激活",
+    "support_message": "如果您在10分钟内没有收到邮件，或遇到任何问题，请联系我们的支持团队。"
   },
   "DataTable": {
     "no_results": "没有结果。"
+  },
+  "LicenseActivation": {
+    "title": "许可证激活",
+    "description": "输入您的许可证密钥以激活PDF Pro",
+    "placeholder": "PDFPRO-XXXX-XXXX-XXXX-XXXX",
+    "key_format": "许可证密钥格式: PDFPRO-XXXX-XXXX-XXXX-XXXX",
+    "activate_button": "激活",
+    "activating": "激活中...",
+    "no_license": "没有许可证？",
+    "purchase_now": "立即购买",
+    "processing": "处理中..."
+  },
+  "SubscriptionStatus": {
+    "account_status": "账户状态",
+    "pro_badge": "专业版",
+    "free_badge": "免费版",
+    "pro_active": "专业版已激活",
+    "pro_trial_active": "专业版试用已激活",
+    "trial_expired": "您的试用期已过期。请购买许可证以继续使用专业版功能。",
+    "pro_features_unlocked": "所有专业版功能已解锁",
+    "try_pro_features": "试用所有专业版功能7天",
+    "time_remaining": "剩余 {days}天 {hours}小时 {minutes}分钟",
+    "pro_features_title": "专业版功能",
+    "feature_custom_themes": "自定义主题",
+    "feature_custom_themes_desc": "个性化您的进度条",
+    "feature_advanced_settings": "高级设置",
+    "feature_advanced_settings_desc": "启用倒计时功能",
+    "feature_priority_support": "优先支持",
+    "feature_priority_support_desc": "获得更快的响应",
+    "upgrade_now": "立即升级",
+    "upgrading": "处理中..."
   },
   "Todos": {
     "title_bar": "待办事项列表",
