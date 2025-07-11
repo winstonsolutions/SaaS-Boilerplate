@@ -25,15 +25,16 @@ export async function GET() {
     logger.info({ count: updatedCount }, '更新过期订阅完成');
 
     // 查找即将在3天内过期的试用用户
-    const trialEndDate = new Date();
-    trialEndDate.setDate(trialEndDate.getDate() + 3);
+    // 试用期7天，剩余3天内意味着已试用4-7天
+    const fourDaysAgo = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000);
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
     const { data: trialUsers, error: trialError } = await db
       .from('users')
       .select('*')
       .eq('subscription_status', 'trial')
-      .lt('trial_started_at', new Date(Date.now() - (7 - 3) * 24 * 60 * 60 * 1000).toISOString())
-      .gt('trial_started_at', new Date(Date.now() - (7 - 2) * 24 * 60 * 60 * 1000).toISOString());
+      .lte('trial_started_at', fourDaysAgo.toISOString())
+      .gte('trial_started_at', sevenDaysAgo.toISOString());
 
     if (trialError) {
       logger.error({ error: trialError }, '查询即将过期的试用用户失败');
@@ -63,23 +64,26 @@ export async function GET() {
       }
     }
 
-    // 查找即将在7天内过期的付费用户
+    // 查找即将在7天内过期的付费用户，每天发送提醒
+    const sevenDaysLater = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
     const { data: proUsers, error: proError } = await db
       .from('users')
       .select('*')
       .eq('subscription_status', 'pro')
-      .lt('subscription_end_at', new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString())
-      .gt('subscription_end_at', new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString());
+      .lt('subscription_end_at', sevenDaysLater.toISOString())
+      .gt('subscription_end_at', new Date().toISOString()); // 还没过期
 
     if (proError) {
       logger.error({ error: proError }, '查询即将过期的订阅用户失败');
     } else {
-      // 发送订阅即将到期提醒
+      // 发送订阅即将到期提醒，7天内每天都发送
       for (const user of proUsers || []) {
         const endDate = new Date(user.subscription_end_at);
         const now = new Date();
         const daysRemaining = Math.ceil((endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 
+        // 7天内每天都发送提醒
         if (daysRemaining > 0 && daysRemaining <= 7) {
           // 发送提醒邮件
           await EmailService.sendSubscriptionEndingSoon(

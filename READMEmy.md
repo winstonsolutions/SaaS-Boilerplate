@@ -336,3 +336,8 @@ Pro功能组件增强 (src/features/dashboard/ProFeatures.tsx)
    - 编写自动化测试确保事件处理的正确性
 
 通过遵循这些最佳实践，可以构建一个健壮的订阅管理系统，能够正确处理整个订阅生命周期的各个阶段，避免重复处理和数据不一致问题。
+
+## cron src/app/api/cron/check-subscriptions/route.ts
+试用期剩余3天内会收到邮件提醒
+付费订阅即将到期提醒 (7天内)
+更新过期账户
