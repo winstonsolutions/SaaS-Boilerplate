@@ -5,6 +5,8 @@ import { NextResponse } from 'next/server';
 import { logger } from '@/libs/Logger';
 import { StripeService } from '@/libs/StripeService';
 import { SubscriptionService } from '@/libs/SubscriptionService';
+import { AppConfig } from '@/utils/AppConfig';
+import { extractLocaleFromRequest } from '@/utils/EmailTranslations';
 
 /**
  * 创建支付结账会话API
@@ -42,12 +44,28 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       }, { status: 404 });
     }
 
+    // 获取用户语言偏好
+    // 1. 首先从请求路径中的[locale]参数中提取 (Next.js的动态路由参数)
+    // 2. 如果没有，则从cookie或accept-language头中提取
+    // 3. 最后使用默认语言
+    const pathname = request.nextUrl.pathname;
+    const localeMatch = pathname.match(/^\/([a-z]{2})\/api\//);
+    let userLocale = localeMatch ? localeMatch[1] : null;
+
+    if (!userLocale || !AppConfig.locales.some(loc => loc.id === userLocale)) {
+      // 从cookie或accept-language头中提取
+      userLocale = extractLocaleFromRequest(request);
+    }
+
+    logger.info({ userId, userLocale }, '创建结账会话，使用用户语言偏好');
+
     // 创建结账会话
     const result = await StripeService.createCheckoutSession(
       user.id,
       user.email,
       successUrl,
       cancelUrl,
+      userLocale, // 传递用户语言偏好
     );
 
     if (!result.url) {

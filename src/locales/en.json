@@ -237,5 +237,63 @@
     "status_completed": "Completed",
     "status_in_progress": "In Progress",
     "status_planned": "Planned"
+  },
+  "Emails": {
+    "Common": {
+      "team_signature": "PDF Pro Team",
+      "thank_you": "Thank you!",
+      "permanent_license": "Permanent (never expires)",
+      "contact_support": "If you have any questions, please contact our support team."
+    },
+    "License": {
+      "subject": "PDF Pro - Your License Key Is Ready",
+      "greeting": "Thank you for purchasing PDF Pro!",
+      "important_note_title": "Important: Activation Required",
+      "important_note_content": "You need to log in and activate your account with the license key below to use Pro features.",
+      "key_intro": "Your license key is:",
+      "expiry_date": "Expiration date:",
+      "activation_steps_title": "Activation Steps:",
+      "activation_step1": "Log in to your PDF Pro account",
+      "activation_step2": "Visit the dashboard page",
+      "activation_step3": "Enter the key above in the \"License Activation\" section",
+      "activation_step4": "Click the \"Activate\" button",
+      "go_to_activation": "Go to Activation Page"
+    },
+    "SubscriptionConfirmation": {
+      "subject": "PDF Pro - Your Subscription Is Confirmed",
+      "greeting": "Your subscription has been successfully activated!",
+      "content": "Thank you for subscribing to PDF Pro. You now have access to all premium features.",
+      "subscription_plan": "Subscription plan:",
+      "expiry_date": "Expiration date:",
+      "dashboard_info": "You can view your subscription details in the dashboard at any time."
+    },
+    "TrialStarted": {
+      "subject": "PDF Pro - Your Trial Has Started",
+      "greeting": "Your PDF Pro trial has begun!",
+      "content": "Thank you for starting your PDF Pro trial. You now have access to all premium features.",
+      "trial_ends": "Trial end date:",
+      "after_trial": "After the trial ends, you can purchase a subscription to continue using all features."
+    },
+    "TrialEndingSoon": {
+      "subject": "PDF Pro - Your Trial Is Ending Soon",
+      "greeting": "Your trial period is ending soon",
+      "content": "Your PDF Pro trial will end in {days} days.",
+      "end_date": "End date:",
+      "upgrade_message": "To continue using all premium features, please consider upgrading to our paid plan."
+    },
+    "SubscriptionEndingSoon": {
+      "subject": "PDF Pro - Your Subscription Is Ending Soon",
+      "greeting": "Your subscription is ending soon",
+      "content": "Your PDF Pro subscription will expire in {days} days.",
+      "expiry_date": "Expiration date:",
+      "renewal_message": "To continue using all premium features, please renew your subscription."
+    },
+    "SubscriptionExpired": {
+      "subject": "PDF Pro - Your Subscription Has Expired",
+      "greeting": "Your subscription has expired",
+      "content": "Your PDF Pro subscription has expired. You no longer have access to premium features.",
+      "renew_message": "To restore access to all premium features, please renew your subscription.",
+      "renew_button": "Renew Now"
+    }
   }
 }

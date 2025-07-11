@@ -237,5 +237,63 @@
     "status_completed": "已完成",
     "status_in_progress": "开发中",
     "status_planned": "计划中"
+  },
+  "Emails": {
+    "Common": {
+      "team_signature": "PDF Pro 团队",
+      "thank_you": "谢谢!",
+      "permanent_license": "永久有效",
+      "contact_support": "如果您有任何问题，请随时联系我们的支持团队。"
+    },
+    "License": {
+      "subject": "PDF Pro - 您的许可证密钥已就绪",
+      "greeting": "感谢您购买 PDF Pro!",
+      "important_note_title": "重要提示：需要激活",
+      "important_note_content": "您需要登录并使用以下许可证密钥激活您的账户，才能使用Pro版功能。",
+      "key_intro": "您的许可证密钥如下:",
+      "expiry_date": "过期日期:",
+      "activation_steps_title": "激活步骤：",
+      "activation_step1": "登录您的 PDF Pro 账户",
+      "activation_step2": "访问仪表板页面",
+      "activation_step3": "在\"许可证激活\"部分输入上面的密钥",
+      "activation_step4": "点击\"激活\"按钮",
+      "go_to_activation": "前往激活页面"
+    },
+    "SubscriptionConfirmation": {
+      "subject": "PDF Pro - 您的订阅已确认",
+      "greeting": "您的订阅已成功激活!",
+      "content": "感谢您订阅 PDF Pro。您现在可以使用所有高级功能。",
+      "subscription_plan": "订阅计划:",
+      "expiry_date": "到期日期:",
+      "dashboard_info": "您可以随时在仪表板查看您的订阅详情。"
+    },
+    "TrialStarted": {
+      "subject": "PDF Pro - 您的试用期已开始",
+      "greeting": "您的 PDF Pro 试用已开始!",
+      "content": "感谢您开始试用 PDF Pro。您现在可以使用所有高级功能。",
+      "trial_ends": "试用结束日期:",
+      "after_trial": "试用结束后，您可以购买订阅以继续使用所有功能。"
+    },
+    "TrialEndingSoon": {
+      "subject": "PDF Pro - 您的试用期将在 {days} 天后结束",
+      "greeting": "您的试用期即将结束",
+      "content": "您的 PDF Pro 试用期将在 {days} 天后结束。",
+      "end_date": "结束日期:",
+      "upgrade_message": "为了继续使用所有高级功能，请考虑升级到我们的付费计划。"
+    },
+    "SubscriptionEndingSoon": {
+      "subject": "PDF Pro - 您的订阅即将到期",
+      "greeting": "您的订阅即将到期",
+      "content": "您的 PDF Pro 订阅将在 {days} 天后到期。",
+      "expiry_date": "到期日期:",
+      "renewal_message": "要继续使用所有高级功能，请续订您的订阅。"
+    },
+    "SubscriptionExpired": {
+      "subject": "PDF Pro - 您的订阅已过期",
+      "greeting": "您的订阅已过期",
+      "content": "您的 PDF Pro 订阅已过期。您不再能使用高级功能。",
+      "renew_message": "要恢复所有高级功能的访问权限，请续订您的订阅。",
+      "renew_button": "立即续订"
+    }
   }
 }

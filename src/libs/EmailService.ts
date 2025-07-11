@@ -1,5 +1,6 @@
 import { logger } from '@/libs/Logger';
-import { formatDate } from '@/utils/SubscriptionHelpers';
+import { AppConfig } from '@/utils/AppConfig';
+import { formatLocalizedDate, getEmailTranslations } from '@/utils/EmailTranslations';
 
 /**
  * 邮件服务 - 处理所有与订阅相关的邮件发送
@@ -78,11 +79,13 @@ export class EmailService {
    * @param to 收件人邮箱
    * @param licenseKey License Key
    * @param expiresAt 过期日期
+   * @param locale 用户语言偏好，默认为英语
    */
   static async sendLicenseEmail(
     to: string,
     licenseKey: string,
     expiresAt: string | null,
+    locale: string = AppConfig.defaultLocale,
   ): Promise<boolean> {
     // 防重复发送：检查是否在10分钟内已发送过相同的license邮件
     const emailKey = `license_${to}_${licenseKey}`;
@@ -102,59 +105,85 @@ export class EmailService {
       return true; // 返回true避免上层报错
     }
 
-    logger.info({ to, licenseKey, expiresAt }, '准备发送许可证邮件');
-    const subject = 'PDF Pro - 您的许可证密钥已就绪';
+    try {
+      logger.info({ to, licenseKey, expiresAt, locale }, '准备发送许可证邮件');
 
-    // 格式化过期日期
-    const formattedExpiryDate = expiresAt ? formatDate(expiresAt) : '永久有效';
+      // 获取国际化翻译
+      const messages = await getEmailTranslations(locale);
 
-    const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #4f46e5;">感谢您购买 PDF Pro!</h2>
+      // 获取翻译文本
+      const subject = messages?.Emails?.License?.subject || 'PDF Pro - Your License Key Is Ready';
+      const greeting = messages?.Emails?.License?.greeting || 'Thank you for purchasing PDF Pro!';
+      const importantNoteTitle = messages?.Emails?.License?.important_note_title || 'Important: Activation Required';
+      const importantNoteContent = messages?.Emails?.License?.important_note_content
+        || 'You need to log in and activate your account with the license key below to use Pro features.';
+      const keyIntro = messages?.Emails?.License?.key_intro || 'Your license key is:';
+      const expiryDateLabel = messages?.Emails?.License?.expiry_date || 'Expiration date:';
+      const activationStepsTitle = messages?.Emails?.License?.activation_steps_title || 'Activation Steps:';
+      const activationStep1 = messages?.Emails?.License?.activation_step1 || 'Log in to your PDF Pro account';
+      const activationStep2 = messages?.Emails?.License?.activation_step2 || 'Visit the dashboard page';
+      const activationStep3 = messages?.Emails?.License?.activation_step3 || 'Enter the key above in the "License Activation" section';
+      const activationStep4 = messages?.Emails?.License?.activation_step4 || 'Click the "Activate" button';
+      const goToActivation = messages?.Emails?.License?.go_to_activation || 'Go to Activation Page';
+      const contactSupport = messages?.Emails?.Common?.contact_support || 'If you have any questions, please contact our support team.';
+      const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
+      const permanentLicense = messages?.Emails?.Common?.permanent_license || 'Permanent (never expires)';
 
-        <div style="background-color: #f9f5ff; border-left: 4px solid #7c3aed; padding: 15px; margin: 20px 0; border-radius: 4px;">
-          <p style="margin: 0; font-weight: bold; color: #7c3aed;">重要提示：需要激活</p>
-          <p style="margin: 8px 0 0 0;">您需要登录并使用以下许可证密钥激活您的账户，才能使用Pro版功能。</p>
+      // 格式化过期日期，使用用户语言偏好
+      const formattedExpiryDate = expiresAt ? formatLocalizedDate(expiresAt, locale) : permanentLicense;
+
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #4f46e5;">${greeting}</h2>
+
+          <div style="background-color: #f9f5ff; border-left: 4px solid #7c3aed; padding: 15px; margin: 20px 0; border-radius: 4px;">
+            <p style="margin: 0; font-weight: bold; color: #7c3aed;">${importantNoteTitle}</p>
+            <p style="margin: 8px 0 0 0;">${importantNoteContent}</p>
+          </div>
+
+          <p>${keyIntro}</p>
+          <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; text-align: center; font-size: 18px; font-family: monospace; margin: 20px 0;">
+            ${licenseKey}
+          </div>
+          <p><strong>${expiryDateLabel}</strong> ${formattedExpiryDate}</p>
+
+          <h3 style="color: #4f46e5; margin-top: 30px;">${activationStepsTitle}</h3>
+          <ol style="line-height: 1.6;">
+            <li>${activationStep1}</li>
+            <li>${activationStep2}</li>
+            <li>${activationStep3}</li>
+            <li>${activationStep4}</li>
+          </ol>
+
+          <div style="margin: 25px 0; text-align: center;">
+            <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
+               style="background-color: #4f46e5; color: white; padding: 12px 24px;
+                      text-decoration: none; border-radius: 5px; font-weight: bold;
+                      display: inline-block;">
+              ${goToActivation}
+            </a>
+          </div>
+
+          <p>${contactSupport}</p>
+          <p>${thankYou}</p>
+          <p>${teamSignature}</p>
         </div>
+      `;
 
-        <p>您的许可证密钥如下:</p>
-        <div style="background-color: #f3f4f6; padding: 15px; border-radius: 5px; text-align: center; font-size: 18px; font-family: monospace; margin: 20px 0;">
-          ${licenseKey}
-        </div>
-        <p><strong>过期日期:</strong> ${formattedExpiryDate}</p>
+      const result = await this.sendEmail(to, subject, htmlContent);
 
-        <h3 style="color: #4f46e5; margin-top: 30px;">激活步骤：</h3>
-        <ol style="line-height: 1.6;">
-          <li>登录您的 PDF Pro 账户</li>
-          <li>访问仪表板页面</li>
-          <li>在"许可证激活"部分输入上面的密钥</li>
-          <li>点击"激活"按钮</li>
-        </ol>
+      // 如果发送成功，记录到缓存中
+      if (result) {
+        this.recentEmails.set(emailKey, now);
+        logger.info({ to, licenseKey, locale }, 'License邮件发送成功，已记录到防重复缓存');
+      }
 
-        <div style="margin: 25px 0; text-align: center;">
-          <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
-             style="background-color: #4f46e5; color: white; padding: 12px 24px;
-                    text-decoration: none; border-radius: 5px; font-weight: bold;
-                    display: inline-block;">
-            前往激活页面
-          </a>
-        </div>
-
-        <p>如果您有任何问题，请随时联系我们的支持团队。</p>
-        <p>谢谢!</p>
-        <p>PDF Pro 团队</p>
-      </div>
-    `;
-
-    const result = await this.sendEmail(to, subject, htmlContent);
-
-    // 如果发送成功，记录到缓存中
-    if (result) {
-      this.recentEmails.set(emailKey, now);
-      logger.info({ to, licenseKey }, 'License邮件发送成功，已记录到防重复缓存');
+      return result;
+    } catch (error) {
+      logger.error({ error, to, licenseKey, locale }, 'License邮件发送失败');
+      return false;
     }
-
-    return result;
   }
 
   /**
@@ -162,58 +191,101 @@ export class EmailService {
    * @param to 收件人邮箱
    * @param planName 计划名称
    * @param expiresAt 过期日期
+   * @param locale 用户语言偏好，默认为英语
    */
   static async sendSubscriptionConfirmation(
     to: string,
     planName: string,
     expiresAt: string | null,
+    locale: string = AppConfig.defaultLocale,
   ): Promise<boolean> {
-    const subject = 'PDF Pro - 您的订阅已确认';
+    try {
+      // 获取国际化翻译
+      const messages = await getEmailTranslations(locale);
 
-    const formattedExpiryDate = expiresAt ? formatDate(expiresAt) : '永久有效';
+      // 获取翻译文本
+      const subject = messages?.Emails?.SubscriptionConfirmation?.subject || 'PDF Pro - Your Subscription Is Confirmed';
+      const greeting = messages?.Emails?.SubscriptionConfirmation?.greeting || 'Your subscription has been successfully activated!';
+      const content = messages?.Emails?.SubscriptionConfirmation?.content
+        || 'Thank you for subscribing to PDF Pro. You now have access to all premium features.';
+      const planLabel = messages?.Emails?.SubscriptionConfirmation?.subscription_plan || 'Subscription plan:';
+      const expiryDateLabel = messages?.Emails?.SubscriptionConfirmation?.expiry_date || 'Expiration date:';
+      const dashboardInfo = messages?.Emails?.SubscriptionConfirmation?.dashboard_info
+        || 'You can view your subscription details in the dashboard at any time.';
+      const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
+      const permanentLicense = messages?.Emails?.Common?.permanent_license || 'Permanent (never expires)';
 
-    const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #4f46e5;">您的订阅已成功激活!</h2>
-        <p>感谢您订阅 PDF Pro。您现在可以使用所有高级功能。</p>
-        <p><strong>订阅计划:</strong> ${planName}</p>
-        <p><strong>到期日期:</strong> ${formattedExpiryDate}</p>
-        <p>您可以随时在仪表板查看您的订阅详情。</p>
-        <p>享受 PDF Pro 带来的便利体验!</p>
-        <p>谢谢!</p>
-        <p>PDF Pro 团队</p>
-      </div>
-    `;
+      // 格式化过期日期，使用用户语言偏好
+      const formattedExpiryDate = expiresAt ? formatLocalizedDate(expiresAt, locale) : permanentLicense;
 
-    return this.sendEmail(to, subject, htmlContent);
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #4f46e5;">${greeting}</h2>
+          <p>${content}</p>
+          <p><strong>${planLabel}</strong> ${planName}</p>
+          <p><strong>${expiryDateLabel}</strong> ${formattedExpiryDate}</p>
+          <p>${dashboardInfo}</p>
+          <p>${thankYou}</p>
+          <p>${teamSignature}</p>
+        </div>
+      `;
+
+      return this.sendEmail(to, subject, htmlContent);
+    } catch (error) {
+      logger.error({ error, to, planName, locale }, '订阅确认邮件发送失败');
+      return false;
+    }
   }
 
   /**
    * 发送试用期开始邮件
    * @param to 收件人邮箱
    * @param trialEndsAt 试用期结束日期
+   * @param locale 用户语言偏好，默认为英语
    */
   static async sendTrialStarted(
     to: string,
     trialEndsAt: string,
+    locale: string = AppConfig.defaultLocale,
   ): Promise<boolean> {
-    const subject = 'PDF Pro - 您的试用期已开始';
+    try {
+      // 获取国际化翻译
+      const messages = await getEmailTranslations(locale);
 
-    const formattedEndDate = formatDate(trialEndsAt);
+      // 获取翻译文本
+      const subject = messages?.Emails?.TrialStarted?.subject || 'PDF Pro - Your Trial Has Started';
+      const greeting = messages?.Emails?.TrialStarted?.greeting || 'Your PDF Pro trial has begun!';
+      const content = messages?.Emails?.TrialStarted?.content
+        || 'Thank you for starting your PDF Pro trial. You now have access to all premium features.';
+      const trialEndsLabel = messages?.Emails?.TrialStarted?.trial_ends || 'Trial end date:';
+      const afterTrial = messages?.Emails?.TrialStarted?.after_trial
+        || 'After the trial ends, you can purchase a subscription to continue using all features.';
+      const contactSupport = messages?.Emails?.Common?.contact_support
+        || 'If you have any questions, please contact our support team.';
+      const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
 
-    const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #4f46e5;">您的 PDF Pro 试用已开始!</h2>
-        <p>感谢您开始试用 PDF Pro。您现在可以使用所有高级功能。</p>
-        <p><strong>试用结束日期:</strong> ${formattedEndDate}</p>
-        <p>试用结束后，您可以购买订阅以继续使用所有功能。</p>
-        <p>如有任何问题，请随时联系我们的支持团队。</p>
-        <p>谢谢!</p>
-        <p>PDF Pro 团队</p>
-      </div>
-    `;
+      // 格式化结束日期
+      const formattedEndDate = formatLocalizedDate(trialEndsAt, locale);
 
-    return this.sendEmail(to, subject, htmlContent);
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #4f46e5;">${greeting}</h2>
+          <p>${content}</p>
+          <p><strong>${trialEndsLabel}</strong> ${formattedEndDate}</p>
+          <p>${afterTrial}</p>
+          <p>${contactSupport}</p>
+          <p>${thankYou}</p>
+          <p>${teamSignature}</p>
+        </div>
+      `;
+
+      return this.sendEmail(to, subject, htmlContent);
+    } catch (error) {
+      logger.error({ error, to, trialEndsAt, locale }, '试用开始邮件发送失败');
+      return false;
+    }
   }
 
   /**
@@ -221,99 +293,156 @@ export class EmailService {
    * @param to 收件人邮箱
    * @param daysRemaining 剩余天数
    * @param trialEndsAt 试用期结束日期
+   * @param locale 用户语言偏好，默认为英语
    */
   static async sendTrialEndingSoon(
     to: string,
     daysRemaining: number,
     trialEndsAt: string,
+    locale: string = AppConfig.defaultLocale,
   ): Promise<boolean> {
-    const subject = `PDF Pro - 您的试用期将在 ${daysRemaining} 天后结束`;
+    try {
+      // 获取国际化翻译
+      const messages = await getEmailTranslations(locale);
 
-    const formattedEndDate = formatDate(trialEndsAt);
+      // 获取翻译文本
+      const subject = messages?.Emails?.TrialEndingSoon?.subject?.replace('{days}', daysRemaining.toString())
+        || `PDF Pro - Your Trial Is Ending Soon (${daysRemaining} days left)`;
+      const greeting = messages?.Emails?.TrialEndingSoon?.greeting || 'Your trial period is ending soon';
+      const content = messages?.Emails?.TrialEndingSoon?.content?.replace('{days}', daysRemaining.toString())
+        || `Your PDF Pro trial will end in ${daysRemaining} days.`;
+      const endDateLabel = messages?.Emails?.TrialEndingSoon?.end_date || 'End date:';
+      const upgradeMessage = messages?.Emails?.TrialEndingSoon?.upgrade_message
+        || 'To continue using all premium features, please consider upgrading to our paid plan.';
+      const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
 
-    const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #4f46e5;">您的试用期即将结束</h2>
-        <p>您的 PDF Pro 试用期将在 <strong>${daysRemaining} 天</strong>后结束。</p>
-        <p><strong>结束日期:</strong> ${formattedEndDate}</p>
-        <p>为了继续使用所有高级功能，请考虑升级到我们的付费计划。</p>
-        <div style="margin: 20px 0;">
-          <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
-             style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
-            立即升级
-          </a>
+      // 格式化结束日期
+      const formattedEndDate = formatLocalizedDate(trialEndsAt, locale);
+
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #4f46e5;">${greeting}</h2>
+          <p>${content}</p>
+          <p><strong>${endDateLabel}</strong> ${formattedEndDate}</p>
+          <p>${upgradeMessage}</p>
+          <div style="margin: 20px 0;">
+            <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
+               style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+              立即升级
+            </a>
+          </div>
+          <p>${thankYou}</p>
+          <p>${teamSignature}</p>
         </div>
-        <p>如有任何问题，请随时联系我们的支持团队。</p>
-        <p>谢谢!</p>
-        <p>PDF Pro 团队</p>
-      </div>
-    `;
+      `;
 
-    return this.sendEmail(to, subject, htmlContent);
+      return this.sendEmail(to, subject, htmlContent);
+    } catch (error) {
+      logger.error({ error, to, daysRemaining, trialEndsAt, locale }, '试用结束提醒邮件发送失败');
+      return false;
+    }
   }
 
   /**
    * 发送订阅即将到期提醒
    * @param to 收件人邮箱
    * @param daysRemaining 剩余天数
-   * @param expiresAt 到期日期
+   * @param expiresAt 订阅到期日期
+   * @param locale 用户语言偏好，默认为英语
    */
   static async sendSubscriptionEndingSoon(
     to: string,
     daysRemaining: number,
     expiresAt: string,
+    locale: string = AppConfig.defaultLocale,
   ): Promise<boolean> {
-    const subject = `PDF Pro - 您的订阅将在 ${daysRemaining} 天后到期`;
+    try {
+      // 获取国际化翻译
+      const messages = await getEmailTranslations(locale);
 
-    const formattedEndDate = formatDate(expiresAt);
+      // 获取翻译文本
+      const subject = messages?.Emails?.SubscriptionEndingSoon?.subject || 'PDF Pro - Your Subscription Is Ending Soon';
+      const greeting = messages?.Emails?.SubscriptionEndingSoon?.greeting || 'Your subscription is ending soon';
+      const content = messages?.Emails?.SubscriptionEndingSoon?.content?.replace('{days}', daysRemaining.toString())
+        || `Your PDF Pro subscription will expire in ${daysRemaining} days.`;
+      const expiryDateLabel = messages?.Emails?.SubscriptionEndingSoon?.expiry_date || 'Expiration date:';
+      const renewalMessage = messages?.Emails?.SubscriptionEndingSoon?.renewal_message
+        || 'To continue using all premium features, please renew your subscription.';
+      const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
 
-    const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #4f46e5;">您的订阅即将到期</h2>
-        <p>您的 PDF Pro 订阅将在 <strong>${daysRemaining} 天</strong>后到期。</p>
-        <p><strong>到期日期:</strong> ${formattedEndDate}</p>
-        <p>为了确保您能继续使用所有高级功能，请续订您的订阅。</p>
-        <div style="margin: 20px 0;">
-          <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
-             style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
-            立即续订
-          </a>
+      // 格式化过期日期
+      const formattedExpiryDate = formatLocalizedDate(expiresAt, locale);
+
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #4f46e5;">${greeting}</h2>
+          <p>${content}</p>
+          <p><strong>${expiryDateLabel}</strong> ${formattedExpiryDate}</p>
+          <p>${renewalMessage}</p>
+          <div style="margin: 20px 0;">
+            <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
+               style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+               立即续订
+            </a>
+          </div>
+          <p>${thankYou}</p>
+          <p>${teamSignature}</p>
         </div>
-        <p>如果您不希望续订，您的账户将在到期后降级为免费版。</p>
-        <p>如有任何问题，请随时联系我们的支持团队。</p>
-        <p>谢谢!</p>
-        <p>PDF Pro 团队</p>
-      </div>
-    `;
+      `;
 
-    return this.sendEmail(to, subject, htmlContent);
+      return this.sendEmail(to, subject, htmlContent);
+    } catch (error) {
+      logger.error({ error, to, daysRemaining, expiresAt, locale }, '订阅即将过期邮件发送失败');
+      return false;
+    }
   }
 
   /**
-   * 发送订阅已到期通知
+   * 发送订阅已过期邮件
    * @param to 收件人邮箱
+   * @param locale 用户语言偏好，默认为英语
    */
-  static async sendSubscriptionExpired(to: string): Promise<boolean> {
-    const subject = 'PDF Pro - 您的订阅已到期';
+  static async sendSubscriptionExpired(
+    to: string,
+    locale: string = AppConfig.defaultLocale,
+  ): Promise<boolean> {
+    try {
+      // 获取国际化翻译
+      const messages = await getEmailTranslations(locale);
 
-    const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #4f46e5;">您的订阅已到期</h2>
-        <p>您的 PDF Pro 订阅已到期。您将无法使用高级功能。</p>
-        <p>要恢复对所有功能的访问，请续订您的订阅。</p>
-        <div style="margin: 20px 0;">
-          <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
-             style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
-            立即续订
-          </a>
+      // 获取翻译文本
+      const subject = messages?.Emails?.SubscriptionExpired?.subject || 'PDF Pro - Your Subscription Has Expired';
+      const greeting = messages?.Emails?.SubscriptionExpired?.greeting || 'Your subscription has expired';
+      const content = messages?.Emails?.SubscriptionExpired?.content
+        || 'Your PDF Pro subscription has expired. You no longer have access to premium features.';
+      const renewMessage = messages?.Emails?.SubscriptionExpired?.renew_message
+        || 'To restore access to all premium features, please renew your subscription.';
+      const renewButton = messages?.Emails?.SubscriptionExpired?.renew_button || 'Renew Now';
+      const thankYou = messages?.Emails?.Common?.thank_you || 'Thank you!';
+      const teamSignature = messages?.Emails?.Common?.team_signature || 'PDF Pro Team';
+
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #4f46e5;">${greeting}</h2>
+          <p>${content}</p>
+          <p>${renewMessage}</p>
+          <div style="margin: 20px 0;">
+            <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
+               style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+              ${renewButton}
+            </a>
+          </div>
+          <p>${thankYou}</p>
+          <p>${teamSignature}</p>
         </div>
-        <p>感谢您之前对 PDF Pro 的支持。</p>
-        <p>如有任何问题，请随时联系我们的支持团队。</p>
-        <p>谢谢!</p>
-        <p>PDF Pro 团队</p>
-      </div>
-    `;
+      `;
 
-    return this.sendEmail(to, subject, htmlContent);
+      return this.sendEmail(to, subject, htmlContent);
+    } catch (error) {
+      logger.error({ error, to, locale }, '订阅过期邮件发送失败');
+      return false;
+    }
   }
 }
