@@ -181,7 +181,8 @@
     "feature_priority_support": "Support prioritaire",
     "feature_priority_support_desc": "Obtenez des réponses plus rapides",
     "upgrade_now": "Mettre à niveau",
-    "upgrading": "En cours..."
+    "upgrading": "En cours...",
+    "active_subscription": "Abonnement actif"
   },
   "Todos": {
     "title_bar": "Liste de Todos",

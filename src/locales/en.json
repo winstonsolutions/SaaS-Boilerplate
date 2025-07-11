@@ -181,7 +181,8 @@
     "feature_priority_support": "Priority Support",
     "feature_priority_support_desc": "Get faster responses",
     "upgrade_now": "Upgrade Now",
-    "upgrading": "Processing..."
+    "upgrading": "Processing...",
+    "active_subscription": "Active subscription"
   },
   "Todos": {
     "title_bar": "Todo List",

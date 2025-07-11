@@ -181,7 +181,8 @@
     "feature_priority_support": "优先支持",
     "feature_priority_support_desc": "获得更快的响应",
     "upgrade_now": "立即升级",
-    "upgrading": "处理中..."
+    "upgrading": "处理中...",
+    "active_subscription": "订阅已激活"
   },
   "Todos": {
     "title_bar": "待办事项列表",
