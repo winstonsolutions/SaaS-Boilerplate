@@ -151,7 +151,7 @@ export class EmailService {
           </ol>
 
           <div style="margin: 25px 0; text-align: center;">
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
+            <a href="https://pixelcapture.winstontech.me/dashboard"
                style="background-color: #4f46e5; color: white; padding: 12px 24px;
                       text-decoration: none; border-radius: 5px; font-weight: bold;
                       display: inline-block;">
@@ -321,7 +321,7 @@ export class EmailService {
           <p><strong>${endDateLabel}</strong> ${formattedEndDate}</p>
           <p>${upgradeMessage}</p>
           <div style="margin: 20px 0;">
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
+            <a href="https://pixelcapture.winstontech.me/dashboard"
                style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
               立即升级
             </a>
@@ -376,7 +376,7 @@ export class EmailService {
           <p><strong>${expiryDateLabel}</strong> ${formattedExpiryDate}</p>
           <p>${renewalMessage}</p>
           <div style="margin: 20px 0;">
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
+            <a href="https://pixelcapture.winstontech.me/dashboard"
                style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
                立即续订
             </a>
@@ -423,7 +423,7 @@ export class EmailService {
           <p>${content}</p>
           <p>${renewMessage}</p>
           <div style="margin: 20px 0;">
-            <a href="${process.env.NEXT_PUBLIC_APP_URL || ''}/dashboard"
+            <a href="https://pixelcapture.winstontech.me/dashboard"
                style="background-color: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
               ${renewButton}
             </a>
