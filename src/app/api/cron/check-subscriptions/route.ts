@@ -11,12 +11,11 @@ import { SubscriptionService } from '@/libs/SubscriptionService';
  * 检查即将过期的订阅并发送提醒邮件
  * 更新已经过期的订阅状态
  */
-export async function GET() {
-  // 检查API密钥(简单保护)
-  const apiKey = process.env.CRON_API_KEY;
-
-  if (!apiKey) {
-    logger.warn('缺少CRON_API_KEY环境变量');
+export async function GET(req: Request) {
+  // 验证是否来自Vercel的定时任务
+  if (req.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
+    logger.warn('未授权的cron请求');
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
