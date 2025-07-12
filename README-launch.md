@@ -57,6 +57,8 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_public_key
 NEXT_PUBLIC_STRIPE_MONTHLY_PRICE_ID=price_your_price_id
 ```
 
+即使还是沙盒中，部署到vercel后，Stripe的webhook链接要改。
+
 #### Database (Supabase)
 ```bash
 NEXT_PUBLIC_SUPABASE_URL=https://your_project.supabase.co
@@ -127,8 +129,8 @@ Create `.github/workflows/cron.yml` in project root:
 name: Daily Subscription Check
 on:
   schedule:
-    - cron: '0 2 * * *'  # Daily at 2 AM UTC (10 AM Beijing Time)
-  workflow_dispatch:    # Allow manual trigger
+    - cron: '0 2 * * *' # Daily at 2 AM UTC (10 AM Beijing Time)
+  workflow_dispatch: # Allow manual trigger
 
 jobs:
   check-subscriptions:
@@ -343,6 +345,9 @@ If you encounter issues during deployment:
 
 ---
 
-**Deployment Date**: `[Fill in deployment completion date]`  
-**Deployment Domain**: `[Fill in actual domain]`  
+**Deployment Date**: `[Fill in deployment completion date]`
+**Deployment Domain**: `[Fill in actual domain]`
 **Version**: `v1.0.0`
+
+clerk 实例化
+选第二个

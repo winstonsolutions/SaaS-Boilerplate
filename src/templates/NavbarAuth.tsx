@@ -10,12 +10,6 @@ import { Separator } from '@/components/ui/separator';
 export const NavbarAuth = () => {
   const t = useTranslations('Navbar');
 
-  // 临时调试 - 部署后可以删除
-  console.log('Clerk环境变量检查:', {
-    publishableKey: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.substring(0, 20) + '...',
-    signInUrl: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
-  });
-
   return (
     <>
       {/* Authenticated UI */}
