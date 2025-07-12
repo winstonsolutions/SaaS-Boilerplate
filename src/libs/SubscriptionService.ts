@@ -70,7 +70,7 @@ export class SubscriptionService {
       // 确定用户状态
       const status = determineUserStatus(
         user.trial_started_at,
-        user.subscription_end_at || (latestLicense?.expires_at ?? null),
+        user.subscription_expires_at || (latestLicense?.expires_at ?? null),
       );
 
       // 计算试用期结束时间
@@ -88,7 +88,7 @@ export class SubscriptionService {
         isPro: status === 'pro' || status === 'trial',
         isTrialActive: isInTrialPeriod(user.trial_started_at),
         trialEndsAt,
-        subscriptionEndsAt: user.subscription_end_at || (latestLicense?.expires_at ?? null),
+        subscriptionEndsAt: user.subscription_expires_at || (latestLicense?.expires_at ?? null),
         email: user.email,
         licenseKey: latestLicense?.license_key,
       };
@@ -206,7 +206,7 @@ export class SubscriptionService {
       const inTrialPeriod = isInTrialPeriod(user.trial_started_at);
 
       // 检查订阅是否有效
-      const hasActiveSubscription = isSubscriptionActive(user.subscription_end_at);
+      const hasActiveSubscription = isSubscriptionActive(user.subscription_expires_at);
 
       return inTrialPeriod || hasActiveSubscription;
     } catch (error) {
@@ -240,7 +240,7 @@ export class SubscriptionService {
       const { data: expiredSubs, error: subError } = await db
         .from('users')
         .update({ subscription_status: 'expired' })
-        .lt('subscription_end_at', now)
+        .lt('subscription_expires_at', now)
         .eq('subscription_status', 'pro')
         .select('id');
 

@@ -100,32 +100,41 @@ export type Database = {
       payments: {
         Row: {
           amount: number | null;
+          created_at: string | null;
           currency: string | null;
           id: string;
           license_id: string | null;
           payment_date: string | null;
           payment_id: string | null;
           status: string | null;
+          subscription_id: string | null;
+          updated_at: string | null;
           user_id: string | null;
         };
         Insert: {
           amount?: number | null;
+          created_at?: string | null;
           currency?: string | null;
           id?: string;
           license_id?: string | null;
           payment_date?: string | null;
           payment_id?: string | null;
           status?: string | null;
+          subscription_id?: string | null;
+          updated_at?: string | null;
           user_id?: string | null;
         };
         Update: {
           amount?: number | null;
+          created_at?: string | null;
           currency?: string | null;
           id?: string;
           license_id?: string | null;
           payment_date?: string | null;
           payment_id?: string | null;
           status?: string | null;
+          subscription_id?: string | null;
+          updated_at?: string | null;
           user_id?: string | null;
         };
         Relationships: [
@@ -145,6 +154,63 @@ export type Database = {
           },
         ];
       };
+      subscriptions: {
+        Row: {
+          cancel_at_period_end: boolean | null;
+          created_at: string | null;
+          customer_id: string | null;
+          end_date: string | null;
+          id: string;
+          license_id: string | null;
+          start_date: string | null;
+          status: string | null;
+          subscription_id: string;
+          updated_at: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          cancel_at_period_end?: boolean | null;
+          created_at?: string | null;
+          customer_id?: string | null;
+          end_date?: string | null;
+          id?: string;
+          license_id?: string | null;
+          start_date?: string | null;
+          status?: string | null;
+          subscription_id: string;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          cancel_at_period_end?: boolean | null;
+          created_at?: string | null;
+          customer_id?: string | null;
+          end_date?: string | null;
+          id?: string;
+          license_id?: string | null;
+          start_date?: string | null;
+          status?: string | null;
+          subscription_id?: string;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'subscriptions_license_id_fkey';
+            columns: ['license_id'];
+            isOneToOne: false;
+            referencedRelation: 'licenses';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'subscriptions_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       users: {
         Row: {
           clerk_id: string;
@@ -153,9 +219,11 @@ export type Database = {
           first_name: string | null;
           id: string;
           last_name: string | null;
-          subscription_end_at: string | null;
+          stripe_subscription_id: string | null;
+          subscription_expires_at: string | null;
           subscription_start_at: string | null;
           subscription_status: string | null;
+          subscription_tier: string | null;
           trial_started_at: string | null;
           updated_at: string | null;
         };
@@ -166,9 +234,11 @@ export type Database = {
           first_name?: string | null;
           id?: string;
           last_name?: string | null;
-          subscription_end_at?: string | null;
+          stripe_subscription_id?: string | null;
+          subscription_expires_at?: string | null;
           subscription_start_at?: string | null;
           subscription_status?: string | null;
+          subscription_tier?: string | null;
           trial_started_at?: string | null;
           updated_at?: string | null;
         };
@@ -179,9 +249,11 @@ export type Database = {
           first_name?: string | null;
           id?: string;
           last_name?: string | null;
-          subscription_end_at?: string | null;
+          stripe_subscription_id?: string | null;
+          subscription_expires_at?: string | null;
           subscription_start_at?: string | null;
           subscription_status?: string | null;
+          subscription_tier?: string | null;
           trial_started_at?: string | null;
           updated_at?: string | null;
         };

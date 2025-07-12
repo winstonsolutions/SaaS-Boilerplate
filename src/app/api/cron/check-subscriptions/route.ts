@@ -71,15 +71,15 @@ export async function GET() {
       .from('users')
       .select('*')
       .eq('subscription_status', 'pro')
-      .lt('subscription_end_at', sevenDaysLater.toISOString())
-      .gt('subscription_end_at', new Date().toISOString()); // 还没过期
+      .lt('subscription_expires_at', sevenDaysLater.toISOString())
+      .gt('subscription_expires_at', new Date().toISOString()); // 还没过期
 
     if (proError) {
       logger.error({ error: proError }, '查询即将过期的订阅用户失败');
     } else {
       // 发送订阅即将到期提醒，7天内每天都发送
       for (const user of proUsers || []) {
-        const endDate = new Date(user.subscription_end_at);
+        const endDate = new Date(user.subscription_expires_at);
         const now = new Date();
         const daysRemaining = Math.ceil((endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 

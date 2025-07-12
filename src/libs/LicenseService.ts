@@ -231,7 +231,8 @@ export class LicenseService {
         .update({
           subscription_status: 'pro',
           subscription_start_at: new Date().toISOString(),
-          subscription_end_at: licenseData.expires_at,
+          subscription_expires_at: licenseData.expires_at, // 修正字段名
+          subscription_tier: 'pro', // 添加subscription_tier字段
         })
         .eq('id', userId);
 

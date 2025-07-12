@@ -197,14 +197,22 @@ export class StripeService {
           user_id: userId,
           license_id: license.id,
           payment_id: paymentIntent,
-          amount: session.amount_total ? session.amount_total / 100 : 0, // Stripe金额以分为单位
+          amount: session.amount_total ? session.amount_total / 100 : 0, // Stripe金额以分为单位转为元
           currency: session.currency,
           status: 'completed',
+          payment_date: new Date().toISOString(), // 添加支付时间
         });
 
       if (paymentError) {
         logger.error({ error: paymentError }, '记录支付信息失败');
         // 不中断流程
+      } else {
+        logger.info({
+          userId,
+          paymentIntent,
+          amount: session.amount_total ? session.amount_total / 100 : 0,
+          currency: session.currency,
+        }, '成功记录一次性支付信息');
       }
 
       // 注意：一次性支付才在这里发送邮件
@@ -323,7 +331,7 @@ export class StripeService {
         .from('users')
         .update({
           subscription_status: 'expired',
-          subscription_end_at: new Date().toISOString(), // 立即过期
+          subscription_expires_at: new Date().toISOString(), // 立即过期
         })
         .eq('id', userId);
 
@@ -442,6 +450,27 @@ export class StripeService {
 
       if (insertError) {
         logger.error({ error: insertError }, '记录订阅信息失败');
+        // 不中断流程
+      }
+
+      // 添加支付记录 - 对于订阅创建事件
+      // 注意：订阅创建时通常还没有实际支付，支付记录在invoice.paid中处理
+      // 但为了保持数据完整性，我们记录订阅创建事件
+      const { error: paymentError } = await db
+        .from('payments')
+        .insert({
+          user_id: userId,
+          license_id: license.id,
+          subscription_id: subscriptionData.id,
+          payment_id: `sub_created_${subscriptionData.id}`, // 标记这是订阅创建事件
+          amount: 0, // 订阅创建时金额为0，实际支付在invoice.paid中记录
+          currency: 'usd',
+          status: 'subscription_created',
+          payment_date: subscriptionData.startDate,
+        });
+
+      if (paymentError) {
+        logger.error({ error: paymentError }, '记录订阅创建支付事件失败');
         // 不中断流程
       }
 
@@ -649,15 +678,25 @@ export class StripeService {
               license_id: license.id,
               payment_id: paymentId,
               subscription_id: subscriptionId,
-              amount: invoice.amount_paid / 100, // 单位转换
+              amount: invoice.amount_paid / 100, // 单位转换从分转为元
               currency: invoice.currency,
               status: 'completed',
+              payment_date: new Date(invoice.created * 1000).toISOString(), // 添加支付时间
             });
 
           if (paymentError) {
             logger.error({ error: paymentError }, '记录支付信息失败');
             // 不中断流程
+          } else {
+            logger.info({
+              userId,
+              paymentId,
+              amount: invoice.amount_paid / 100,
+              currency: invoice.currency,
+            }, '成功记录发票支付信息');
           }
+        } else {
+          logger.info({ userId, paymentId }, '支付记录已存在，跳过重复记录');
         }
       }
 
@@ -777,7 +816,7 @@ export class StripeService {
       const { error: updateError } = await db
         .from('users')
         .update({
-          subscription_end_at: subscriptionEndDate.toISOString(),
+          subscription_expires_at: subscriptionEndDate.toISOString(),
         })
         .eq('id', userRecord.id);
 
@@ -829,7 +868,7 @@ export class StripeService {
         .from('users')
         .update({
           subscription_status: 'expired',
-          subscription_end_at: new Date().toISOString(), // 立即过期
+          subscription_expires_at: new Date().toISOString(), // 立即过期
         })
         .eq('id', userRecord.id);
 
