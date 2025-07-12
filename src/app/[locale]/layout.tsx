@@ -1,5 +1,6 @@
 import '@/styles/global.css';
 
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import { NextIntlClientProvider, useMessages } from 'next-intl';
@@ -127,6 +128,7 @@ export default function RootLayout(props: {
           messages={messages}
         >
           {props.children}
+          <SpeedInsights />
         </NextIntlClientProvider>
       </body>
     </html>
