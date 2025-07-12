@@ -34,12 +34,14 @@ export class LicenseService {
    * @param email 用户邮箱
    * @param planType 订阅类型 (monthly/yearly)
    * @param months 订阅月数
+   * @param price 订阅价格
    */
   static async createLicense(
     userId: string,
     email: string,
     planType: string = 'monthly',
     months: number = 1,
+    price?: number,
   ): Promise<License | null> {
     try {
       // 首先检查用户是否已经有最近创建的license
@@ -99,6 +101,7 @@ export class LicenseService {
           active: false,
           plan_type: planType,
           email,
+          price,
         })
         .select()
         .single();
@@ -232,7 +235,6 @@ export class LicenseService {
           subscription_status: 'pro',
           subscription_start_at: new Date().toISOString(),
           subscription_expires_at: licenseData.expires_at, // 修正字段名
-          subscription_tier: 'pro', // 添加subscription_tier字段
         })
         .eq('id', userId);
 

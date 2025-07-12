@@ -176,12 +176,17 @@ export class StripeService {
         return false;
       }
 
+      // 获取价格配置
+      const { getCurrentPricingPlan } = await import('@/utils/SubscriptionConfig');
+      const pricePlan = getCurrentPricingPlan();
+
       // 创建license - 但不激活
       const license = await LicenseService.createLicense(
         userId,
         user.email,
         planType || 'monthly',
         1, // 1个月的订阅
+        pricePlan.price, // 传递正确的价格
       );
 
       if (!license) {
@@ -280,12 +285,17 @@ export class StripeService {
     months: number = 1,
   ): Promise<{ success: boolean; licenseKey?: string; error?: string }> {
     try {
+      // 获取价格配置
+      const { getCurrentPricingPlan } = await import('@/utils/SubscriptionConfig');
+      const pricePlan = getCurrentPricingPlan();
+
       // 创建license
       const license = await LicenseService.createLicense(
         userId,
         email,
         'monthly',
         months,
+        pricePlan.price, // 传递正确的价格
       );
 
       if (!license) {
@@ -421,12 +431,17 @@ export class StripeService {
         return true; // 已处理过，直接返回成功
       }
 
+      // 获取价格配置
+      const { getCurrentPricingPlan } = await import('@/utils/SubscriptionConfig');
+      const pricePlan = getCurrentPricingPlan();
+
       // 创建license
       const license = await LicenseService.createLicense(
         userId,
         user.email,
         'monthly', // 目前只支持月付
         1, // 1个月的订阅
+        pricePlan.price, // 传递正确的价格
       );
 
       if (!license) {
@@ -454,8 +469,7 @@ export class StripeService {
       }
 
       // 添加支付记录 - 对于订阅创建事件
-      // 注意：订阅创建时通常还没有实际支付，支付记录在invoice.paid中处理
-      // 但为了保持数据完整性，我们记录订阅创建事件
+      // 使用实际的订阅价格而不是0
       const { error: paymentError } = await db
         .from('payments')
         .insert({
@@ -463,7 +477,7 @@ export class StripeService {
           license_id: license.id,
           subscription_id: subscriptionData.id,
           payment_id: `sub_created_${subscriptionData.id}`, // 标记这是订阅创建事件
-          amount: 0, // 订阅创建时金额为0，实际支付在invoice.paid中记录
+          amount: pricePlan.price, // 使用实际价格而不是0
           currency: 'usd',
           status: 'subscription_created',
           payment_date: subscriptionData.startDate,
@@ -478,7 +492,6 @@ export class StripeService {
       const { error: userUpdateError } = await db
         .from('users')
         .update({
-          subscription_tier: 'pro',
           subscription_expires_at: subscriptionData.endDate,
           updated_at: new Date().toISOString(),
         })
@@ -645,12 +658,17 @@ export class StripeService {
         subscriptionEndDate = new Date(invoice.period_end * 1000);
       }
 
+      // 获取价格配置
+      const { getCurrentPricingPlan } = await import('@/utils/SubscriptionConfig');
+      const pricePlan = getCurrentPricingPlan();
+
       // 创建license
       const license = await LicenseService.createLicense(
         userId,
         user.email,
         'monthly', // 目前只支持月付
         1, // 1个月的订阅
+        pricePlan.price, // 传递正确的价格
       );
 
       if (!license) {
@@ -751,7 +769,6 @@ export class StripeService {
       const { error: userUpdateError } = await db
         .from('users')
         .update({
-          subscription_tier: 'pro',
           subscription_expires_at: subscriptionEndDate?.toISOString() || null,
           updated_at: new Date().toISOString(),
         })
@@ -798,15 +815,27 @@ export class StripeService {
         return true; // 不处理非活跃状态的更新
       }
 
+      // 通过 subscriptions 表查找用户ID
+      const { data: subscriptionRecord, error: subscriptionError } = await db
+        .from('subscriptions')
+        .select('user_id')
+        .eq('subscription_id', subscription.id)
+        .single();
+
+      if (subscriptionError || !subscriptionRecord) {
+        logger.error({ error: subscriptionError, subscriptionId: subscription.id }, '找不到匹配的订阅记录');
+        return false;
+      }
+
       // 查找用户记录
       const { data: userRecord, error: userError } = await db
         .from('users')
         .select('*')
-        .eq('stripe_subscription_id', subscription.id)
+        .eq('id', subscriptionRecord.user_id)
         .single();
 
       if (userError || !userRecord) {
-        logger.error({ error: userError, subscriptionId: subscription.id }, '找不到匹配的用户记录');
+        logger.error({ error: userError, userId: subscriptionRecord.user_id }, '找不到匹配的用户记录');
         return false;
       }
 
@@ -840,15 +869,27 @@ export class StripeService {
     try {
       const subscription = event.data.object as Stripe.Subscription;
 
+      // 通过 subscriptions 表查找用户ID
+      const { data: subscriptionRecord, error: subscriptionError } = await db
+        .from('subscriptions')
+        .select('user_id')
+        .eq('subscription_id', subscription.id)
+        .single();
+
+      if (subscriptionError || !subscriptionRecord) {
+        logger.error({ error: subscriptionError, subscriptionId: subscription.id }, '找不到匹配的订阅记录');
+        return false;
+      }
+
       // 查找用户记录
       const { data: userRecord, error: userError } = await db
         .from('users')
         .select('*')
-        .eq('stripe_subscription_id', subscription.id)
+        .eq('id', subscriptionRecord.user_id)
         .single();
 
       if (userError || !userRecord) {
-        logger.error({ error: userError, subscriptionId: subscription.id }, '找不到匹配的用户记录');
+        logger.error({ error: userError, userId: subscriptionRecord.user_id }, '找不到匹配的用户记录');
         return false;
       }
 
