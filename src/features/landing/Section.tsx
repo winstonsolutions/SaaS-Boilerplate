@@ -12,8 +12,12 @@ export const Section = (props: {
     {(props.title || props.subtitle || props.description) && (
       <div className="mx-auto mb-12 max-w-screen-md text-center">
         {props.subtitle && (
-          <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-base font-bold uppercase tracking-wide text-transparent">
-            {props.subtitle}
+          <div className="flex items-center justify-center gap-4">
+            <div className="h-0.5 w-full max-w-[100px] bg-gray-300"></div>
+            <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-base font-bold uppercase tracking-wide text-transparent">
+              {props.subtitle}
+            </div>
+            <div className="h-0.5 w-full max-w-[100px] bg-gray-300"></div>
           </div>
         )}
 
