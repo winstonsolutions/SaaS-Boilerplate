@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage(props: { params: { locale: string } })
         <div className="mb-12 text-center">
           <h1 className="mb-4 text-4xl font-bold">Privacy Policy</h1>
           <p className="mx-auto max-w-3xl text-lg text-muted-foreground">
-            Last updated: June 1, 2023
+            Last updated: July 13, 2025
           </p>
         </div>
 
@@ -112,8 +112,8 @@ export default function PrivacyPolicyPage(props: { params: { locale: string } })
             <p>
               If you have any questions about this Privacy Policy, please contact me at
               {' '}
-              <a href="mailto:alex@pixelcapture.app" className="text-primary hover:underline">
-                alex@pixelcapture.app
+              <a href="mailto:winstonzhaotech@gmail.com" className="text-primary hover:underline">
+                winstonzhaotech@gmail.com
               </a>
             </p>
           </section>
