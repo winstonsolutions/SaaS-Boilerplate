@@ -149,6 +149,28 @@
     "activate_license": "收到许可证密钥后，请在下方的激活框中输入激活",
     "support_message": "如果您在10分钟内没有收到邮件，或遇到任何问题，请联系我们的支持团队。"
   },
+  "About": {
+    "meta_title": "关于 Pixel Capture",
+    "meta_description": "了解 Pixel Capture 背后的故事和使命，这是一个具有像素级精准度的完美截图工具。",
+    "page_title": "关于 Pixel Capture",
+    "page_subtitle": "我的使命是创造强大的工具，使设计师和开发者的工作更加轻松",
+    "story_title": "我的故事",
+    "story_paragraph_1": "你好！我是Winston Zhao，一位热衷于为网络社区创造有用工具的独立开发者。Pixel Capture 诞生于2025年，源于我对现有截图工具的不满。我想要一个能够提供像素级精度、自定义尺寸和无缝工作流集成的解决方案。",
+    "story_paragraph_2": "最初只是为了自己使用的简单工具，很快就发展成为一个全面的浏览器扩展，现在为全球数千名设计师、开发者和内容创作者提供服务。我对质量和用户体验的承诺推动了 Pixel Capture 的持续改进。",
+    "mission_title": "我的使命",
+    "mission_statement": "提供最精确、最直观、最高效的截图工具，增强创意工作流程并为全球专业人士节省时间。",
+    "value_precision_title": "精确性",
+    "value_precision_description": "我相信像素级精度很重要，特别是对于需要捕捉精确 UI 元素的设计师和开发者。",
+    "value_simplicity_title": "简洁性",
+    "value_simplicity_description": "强大功能不必复杂。我专注于直观设计，使高级功能对每个人都易于使用。",
+    "value_innovation_title": "创新性",
+    "value_innovation_description": "我不断推动截图工具可能性的边界，整合最新技术和用户反馈。",
+    "about_me_title": "关于我",
+    "about_me_name": "Winston Zhao",
+    "about_me_position": "全栈开发者 & Pixel Capture 创始人",
+    "about_me_bio_1": "我是一名热情的开发者，拥有超过5年的网络和浏览器扩展开发经验。当我不写代码时，你可以看到我在钓鱼、徒步旅行、阅读关于新技术的资料，或者尝试摄影。",
+    "about_me_bio_2": "Pixel Capture 代表了我为创意专业人士解决实际问题的承诺。我根据用户反馈不断努力改进和开发新功能。"
+  },
   "DataTable": {
     "no_results": "没有结果。"
   },

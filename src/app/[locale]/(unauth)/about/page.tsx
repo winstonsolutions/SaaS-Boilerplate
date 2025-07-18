@@ -1,69 +1,71 @@
 import Image from 'next/image';
-import { unstable_setRequestLocale } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 
 import { Footer } from '@/templates/Footer';
 import { Navbar } from '@/templates/Navbar';
 
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
+  const t = await getTranslations({ locale, namespace: 'About' });
+
+  return {
+    title: t('meta_title'),
+    description: t('meta_description'),
+  };
+}
+
 export default function AboutPage(props: { params: { locale: string } }) {
-  unstable_setRequestLocale(props.params.locale);
+  const { locale } = props.params;
+  unstable_setRequestLocale(locale);
+  const t = useTranslations('About');
 
   return (
     <>
       <Navbar />
       <main className="container mx-auto px-4 py-16">
         <div className="mb-12 text-center">
-          <h1 className="mb-4 text-4xl font-bold">About Pixel Capture</h1>
+          <h1 className="mb-4 text-4xl font-bold">{t('page_title')}</h1>
           <p className="mx-auto max-w-3xl text-lg text-muted-foreground">
-            My mission is to create powerful tools that make designers' and developers' lives easier
+            {t('page_subtitle')}
           </p>
         </div>
 
         <section className="mb-16">
           <div className="mx-auto max-w-3xl">
-            <h2 className="mb-6 text-2xl font-semibold">My Story</h2>
+            <h2 className="mb-6 text-2xl font-semibold">{t('story_title')}</h2>
             <p className="mb-4">
-              Hi there! I'm Winston Zhao, an independent developer with a passion for creating useful tools
-              for the web community. Pixel Capture was born in 2025 out of my own frustration with
-              existing screenshot tools. I wanted a solution that offered pixel-perfect precision,
-              custom dimensions, and seamless workflow integration.
+              {t('story_paragraph_1')}
             </p>
             <p className="mb-4">
-              What started as a simple tool for my own use quickly evolved into a comprehensive
-              browser extension that now serves thousands of designers, developers, and content creators
-              worldwide. My commitment to quality and user experience drives the continuous improvement
-              of Pixel Capture.
+              {t('story_paragraph_2')}
             </p>
           </div>
         </section>
 
         <section className="mb-16 bg-card/50 py-12">
           <div className="mx-auto max-w-3xl">
-            <h2 className="mb-6 text-center text-2xl font-semibold">My Mission</h2>
+            <h2 className="mb-6 text-center text-2xl font-semibold">{t('mission_title')}</h2>
             <p className="mb-8 text-center text-lg">
-              To provide the most precise, intuitive, and efficient screenshot tools that enhance
-              creative workflows and save time for professionals around the world.
+              {t('mission_statement')}
             </p>
 
             <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
               <div className="rounded-lg bg-background p-6 shadow-sm">
-                <h3 className="mb-3 text-lg font-medium">Precision</h3>
+                <h3 className="mb-3 text-lg font-medium">{t('value_precision_title')}</h3>
                 <p className="text-muted-foreground">
-                  I believe that pixel-perfect accuracy matters, especially for designers and
-                  developers who need to capture exact UI elements.
+                  {t('value_precision_description')}
                 </p>
               </div>
               <div className="rounded-lg bg-background p-6 shadow-sm">
-                <h3 className="mb-3 text-lg font-medium">Simplicity</h3>
+                <h3 className="mb-3 text-lg font-medium">{t('value_simplicity_title')}</h3>
                 <p className="text-muted-foreground">
-                  Power doesn't have to be complex. I focus on intuitive design that makes
-                  advanced features accessible to everyone.
+                  {t('value_simplicity_description')}
                 </p>
               </div>
               <div className="rounded-lg bg-background p-6 shadow-sm">
-                <h3 className="mb-3 text-lg font-medium">Innovation</h3>
+                <h3 className="mb-3 text-lg font-medium">{t('value_innovation_title')}</h3>
                 <p className="text-muted-foreground">
-                  I continuously push the boundaries of what's possible with screenshot tools,
-                  integrating the latest technologies and user feedback.
+                  {t('value_innovation_description')}
                 </p>
               </div>
             </div>
@@ -72,28 +74,24 @@ export default function AboutPage(props: { params: { locale: string } }) {
 
         <section className="mb-16">
           <div className="mx-auto max-w-3xl">
-            <h2 className="mb-6 text-center text-2xl font-semibold">About Me</h2>
+            <h2 className="mb-6 text-center text-2xl font-semibold">{t('about_me_title')}</h2>
             <div className="flex flex-col items-center">
               <div className="relative mb-6 size-40 overflow-hidden rounded-full">
                 <Image
                   src="/developer-avatar.jpg"
-                  alt="Winston Zhao"
+                  alt={t('about_me_name')}
                   fill
                   className="object-cover"
                   priority
                 />
               </div>
-              <h3 className="text-xl font-medium">Winston Zhao</h3>
-              <p className="mb-6 text-muted-foreground">Full-Stack Developer & Creator of Pixel Capture</p>
+              <h3 className="text-xl font-medium">{t('about_me_name')}</h3>
+              <p className="mb-6 text-muted-foreground">{t('about_me_position')}</p>
               <p className="mb-4 text-center">
-                I'm a passionate developer with over 5 years of experience in web and browser extension
-                development. When I'm not coding, you can find me fishing, hiking, reading about new technologies,
-                or experimenting with photography.
+                {t('about_me_bio_1')}
               </p>
               <p className="text-center">
-                Pixel Capture represents my commitment to creating tools that solve real problems for
-                creative professionals. I'm constantly working on improvements and new features based on
-                user feedback.
+                {t('about_me_bio_2')}
               </p>
             </div>
           </div>

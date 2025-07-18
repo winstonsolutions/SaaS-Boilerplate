@@ -237,5 +237,27 @@
     "status_completed": "Terminé",
     "status_in_progress": "En Cours",
     "status_planned": "Planifié"
+  },
+  "About": {
+    "meta_title": "À propos de Pixel Capture",
+    "meta_description": "Découvrez l'histoire et la mission derrière Pixel Capture, l'outil de capture d'écran parfait avec une précision au pixel près.",
+    "page_title": "À propos de Pixel Capture",
+    "page_subtitle": "Ma mission est de créer des outils puissants qui facilitent la vie des designers et des développeurs",
+    "story_title": "Mon histoire",
+    "story_paragraph_1": "Bonjour! Je suis Winston Zhao, un développeur indépendant passionné par la création d'outils utiles pour la communauté web. Pixel Capture est né en 2025 de ma propre frustration face aux outils de capture d'écran existants. Je voulais une solution offrant une précision au pixel près, des dimensions personnalisées et une intégration fluide dans le flux de travail.",
+    "story_paragraph_2": "Ce qui a commencé comme un simple outil pour mon usage personnel s'est rapidement transformé en une extension de navigateur complète qui sert maintenant des milliers de designers, développeurs et créateurs de contenu dans le monde entier. Mon engagement pour la qualité et l'expérience utilisateur motive l'amélioration continue de Pixel Capture.",
+    "mission_title": "Ma mission",
+    "mission_statement": "Fournir les outils de capture d'écran les plus précis, intuitifs et efficaces qui améliorent les flux de travail créatifs et font gagner du temps aux professionnels du monde entier.",
+    "value_precision_title": "Précision",
+    "value_precision_description": "Je crois que la précision au pixel près est importante, en particulier pour les designers et les développeurs qui doivent capturer des éléments d'interface utilisateur exacts.",
+    "value_simplicity_title": "Simplicité",
+    "value_simplicity_description": "La puissance n'a pas besoin d'être complexe. Je me concentre sur un design intuitif qui rend les fonctionnalités avancées accessibles à tous.",
+    "value_innovation_title": "Innovation",
+    "value_innovation_description": "Je repousse continuellement les limites de ce qui est possible avec les outils de capture d'écran, en intégrant les dernières technologies et les retours des utilisateurs.",
+    "about_me_title": "À propos de moi",
+    "about_me_name": "Winston Zhao",
+    "about_me_position": "Développeur Full-Stack & Créateur de Pixel Capture",
+    "about_me_bio_1": "Je suis un développeur passionné avec plus de 5 ans d'expérience dans le développement web et d'extensions de navigateur. Quand je ne code pas, vous pouvez me trouver à la pêche, en randonnée, en train de lire sur les nouvelles technologies ou d'expérimenter la photographie.",
+    "about_me_bio_2": "Pixel Capture représente mon engagement à créer des outils qui résolvent des problèmes concrets pour les professionnels créatifs. Je travaille constamment sur des améliorations et de nouvelles fonctionnalités basées sur les retours des utilisateurs."
   }
 }
