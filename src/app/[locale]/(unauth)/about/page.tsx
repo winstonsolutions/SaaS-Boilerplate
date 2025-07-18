@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { unstable_setRequestLocale } from 'next-intl/server';
 
 import { Footer } from '@/templates/Footer';
@@ -21,8 +22,8 @@ export default function AboutPage(props: { params: { locale: string } }) {
           <div className="mx-auto max-w-3xl">
             <h2 className="mb-6 text-2xl font-semibold">My Story</h2>
             <p className="mb-4">
-              Hi there! I'm Alex Chen, an independent developer with a passion for creating useful tools
-              for the web community. Pixel Capture was born in 2023 out of my own frustration with
+              Hi there! I'm Winston Zhao, an independent developer with a passion for creating useful tools
+              for the web community. Pixel Capture was born in 2025 out of my own frustration with
               existing screenshot tools. I wanted a solution that offered pixel-perfect precision,
               custom dimensions, and seamless workflow integration.
             </p>
@@ -73,12 +74,20 @@ export default function AboutPage(props: { params: { locale: string } }) {
           <div className="mx-auto max-w-3xl">
             <h2 className="mb-6 text-center text-2xl font-semibold">About Me</h2>
             <div className="flex flex-col items-center">
-              <div className="mb-6 size-40 overflow-hidden rounded-full bg-muted"></div>
-              <h3 className="text-xl font-medium">Alex Chen</h3>
+              <div className="relative mb-6 size-40 overflow-hidden rounded-full">
+                <Image
+                  src="/developer-avatar.jpg"
+                  alt="Winston Zhao"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <h3 className="text-xl font-medium">Winston Zhao</h3>
               <p className="mb-6 text-muted-foreground">Full-Stack Developer & Creator of Pixel Capture</p>
               <p className="mb-4 text-center">
-                I'm a passionate developer with over 8 years of experience in web and browser extension
-                development. When I'm not coding, you can find me hiking, reading about new technologies,
+                I'm a passionate developer with over 5 years of experience in web and browser extension
+                development. When I'm not coding, you can find me fishing, hiking, reading about new technologies,
                 or experimenting with photography.
               </p>
               <p className="text-center">
