@@ -109,6 +109,58 @@ export class EmailService {
   }
 
   /**
+   * 发送联系表单邮件
+   * @param fromName 发送者姓名
+   * @param fromEmail 发送者邮箱
+   * @param subject 邮件主题
+   * @param message 消息内容
+   */
+  static async sendContactFormEmail(
+    fromName: string,
+    fromEmail: string,
+    subject: string,
+    message: string,
+  ): Promise<boolean> {
+    try {
+      // 目标邮箱 - 开发者邮箱
+      const to = 'winstonzhaotech@gmail.com';
+
+      // 构建邮件主题
+      const emailSubject = `Contact Form: ${subject}`;
+
+      // 构建HTML内容
+      const htmlContent = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #4f46e5;">New Contact Form Submission</h2>
+          <div style="background-color: #f3f4f6; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <p><strong>From:</strong> ${fromName} (${fromEmail})</p>
+            <p><strong>Subject:</strong> ${subject}</p>
+            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd;">
+              <p><strong>Message:</strong></p>
+              <div style="background-color: #fff; padding: 15px; border-radius: 5px;">
+                ${message.replace(/\n/g, '<br>')}
+              </div>
+            </div>
+          </div>
+          <p style="color: #6b7280; font-size: 14px;">This message was sent from the contact form on Pixel Capture website.</p>
+        </div>
+      `;
+
+      logger.info({ fromName, fromEmail, subject }, '发送联系表单邮件');
+
+      // 使用现有的sendEmail方法发送
+      return await this.sendEmail(
+        to,
+        emailSubject,
+        htmlContent,
+      );
+    } catch (error) {
+      logger.error({ error, fromName, fromEmail, subject }, '联系表单邮件发送失败');
+      return false;
+    }
+  }
+
+  /**
    * 发送license key邮件
    * @param to 收件人邮箱
    * @param licenseKey License Key

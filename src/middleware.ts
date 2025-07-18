@@ -21,9 +21,9 @@ const isProtectedRoute = createRouteMatcher([
   '/:locale/dashboard(.*)',
   '/onboarding(.*)',
   '/:locale/onboarding(.*)',
-  // 排除webhook、同步用户API、测试API和cron API路径
-  '/((?!api/webhooks|api/sync-users|api/test-email|api/debug-email|api/cron).*)api(.*)',
-  '/:locale/((?!api/webhooks|api/sync-users|api/test-email|api/debug-email|api/cron).*)api(.*)',
+  // 排除webhook、同步用户API、测试API、cron API和联系表单API路径
+  '/((?!api/webhooks|api/sync-users|api/test-email|api/debug-email|api/cron|api/contact).*)api(.*)',
+  '/:locale/((?!api/webhooks|api/sync-users|api/test-email|api/debug-email|api/cron|api/contact).*)api(.*)',
 ]);
 
 // 此middleware确保只有已登录用户可以访问应用
@@ -32,13 +32,14 @@ export default function middleware(
   request: NextRequest,
   event: NextFetchEvent,
 ) {
-  // 排除webhook路径、同步用户API、测试API和cron API
+  // 排除webhook路径、同步用户API、测试API、cron API和联系表单API
   if (
     request.nextUrl.pathname.includes('/api/webhooks')
     || request.nextUrl.pathname.includes('/api/sync-users')
     || request.nextUrl.pathname.includes('/api/test-email')
     || request.nextUrl.pathname.includes('/api/debug-email')
     || request.nextUrl.pathname.includes('/api/cron')
+    || request.nextUrl.pathname.includes('/api/contact')
   ) {
     return NextResponse.next();
   }

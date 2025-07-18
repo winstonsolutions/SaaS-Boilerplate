@@ -83,6 +83,14 @@ export const Footer = () => {
                   {t('roadmap')}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/about"
+                  className="text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  About
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -108,31 +116,6 @@ export const Footer = () => {
                   {t('community')}
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          {/* Developer Links */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">
-              {t('developer')}
-            </h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {t('about_me')}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {t('contact')}
-                </Link>
-              </li>
               <li>
                 <Link
                   href="/privacy"
@@ -147,6 +130,31 @@ export const Footer = () => {
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {t('terms_of_service')}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Developer Links */}
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider">
+              {t('developer')}
+            </h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link
+                  href="/developer"
+                  className="text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {t('about_me')}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="mailto:winstonzhaotech@gmail.com"
+                  className="text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {t('contact')}
                 </Link>
               </li>
             </ul>
