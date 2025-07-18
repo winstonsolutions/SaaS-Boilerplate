@@ -8,6 +8,37 @@ import { formatLocalizedDate, getEmailTranslations } from '@/utils/EmailTranslat
 export class EmailService {
   // 防重复发送邮件的缓存（存储最近发送的邮件记录）
   private static recentEmails = new Map<string, number>();
+  // 上次发送邮件的时间
+  private static lastEmailSentTime = 0;
+  // 邮件发送间隔（毫秒）- 确保每秒不超过1个请求
+  private static readonly EMAIL_RATE_LIMIT_MS = 1000;
+
+  /**
+   * 延迟执行的工具函数
+   * @param ms 延迟毫秒数
+   */
+  private static sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
+   * 控制邮件发送速率，确保不触发限流
+   */
+  private static async respectRateLimit(): Promise<void> {
+    const now = Date.now();
+    const timeSinceLastEmail = now - this.lastEmailSentTime;
+
+    // 如果距离上次发送不足500毫秒，则等待
+    if (timeSinceLastEmail < this.EMAIL_RATE_LIMIT_MS) {
+      const waitTime = this.EMAIL_RATE_LIMIT_MS - timeSinceLastEmail;
+      logger.info({ waitTime }, '等待邮件发送间隔');
+      await this.sleep(waitTime);
+    }
+
+    // 更新上次发送时间
+    this.lastEmailSentTime = Date.now();
+  }
+
   /**
    * 发送一封邮件
    * @param to 收件人邮箱
@@ -20,6 +51,9 @@ export class EmailService {
     htmlContent: string,
   ): Promise<boolean> {
     try {
+      // 控制发送速率
+      await this.respectRateLimit();
+
       // 不论环境，都发送邮件
       logger.info({
         to,

@@ -225,6 +225,19 @@ export class SubscriptionService {
       // 更新过期的试用账户
       const trialEndDate = addDays(new Date(), -TRIAL_DAYS).toISOString();
 
+      // 记录试用期查询SQL
+      logger.info({
+        table: 'users',
+        filter: {
+          trial_started_at_lt: trialEndDate,
+          subscription_status: 'trial',
+        },
+        query: `UPDATE users SET subscription_status = 'expired'
+                WHERE trial_started_at < '${trialEndDate}'
+                AND subscription_status = 'trial'
+                RETURNING id`,
+      }, '更新过期试用账户SQL');
+
       const { data: expiredTrials, error: trialError } = await db
         .from('users')
         .update({ subscription_status: 'expired' })
@@ -234,7 +247,23 @@ export class SubscriptionService {
 
       if (trialError) {
         console.error('更新过期试用账户失败:', trialError);
+        logger.error({ error: trialError }, '更新过期试用账户失败');
+      } else {
+        logger.info({ count: expiredTrials?.length || 0 }, '更新的过期试用账户数量');
       }
+
+      // 记录订阅过期查询SQL
+      logger.info({
+        table: 'users',
+        filter: {
+          subscription_expires_at_lt: now,
+          subscription_status: 'pro',
+        },
+        query: `UPDATE users SET subscription_status = 'expired'
+                WHERE subscription_expires_at < '${now}'
+                AND subscription_status = 'pro'
+                RETURNING id`,
+      }, '更新过期订阅账户SQL');
 
       // 更新过期的订阅账户
       const { data: expiredSubs, error: subError } = await db
@@ -246,6 +275,9 @@ export class SubscriptionService {
 
       if (subError) {
         console.error('更新过期订阅账户失败:', subError);
+        logger.error({ error: subError }, '更新过期订阅账户失败');
+      } else {
+        logger.info({ count: expiredSubs?.length || 0 }, '更新的过期订阅账户数量');
       }
 
       // 返回更新的总记录数

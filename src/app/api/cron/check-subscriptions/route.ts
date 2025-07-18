@@ -19,7 +19,10 @@ export async function GET(req: Request) {
   }
 
   try {
+    logger.info('开始执行订阅检查定时任务');
+
     // 更新过期的订阅
+    logger.info('准备更新过期订阅');
     const updatedCount = await SubscriptionService.updateExpiredSubscriptions();
     logger.info({ count: updatedCount }, '更新过期订阅完成');
 
@@ -27,6 +30,17 @@ export async function GET(req: Request) {
     // 试用期7天，剩余3天内意味着已试用4-7天
     const fourDaysAgo = new Date(Date.now() - 4 * 24 * 60 * 60 * 1000);
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
+    // 记录查询参数
+    logger.info({
+      table: 'users',
+      filter: {
+        subscription_status: 'trial',
+        trial_started_at_lte: fourDaysAgo.toISOString(),
+        trial_started_at_gte: sevenDaysAgo.toISOString(),
+      },
+      query: `SELECT * FROM users WHERE subscription_status = 'trial' AND trial_started_at <= '${fourDaysAgo.toISOString()}' AND trial_started_at >= '${sevenDaysAgo.toISOString()}'`,
+    }, '试用用户查询SQL');
 
     const { data: trialUsers, error: trialError } = await db
       .from('users')
@@ -38,6 +52,8 @@ export async function GET(req: Request) {
     if (trialError) {
       logger.error({ error: trialError }, '查询即将过期的试用用户失败');
     } else {
+      logger.info({ count: trialUsers?.length || 0 }, '查询到的试用用户数量');
+
       // 发送试用即将结束提醒
       for (const user of trialUsers || []) {
         const trialStartDate = new Date(user.trial_started_at);
@@ -66,6 +82,17 @@ export async function GET(req: Request) {
     // 查找即将在7天内过期的付费用户，每天发送提醒
     const sevenDaysLater = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
+    // 记录查询参数
+    logger.info({
+      table: 'users',
+      filter: {
+        subscription_status: 'pro',
+        subscription_expires_at_lt: sevenDaysLater.toISOString(),
+        subscription_expires_at_gt: new Date().toISOString(),
+      },
+      query: `SELECT * FROM users WHERE subscription_status = 'pro' AND subscription_expires_at < '${sevenDaysLater.toISOString()}' AND subscription_expires_at > '${new Date().toISOString()}'`,
+    }, '付费用户查询SQL');
+
     const { data: proUsers, error: proError } = await db
       .from('users')
       .select('*')
@@ -76,6 +103,8 @@ export async function GET(req: Request) {
     if (proError) {
       logger.error({ error: proError }, '查询即将过期的订阅用户失败');
     } else {
+      logger.info({ count: proUsers?.length || 0 }, '查询到的付费用户数量');
+
       // 发送订阅即将到期提醒，7天内每天都发送
       for (const user of proUsers || []) {
         const endDate = new Date(user.subscription_expires_at);
@@ -98,6 +127,8 @@ export async function GET(req: Request) {
         }
       }
     }
+
+    logger.info('订阅检查定时任务完成');
 
     return NextResponse.json({
       success: true,
