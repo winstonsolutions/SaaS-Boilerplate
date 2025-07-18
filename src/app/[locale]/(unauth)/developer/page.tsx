@@ -55,49 +55,55 @@ export default function DeveloperPage(props: { params: { locale: string } }) {
                     </div>
                   </div>
 
-                  <div className="rounded-2xl bg-card/50 p-8 backdrop-blur-sm">
-                    <h3 className="mb-4 text-2xl font-semibold">{t('location_title')}</h3>
-                    <p className="text-lg text-muted-foreground">
-                      {t('location_description')}
-                    </p>
+                  <div>
+                    <h2 className="mb-6 text-3xl font-bold">{t('location_title')}</h2>
+                    <div className="space-y-4 text-lg text-muted-foreground">
+                      <p>{t('location_description')}</p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex flex-col items-center space-y-8">
-                  <div className="relative">
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 p-1">
-                      <div className="relative size-56 overflow-hidden rounded-full bg-white">
-                        <Image
-                          src="/developer-avatar.jpg"
-                          alt="Winston Zhao"
-                          fill
-                          className="object-cover"
-                          priority
-                        />
+                <div className="flex flex-col items-center">
+                  {/* Profile Card */}
+                  <div className="rounded-3xl border-0 bg-white p-8 shadow-xl transition-all duration-300 hover:shadow-2xl">
+                    {/* #OpenToWork Badge - Top */}
+                    <div className="relative mx-auto mb-2">
+                      <div className="absolute -top-6 left-1/2 z-10 -translate-x-1/2">
+                        <div className="rounded-full bg-gradient-to-r from-green-500 to-purple-500 px-6 py-2 text-base font-bold text-white shadow-lg">
+                          #OpenToWork
+                        </div>
                       </div>
                     </div>
-                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2">
-                      <div className="rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-lg">
-                        #OpenToWork
-                      </div>
+
+                    {/* Avatar */}
+                    <div className="relative mx-auto size-40 overflow-hidden rounded-full border-4 border-white shadow-lg">
+                      <Image
+                        src="/developer-avatar.jpg"
+                        alt="Winston Zhao"
+                        fill
+                        className="object-cover"
+                        priority
+                      />
                     </div>
-                  </div>
 
-                  <div className="text-center">
-                    <h3 className="mb-2 text-2xl font-bold">Winston Zhao</h3>
-                    <p className="mb-6 text-lg text-muted-foreground">{t('developer_title')}</p>
+                    {/* Name and title */}
+                    <div className="mb-6 mt-4 text-center">
+                      <h3 className="mb-1 text-2xl font-bold text-gray-900">Winston Zhao</h3>
+                      <p className="text-lg text-gray-600">{t('developer_title')}</p>
+                    </div>
 
-                    <div className="flex w-full max-w-xs flex-col gap-4">
+                    {/* Contact links */}
+                    <div className="flex flex-row items-center justify-center gap-3">
                       <a
                         href="mailto:winstonzhaotech@gmail.com"
-                        className="flex items-center justify-center gap-3 rounded-xl bg-white px-6 py-3 shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                        className="flex items-center justify-center rounded-xl border border-gray-200 bg-white px-5 py-2 shadow-md transition-all duration-300 hover:shadow-lg"
                       >
                         <Image
                           src="/icons8-gmail-480.png"
                           alt="Gmail"
                           width={24}
                           height={24}
-                          className="shrink-0"
+                          className="mr-2 shrink-0"
                         />
                         <span className="font-medium text-gray-800">Email</span>
                       </a>
@@ -105,9 +111,9 @@ export default function DeveloperPage(props: { params: { locale: string } }) {
                         href="https://www.linkedin.com/in/winstontech"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-3 rounded-xl bg-[#0A66C2] px-6 py-3 text-white shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                        className="flex items-center justify-center rounded-xl bg-[#0A66C2] px-5 py-2 text-white shadow-md transition-all duration-300 hover:shadow-lg"
                       >
-                        <svg className="size-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="mr-2 size-5 shrink-0" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z" />
                         </svg>
                         <span className="font-medium">LinkedIn</span>
