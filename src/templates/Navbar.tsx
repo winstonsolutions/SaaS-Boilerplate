@@ -39,7 +39,7 @@ export const Navbar = () => {
           <Link href="/#roadmap" scroll={true}>{t('roadmap')}</Link>
         </li>
         <li>
-          <Link href="https://chrome.google.com/webstore" target="_blank" rel="noopener noreferrer">{t('chrome')}</Link>
+          <Link href="https://chrome.google.com/webstore/detail/hcnejpkelpdohoofkpocjmemjomnfjog" target="_blank" rel="noopener noreferrer">{t('chrome')}</Link>
         </li>
       </CenteredMenu>
     </Section>
