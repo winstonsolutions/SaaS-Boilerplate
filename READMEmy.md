@@ -341,3 +341,10 @@ Pro功能组件增强 (src/features/dashboard/ProFeatures.tsx)
 试用期剩余3天内会收到邮件提醒
 付费订阅即将到期提醒 (7天内)
 更新过期账户
+
+bugs
+不显示signin sighup按钮，不是代码问题。这是Chrome浏览器的DNS缓存或网络策略问题，不是代码问题！
+方案1：清除Chrome的DNS缓存（推荐先试这个）
+  # 在Chrome地址栏输入：
+  chrome://net-internals/#dns
+  # 点击 "Clear host cache" 按钮
